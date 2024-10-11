@@ -1,4 +1,5 @@
 import express from 'express';
+import { HTTP_STATUS_CODE_MAP } from './constants';
 
 const app = express();
 const PORT = 8000;
@@ -10,13 +11,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status/:status', (req, res) => {
-  const status = parseInt(req.params.status);
-
-  if (status < 100 || status >= 600) {
-    res.sendStatus(400);
-  } else {
-    res.sendStatus(status);
-  }
+  const reqStatucCode = parseInt(req.params.status);
+  const statucCode = (reqStatucCode >= 100 && reqStatucCode <= 599) ? reqStatucCode : 400;
+  res.status(statucCode).json({ statucCode, message: HTTP_STATUS_CODE_MAP[statucCode] || 'unknown' });
 });
 
 app.listen(PORT, () => {
