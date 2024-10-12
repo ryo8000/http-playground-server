@@ -1,0 +1,21 @@
+{
+  "name": "simple-mock-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ryo8000/simple-mock-server.git",
+  "author": "Ryo Hasegawa",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -e ts --files ./src/server.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.5",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
