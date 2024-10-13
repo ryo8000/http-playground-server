@@ -1,19 +1,15 @@
 import express from 'express';
-import { HTTP_STATUS_CODE_MAP } from './constants';
+import { statusRouter } from './routes/statusRoutes';
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello!');
-});
+app.use('/status', statusRouter);
 
-app.get('/status/:status', (req, res) => {
-  const reqStatucCode = parseInt(req.params.status);
-  const statucCode = (reqStatucCode >= 100 && reqStatucCode <= 599) ? reqStatucCode : 400;
-  res.status(statucCode).json({ statucCode, message: HTTP_STATUS_CODE_MAP[statucCode] || 'unknown' });
+app.get('/', (_req, res) => {
+  res.send('Hello!');
 });
 
 app.listen(PORT, () => {
