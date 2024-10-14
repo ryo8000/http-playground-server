@@ -6,7 +6,8 @@
   "author": "Ryo Hasegawa",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e ts --files ./src/server.ts"
+    "dev": "nodemon -e ts --files ./src/server.ts",
+    "build": "tsc"
   },
   "dependencies": {
     "express": "^4.21.1"
