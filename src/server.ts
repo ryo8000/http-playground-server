@@ -1,8 +1,8 @@
 import express from 'express';
 import { statusRouter } from './routes/statusRoutes';
+import { EnvConfig } from './env';
 
 const app = express();
-const PORT = 8000;
 
 app.use(express.json());
 
@@ -12,6 +12,6 @@ app.get('/', (_req, res) => {
   res.send('Hello!');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(EnvConfig.PORT, () => {
+  console.log(`Server is running on http://localhost:${EnvConfig.PORT}`);
 });
