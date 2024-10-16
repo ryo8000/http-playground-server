@@ -2,5 +2,7 @@
   "watch": ["src"],
   "ext": "ts",
   "exec": "ts-node ./src/server.ts",
-  "env": {}
+  "env": {
+    "PORT": 8000
+  }
 }
