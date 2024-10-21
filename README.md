@@ -6,6 +6,7 @@ A simple mock server built with Node.js and Express.
 
 | HTTP request             | Description                                             | Notes |
 | ------------------------ | ------------------------------------------------------- | ----- |
+| **POST** /mirror/        | Returns the request body as a response.                 |       |
 | **GET** /status/{status} | Returns a response with the specified http status code. |       |
 
 ## Getting Started
@@ -67,9 +68,9 @@ This will execute all the test cases located in the `tests/` directory.
 
 ## Environment Variables
 
-| Environment Variable | Description                      | Required | Default |
-| -------------------- | -------------------------------- | -------- | ------- |
-| PORT                 | Port number for this application | N        | 8000    |
+| Name | Description                      | Required | Default Value |
+| ---- | -------------------------------- | -------- | ------------- |
+| PORT | Port number for this application | No       | 8000          |
 
 ## License
 
