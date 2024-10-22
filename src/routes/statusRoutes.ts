@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { HTTP_STATUS_CODE_MAP } from '../constants';
 import { createStatusResponse } from '../models/statusResponse';
+import { toSafeInteger } from '../utils/numberUtils';
 
 const statusRouter = Router();
 
 statusRouter.get('/:status', (req, res) => {
-  const reqStatusCode = parseInt(req.params.status);
+  const reqStatusCode = toSafeInteger(req.params.status);
   const statusCode =
     reqStatusCode >= 200 && reqStatusCode <= 599 ? reqStatusCode : 400;
 
