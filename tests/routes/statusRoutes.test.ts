@@ -40,7 +40,7 @@ describe('GET /status/:status', () => {
   });
 
   it('should return 400 and corresponding message for non-numeric status code', async () => {
-    const response = await request(app).get('/status/abc');
+    const response = await request(app).get('/status/2e1');
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
       code: 400,
