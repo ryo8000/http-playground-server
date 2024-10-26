@@ -6,7 +6,11 @@ import { EnvConfig } from './env';
 const app = express();
 
 app.use((_req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  if (EnvConfig.ORIGIN !== '') {
+    res.header({
+      'Access-Control-Allow-Origin': EnvConfig.ORIGIN
+    });
+  }
   next();
 });
 
