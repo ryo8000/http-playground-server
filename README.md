@@ -68,9 +68,10 @@ This will execute all the test cases located in the `tests/` directory.
 
 ## Environment Variables
 
-| Name | Description                      | Required | Default Value |
-| ---- | -------------------------------- | -------- | ------------- |
-| PORT | Port number for this application | No       | 8000          |
+| Name   | Description                                                  | Required | Default Value |
+| ------ | ------------------------------------------------------------ | -------- | ------------- |
+| ORIGIN | The value of the Access-Control-Allow-Origin response header | No       | \*            |
+| PORT   | Port number for this application                             | No       | 8000          |
 
 ## License
 
