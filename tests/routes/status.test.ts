@@ -30,12 +30,18 @@ describe('GET /status/:status', () => {
     expect(response1.body).toEqual({
       code: 400,
       message: 'Bad Request',
+      error: {
+        message: 'Invalid status'
+      },
     });
     const response2 = await request(app).get('/status/600');
     expect(response2.status).toBe(400);
     expect(response2.body).toEqual({
       code: 400,
       message: 'Bad Request',
+      error: {
+        message: 'Invalid status'
+      },
     });
   });
 
@@ -45,6 +51,9 @@ describe('GET /status/:status', () => {
     expect(response.body).toEqual({
       code: 400,
       message: 'Bad Request',
+      error: {
+        message: 'Invalid status'
+      },
     });
   });
 });
