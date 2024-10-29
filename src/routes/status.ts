@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { HTTP_STATUS_CODE_MAP } from '../constants';
 import { createStatusResponse } from '../models/statusResponse';
 import { toSafeInteger } from '../utils/numberUtils';
 
@@ -7,15 +6,12 @@ const statusRouter = Router();
 
 statusRouter.get('/:status', (req, res) => {
   const reqStatusCode = toSafeInteger(req.params.status);
-  const statusCode =
-    reqStatusCode >= 200 && reqStatusCode <= 599 ? reqStatusCode : 400;
+  const isValidStatusCode = reqStatusCode >= 200 && reqStatusCode <= 599;
 
-  const responseBody = createStatusResponse(
-    statusCode,
-    HTTP_STATUS_CODE_MAP[statusCode] || 'unknown'
-  );
+  const statusCode = isValidStatusCode ? reqStatusCode : 400;
+  const errorMessage = isValidStatusCode ? undefined : 'Invalid status';
 
-  res.status(statusCode).json(responseBody);
+  res.status(statusCode).json(createStatusResponse(statusCode, errorMessage));
 });
 
 export { statusRouter };
