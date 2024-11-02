@@ -9,62 +9,48 @@ A simple mock server built with Node.js and Express.
 | **POST** /mirror/        | Returns the request body as a response.                 |       |
 | **GET** /status/{status} | Returns a response with the specified http status code. |       |
 
-## Getting Started
+## Build and Run the Application
 
-### Prerequisites
+### Using Docker
 
-- Node.js (version 18.x or higher recommended)
-- Yarn (for package management)
-
-### Installation
-
-1. Clone the repository:
+1. Clone this repository:
 
    ```bash
    git clone https://github.com/ryo8000/simple-mock-server.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
    cd simple-mock-server
    ```
 
-3. Install dependencies using Yarn:
+2. Build and run the application in a Docker container:
+   ```bash
+   docker build -t simple-mock-server .
+   docker run -p 8000:8000 simple-mock-server
+   ```
+
+### Using Yarn
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/ryo8000/simple-mock-server.git
+   cd simple-mock-server
+   ```
+
+2. Install dependencies using Yarn:
 
    ```bash
    yarn install
    ```
 
-### Running the Application
+3. Build the application:
 
-To start the development server:
+   ```bash
+   yarn build
+   ```
 
-```bash
-yarn dev
-```
-
-This command will start the server with Nodemon, which automatically restarts it when file changes are detected.
-
-### Building the Project
-
-To compile the TypeScript code:
-
-```bash
-yarn build
-```
-
-This will generate JavaScript files from the TypeScript source code.
-
-### Running Tests
-
-To run tests using Jest:
-
-```bash
-yarn test
-```
-
-This will execute all the test cases located in the `tests/` directory.
+4. Run the application:
+   ```bash
+   node dist/app.js
+   ```
 
 ## Environment Variables
 
@@ -72,6 +58,10 @@ This will execute all the test cases located in the `tests/` directory.
 | ------ | ------------------------------------------------------------ | -------- | ------------- |
 | ORIGIN | The value of the Access-Control-Allow-Origin response header | No       | \*            |
 | PORT   | Port number for this application                             | No       | 8000          |
+
+## Development
+
+For developer-specific instructions, including details on testing and project structure, see the [Development Guide](./docs/DEVELOPMENT_GUIDE.md).
 
 ## License
 
