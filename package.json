@@ -11,12 +11,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "4.21.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.8.1",
+    "@types/node": "^22.8.6",
     "@types/supertest": "^6.0.2",
     "jest": "^29.2.0",
     "nodemon": "^3.1.7",
