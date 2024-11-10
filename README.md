@@ -9,6 +9,12 @@ A simple mock server built with Node.js and Express.
 | **POST** /mirror/        | Returns the request body as a response.                 |       |
 | **GET** /status/{status} | Returns a response with the specified http status code. |       |
 
+### Common Query parameters
+
+| Parameter | Type   | Description                                                 |
+| --------- | ------ | ----------------------------------------------------------- |
+| delay     | Number | Delays the response by the specified value in milliseconds. |
+
 ## Build and Run the Application
 
 ### Using Docker
