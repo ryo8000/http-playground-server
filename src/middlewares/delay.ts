@@ -1,11 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import { toSafeInteger } from '../utils/numberUtils';
 
-export const delayMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+/**
+ * Middleware to add artificial delay to responses.
+ *
+ * @param {Request} req - Express request object
+ * @param {Response} _res - Express response object
+ * @param {NextFunction} next - Express next function
+ */
+export const delayMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const delay = toSafeInteger(req.query['delay'] as string);
   if (delay > 0) {
-    setTimeout(() => next(), delay);
-  } else {
-    next();
+    await new Promise(resolve => setTimeout(resolve, delay));
   }
+  next();
 };
