@@ -8,6 +8,9 @@ import { EnvConfig } from './env';
 
 const app = express();
 
+// Disable X-Powered-By header
+app.disable('x-powered-by');
+
 // Set CORS header if an origin is specified in the environment configuration
 app.use((_req, res, next) => {
   if (EnvConfig.ORIGIN !== '') {
