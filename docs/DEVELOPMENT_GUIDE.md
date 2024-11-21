@@ -9,6 +9,7 @@ This guide covers development-specific details for contributing to the Simple Mo
 │   ├── app.ts               # Main application setup
 │   ├── constants.ts         # Application constants
 │   ├── env.ts               # Environment variable handler
+│   ├── middlewares          # middlewares directory
 │   ├── models               # models directory
 │   ├── routes               # API routes directory
 │   └── utils                # Utility functions directory
