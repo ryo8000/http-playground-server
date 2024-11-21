@@ -27,6 +27,7 @@ A simple mock server built with Node.js and Express.
    ```
 
 2. Build and run the application in a Docker container:
+
    ```bash
    docker build -t simple-mock-server .
    docker run -p 8000:8000 simple-mock-server
@@ -54,8 +55,9 @@ A simple mock server built with Node.js and Express.
    ```
 
 4. Run the application:
+
    ```bash
-   node dist/app.js
+   yarn start
    ```
 
 ## Environment Variables
