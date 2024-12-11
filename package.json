@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "4.21.1"
+    "express": "4.21.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
