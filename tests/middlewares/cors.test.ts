@@ -29,7 +29,9 @@ describe('corsMiddleware', () => {
     corsMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
     expect(mockResponse.header).toHaveBeenCalledWith({
-      'Access-Control-Allow-Origin': 'http://localhost'
+      'Access-Control-Allow-Origin': 'http://localhost',
+      'Access-Control-Allow-Methods': 'OPTIONS, POST',
+      'Access-Control-Allow-Headers': 'Content-Type',
     });
     expect(mockNext).toHaveBeenCalled();
   });
@@ -38,7 +40,9 @@ describe('corsMiddleware', () => {
     corsMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
     expect(mockResponse.header).toHaveBeenCalledWith({
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'OPTIONS, POST',
+      'Access-Control-Allow-Headers': 'Content-Type',
     });
     expect(mockNext).toHaveBeenCalled();
   });

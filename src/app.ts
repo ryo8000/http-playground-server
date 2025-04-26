@@ -13,11 +13,10 @@ const app = express();
 app.disable('x-powered-by');
 
 app.use(express.json());
-app.use(corsMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
-app.use('/mirror', mirrorRouter);
+app.use('/mirror', corsMiddleware, mirrorRouter);
 app.use('/status', statusRouter);
 
 // 404 handler
