@@ -24,6 +24,11 @@ app.use((_req, res) => {
   res.status(404).json(createStatusResponse(404, 'Resource not found'));
 });
 
+// Error handler
+app.use((_err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  res.status(500).json(createStatusResponse(500));
+});
+
 app.listen(environment.port, () => {
   console.log(`Server is running on http://localhost:${environment.port}`);
 });
