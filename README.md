@@ -57,7 +57,7 @@ A simple mock server built with Node.js and Express.
 4. Run the application:
 
    ```bash
-   yarn start
+   node dist/app.js
    ```
 
 ## Environment Variables
