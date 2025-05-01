@@ -5,7 +5,6 @@ import { createStatusResponse } from './models/statusResponse';
 import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
 import { statusRouter } from './routes/status';
-import { environment } from './env';
 
 const app = express();
 
@@ -29,20 +28,4 @@ app.use((_err: Error, _req: express.Request, res: express.Response, _next: expre
   res.status(500).json(createStatusResponse(500));
 });
 
-const server = app.listen(environment.port, () => {
-  console.log(`Server is running on http://localhost:${environment.port}`);
-});
-
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
-
-  server.close((err) => {
-    if (err) {
-      console.error('Error during server close:', err);
-      process.exit(1);
-    }
-
-    console.log('HTTP server closed');
-    process.exit(0);
-  });
-});
+export { app };
