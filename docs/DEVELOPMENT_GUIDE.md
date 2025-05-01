@@ -12,6 +12,7 @@ This guide covers development-specific details for contributing to the Simple Mo
 │   ├── middlewares          # middlewares directory
 │   ├── models               # models directory
 │   ├── routes               # API routes directory
+│   ├── server.ts            # Server startup and shutdown handling
 │   └── utils                # Utility functions directory
 ├── tests                    # Jest tests directory
 └── Dockerfile               # Docker configuration

@@ -15,6 +15,13 @@ A simple mock server built with Node.js and Express.
 | --------- | ------ | ----------------------------------------------------------- |
 | delay     | Number | Delays the response by the specified value in milliseconds. |
 
+### Other Features
+
+- The server implements graceful shutdown handling:
+  - Responds to SIGTERM signals for clean shutdown.
+  - Provides a 10-second timeout for graceful shutdown.
+  - Logs shutdown progress and any errors.
+
 ## Build and Run the Application
 
 ### Using Docker
