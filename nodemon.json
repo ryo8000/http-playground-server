@@ -3,6 +3,7 @@
   "ext": "ts",
   "exec": "ts-node ./src/server.ts",
   "env": {
+    "ENABLE_SHUTDOWN": true,
     "PORT": 8000
   }
 }
