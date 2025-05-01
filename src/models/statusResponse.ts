@@ -13,16 +13,27 @@ type StatusResponse = {
 }
 
 /**
- * Creates a status response object.
- * @param {number} code - The HTTP status code to return.
- * @param {string} [errorMessage] - An optional error message.
- * @returns {StatusResponse} The constructed status response object.
+ * Creates a status response object with the specified HTTP status code and optional details.
+ * 
+ * @param code - The HTTP status code to return
+ * @param options - Optional parameters for customizing the response
+ * @param options.message - Custom status message (defaults to standard HTTP status message)
+ * @param options.errorMessage - Optional error message to include in the response
+ * @returns A status response object containing the code, message, and optional error details
  */
 export const createStatusResponse = (
   code: number,
-  errorMessage?: string
+  {
+    message,
+    errorMessage,
+  }: {
+    /** Custom status message (defaults to standard HTTP status message) */
+    message?: string;
+    /** Optional error message to include in the response */
+    errorMessage?: string | undefined;
+  } = {}
 ): StatusResponse => ({
   code,
-  message: HTTP_STATUS_CODE_MAP[code] || 'unknown',
+  message: message ?? (HTTP_STATUS_CODE_MAP[code] || 'unknown'),
   ...(errorMessage && { error: { message: errorMessage } }),
 });

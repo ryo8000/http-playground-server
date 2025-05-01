@@ -7,6 +7,7 @@ A simple mock server built with Node.js and Express.
 | HTTP request             | Description                                             | Notes |
 | ------------------------ | ------------------------------------------------------- | ----- |
 | **POST** /mirror/        | Returns the request body as a response.                 |       |
+| **POST** /shutdown/      | Triggers a shutdown of the server.                      |       |
 | **GET** /status/{status} | Returns a response with the specified http status code. |       |
 
 ### Common Query parameters
@@ -69,10 +70,11 @@ A simple mock server built with Node.js and Express.
 
 ## Environment Variables
 
-| Name   | Description                                                  | Required | Default Value |
-| ------ | ------------------------------------------------------------ | -------- | ------------- |
-| ORIGIN | The value of the Access-Control-Allow-Origin response header | No       | \*            |
-| PORT   | Port number for this application                             | No       | 8000          |
+| Name            | Description                                                  | Required | Default Value |
+| --------------- | ------------------------------------------------------------ | -------- | ------------- |
+| ENABLE_SHUTDOWN | Enables the /shutdown endpoint                               | No       | false         |
+| ORIGIN          | The value of the Access-Control-Allow-Origin response header | No       | \*            |
+| PORT            | Port number for this application                             | No       | 8000          |
 
 ## Development
 

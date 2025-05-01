@@ -11,7 +11,7 @@ statusRouter.get('/:status', (req, res) => {
   const statusCode = isValidStatusCode ? reqStatusCode : 400;
   const errorMessage = isValidStatusCode ? undefined : 'Invalid status';
 
-  res.status(statusCode).json(createStatusResponse(statusCode, errorMessage));
+  res.status(statusCode).json(createStatusResponse(statusCode, { errorMessage }));
 });
 
 export { statusRouter };
