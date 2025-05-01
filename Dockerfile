@@ -22,4 +22,4 @@ COPY --from=build /app/dist ./dist
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/server.js"]

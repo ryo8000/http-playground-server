@@ -1,7 +1,7 @@
 {
   "name": "simple-mock-server",
   "version": "0.0.1",
-  "main": "dist/app.js",
+  "main": "dist/server.js",
   "repository": "https://github.com/ryo8000/simple-mock-server.git",
   "author": "Ryo Hasegawa",
   "license": "MIT",
