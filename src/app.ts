@@ -26,8 +26,16 @@ app.use((_req, res) => {
 });
 
 // Error handler
-app.use((_err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  res.status(500).json(createStatusResponse(500));
+app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('Unhandled error:', err);
+  const isDevelopment = req.app.get('env') === 'development';
+  const statusCode = isDevelopment ? (err as any).status || 500 : 500;
+
+  res.status(statusCode).json(
+    createStatusResponse(statusCode, {
+      errorMessage: isDevelopment ? err.stack : 'An unexpected error has occurred.',
+    })
+  );
 });
 
 export { app };
