@@ -1,23 +1,24 @@
 import { app } from './app';
 import { environment } from './env';
+import { log } from './logger';
 
 const server = app.listen(environment.port, () => {
-  console.log(`Server is running on http://localhost:${environment.port}`);
+  log.info(`Server is running on http://localhost:${environment.port}`);
 });
 
 let isShuttingDown = false;
 
 process.on('SIGTERM', () => {
   if (isShuttingDown) {
-    console.warn('Shutdown already in progress...');
+    log.warn('Shutdown already in progress...');
     return;
   }
   isShuttingDown = true;
 
-  console.log('SIGTERM signal received: closing HTTP server');
+  log.info('SIGTERM signal received: closing HTTP server');
 
   const forceExitTimeout = setTimeout(() => {
-    console.error('Server close timed out, forcing exit');
+    log.error('Server close timed out, forcing exit');
     process.exit(1);
   }, 10_000);
 
@@ -25,11 +26,11 @@ process.on('SIGTERM', () => {
     clearTimeout(forceExitTimeout);
 
     if (err) {
-      console.error('Error during server close:', err);
+      log.error({ err }, 'Error during server close');
       process.exit(1);
     }
 
-    console.log('HTTP server closed');
+    log.info('HTTP server closed');
     process.exit(0);
   });
 });
