@@ -1,10 +1,23 @@
 import pino from 'pino';
 import { environment } from './env';
 
-export const logger = pino({
-  level: environment.logLevel,
-  timestamp: pino.stdTimeFunctions.isoTime,
-});
+export const logger = pino(
+  environment.nodeEnv === 'development'
+    ? {
+        level: environment.logLevel,
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            translateTime: 'SYS:standard',
+            ignore: 'pid,hostname',
+          },
+        },
+      }
+    : {
+        level: environment.logLevel,
+      }
+);
 
 export const log = {
   fatal: logger.fatal.bind(logger),
