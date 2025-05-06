@@ -11,7 +11,7 @@ import { environment } from '../env';
 export const corsMiddleware = (_req: Request, res: Response, next: NextFunction) => {
   res.header({
     'Access-Control-Allow-Origin': environment.origin,
-    'Access-Control-Allow-Methods': 'OPTIONS, POST',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   });
   next();
