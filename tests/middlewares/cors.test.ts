@@ -30,7 +30,7 @@ describe('corsMiddleware', () => {
 
     expect(mockResponse.header).toHaveBeenCalledWith({
       'Access-Control-Allow-Origin': 'http://localhost',
-      'Access-Control-Allow-Methods': 'OPTIONS, POST',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     });
     expect(mockNext).toHaveBeenCalled();
@@ -41,7 +41,7 @@ describe('corsMiddleware', () => {
 
     expect(mockResponse.header).toHaveBeenCalledWith({
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'OPTIONS, POST',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     });
     expect(mockNext).toHaveBeenCalled();

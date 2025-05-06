@@ -4,8 +4,8 @@ import { delayMiddleware } from './middlewares/delay';
 import { createStatusResponse } from './models/statusResponse';
 import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
-import { statusRouter } from './routes/status';
 import { shutdownRouter } from './routes/shutdown';
+import { statusRouter } from './routes/status';
 
 const app = express();
 
@@ -17,8 +17,8 @@ app.use(delayMiddleware);
 
 app.use('/', indexRouter);
 app.use('/mirror', corsMiddleware, mirrorRouter);
-app.use('/status', statusRouter);
 app.use('/shutdown', shutdownRouter);
+app.use('/status', statusRouter);
 
 // 404 handler
 app.use((_req, res) => {
