@@ -73,6 +73,8 @@ A simple mock server built with Node.js and Express.
 | Name            | Description                                                  | Required | Default Value |
 | --------------- | ------------------------------------------------------------ | -------- | ------------- |
 | ENABLE_SHUTDOWN | Enables the /shutdown endpoint                               | No       | false         |
+| LOG_LEVEL       | Sets the logging level (debug, info, warn, error)            | No       | info          |
+| NODE_ENV        | Sets the environment mode (development, production, test)    | No       | development   |
 | ORIGIN          | The value of the Access-Control-Allow-Origin response header | No       | \*            |
 | PORT            | Port number for this application                             | No       | 8000          |
 
