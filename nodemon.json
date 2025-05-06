@@ -4,6 +4,7 @@
   "exec": "ts-node ./src/server.ts",
   "env": {
     "ENABLE_SHUTDOWN": true,
+    "LOG_LEVEL": "debug",
     "PORT": 8000
   }
 }
