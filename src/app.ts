@@ -6,6 +6,7 @@ import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
 import { shutdownRouter } from './routes/shutdown';
 import { statusRouter } from './routes/status';
+import { environment } from './env';
 import { log } from './logger';
 
 const app = express();
@@ -27,9 +28,9 @@ app.use((_req, res) => {
 });
 
 // Error handler
-app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   log.error({ err }, 'Unhandled error occurred');
-  const isDevelopment = req.app.get('env') === 'development';
+  const isDevelopment = environment.nodeEnv === 'development';
   const statusCode = isDevelopment ? (err as any).status || 500 : 500;
 
   res.status(statusCode).json(
