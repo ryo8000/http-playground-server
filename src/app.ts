@@ -1,6 +1,7 @@
 import express from 'express';
 import { corsMiddleware } from './middlewares/cors';
 import { delayMiddleware } from './middlewares/delay';
+import { loggerMiddleware } from './middlewares/logger';
 import { createStatusResponse } from './models/statusResponse';
 import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
@@ -15,6 +16,7 @@ const app = express();
 app.disable('x-powered-by');
 
 app.use(express.json());
+app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
