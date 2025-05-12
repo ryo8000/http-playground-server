@@ -1,4 +1,4 @@
-FROM node:23.11.0-slim AS build
+FROM node:22.15.0-slim AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
-FROM node:23.11.0-slim AS production
+FROM node:22.15.0-slim AS production
 ENV NODE_ENV=production
 
 WORKDIR /app
