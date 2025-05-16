@@ -1,4 +1,4 @@
-const integerPattern = /^-?\d+$/;
+const integerPattern = /^-?[0-9]+$/;
 
 /**
  * Converts a string to a safe integer if the string represents a valid integer within the safe range.
