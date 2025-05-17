@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createStatusResponse } from '../models/statusResponse';
-import { toSafeInteger } from '../utils/numberUtils';
+import { toSafeInteger } from '../utils/number';
 
 const statusRouter = Router();
 
