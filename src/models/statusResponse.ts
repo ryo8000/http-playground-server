@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE_MAP } from '../constants';
+import { HTTP_STATUS_CODE_MAP } from '../utils/http';
 
 type StatusResponse = {
   /** The HTTP status code */
@@ -14,7 +14,7 @@ type StatusResponse = {
 
 /**
  * Creates a status response object with the specified HTTP status code and optional details.
- * 
+ *
  * @param code - The HTTP status code to return
  * @param options - Optional parameters for customizing the response
  * @param options.message - Custom status message (defaults to standard HTTP status message)
