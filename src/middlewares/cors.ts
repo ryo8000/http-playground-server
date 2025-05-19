@@ -8,7 +8,7 @@ import { environment } from '../env';
  * @param {Response} res - Express response object
  * @param {NextFunction} next - Express next function
  */
-export const corsMiddleware = (_req: Request, res: Response, next: NextFunction) => {
+export const corsMiddleware = (_req: Request, res: Response, next: NextFunction): void => {
   res.header({
     'Access-Control-Allow-Origin': environment.origin,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
