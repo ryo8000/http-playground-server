@@ -8,7 +8,7 @@ import { toSafeInteger } from '../utils/number';
  * @param {Response} _res - Express response object
  * @param {NextFunction} next - Express next function
  */
-export const delayMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
+export const delayMiddleware = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
   const delay = toSafeInteger(req.query['delay'] as string);
   if (delay > 0) {
     await new Promise(resolve => setTimeout(resolve, delay));

@@ -8,7 +8,7 @@ import { log } from '../logger';
  * @param {Response} res - Express response object
  * @param {NextFunction} next - Express next function
  */
-export const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const loggerMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   log.debug({
     type: 'request',
     method: req.method,
