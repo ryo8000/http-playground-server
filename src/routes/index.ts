@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { createStatusResponse } from '../models/statusResponse';
+import { HttpStatusCodes } from '../utils/http';
 
 const indexRouter = Router();
-const statusCode = 200;
 
 indexRouter.all('/', (_req, res) => {
-  const responseBody = createStatusResponse(statusCode);
+  const responseBody = createStatusResponse(HttpStatusCodes.OK);
 
   res.json(responseBody);
 });
