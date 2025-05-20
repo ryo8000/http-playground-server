@@ -15,7 +15,7 @@
     "pino": "9.7.0"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
+    "@types/express": "^5.0.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.17",
     "@types/supertest": "^6.0.3",
