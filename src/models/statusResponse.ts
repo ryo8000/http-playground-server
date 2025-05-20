@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE_MAP } from '../utils/http';
+import { HttpStatusCodeMap } from '../utils/http';
 
 type StatusResponse = {
   /** The HTTP status code */
@@ -34,6 +34,6 @@ export const createStatusResponse = (
   } = {}
 ): StatusResponse => ({
   code,
-  message: message ?? (HTTP_STATUS_CODE_MAP[code] || 'unknown'),
+  message: message ?? (HttpStatusCodeMap[code] || 'unknown'),
   ...(errorMessage && { error: { message: errorMessage } }),
 });

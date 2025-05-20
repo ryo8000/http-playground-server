@@ -7,6 +7,7 @@ import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
 import { shutdownRouter } from './routes/shutdown';
 import { statusRouter } from './routes/status';
+import { HttpStatusCodes } from './utils/http';
 import { environment } from './env';
 import { log } from './logger';
 
@@ -26,14 +27,18 @@ app.use('/status', statusRouter);
 
 // 404 handler
 app.use((_req, res) => {
-  res.status(404).json(createStatusResponse(404, { errorMessage: 'Resource not found' }));
+  res
+    .status(HttpStatusCodes.NOT_FOUND)
+    .json(createStatusResponse(HttpStatusCodes.NOT_FOUND, { errorMessage: 'Resource not found' }));
 });
 
 // Error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   log.error({ err }, 'Unhandled error occurred');
   const isDevelopment = environment.nodeEnv === 'development';
-  const statusCode = isDevelopment ? (err as any).status || 500 : 500;
+  const statusCode = isDevelopment
+    ? (err as any).status || HttpStatusCodes.INTERNAL_SERVER_ERROR
+    : HttpStatusCodes.INTERNAL_SERVER_ERROR;
 
   res.status(statusCode).json(
     createStatusResponse(statusCode, {
