@@ -5,7 +5,7 @@ import { toSafeInteger } from '../utils/number';
 
 const statusRouter = Router();
 
-statusRouter.get('/:status', (req, res) => {
+statusRouter.all('/:status', (req, res) => {
   const reqStatusCode = toSafeInteger(req.params.status);
   const isValidStatusCode = reqStatusCode >= 200 && reqStatusCode <= 599;
 
