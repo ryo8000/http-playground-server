@@ -5,7 +5,7 @@ import { HttpStatusCodes } from '../utils/http';
 
 const shutdownRouter = Router();
 
-shutdownRouter.post('/', (_req, res) => {
+shutdownRouter.all('/', (_req, res) => {
   if (!environment.enableShutdown) {
     res
       .status(HttpStatusCodes.FORBIDDEN)

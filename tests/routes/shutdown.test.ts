@@ -11,7 +11,7 @@ const mockExit = jest.spyOn(process, 'exit').mockImplementation((code) => {
   throw new Error(`process.exit(${code})`);
 });
 
-describe('POST /shutdown', () => {
+describe('GET /shutdown', () => {
   let mockEnvironment: typeof environment;
 
   beforeEach(() => {
