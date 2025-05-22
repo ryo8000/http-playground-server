@@ -4,11 +4,11 @@ A simple mock server built with Node.js and Express.
 
 ## API
 
-| HTTP request     | Description                                                            | Notes |
-| ---------------- | ---------------------------------------------------------------------- | ----- |
-| /mirror/         | Returns the given request method, query parameters, headers, and body. |       |
-| /shutdown/       | Triggers a shutdown of the server.                                     |       |
-| /status/{status} | Returns a response with the specified http status code.                |       |
+| HTTP request     | Description                                             | Notes |
+| ---------------- | ------------------------------------------------------- | ----- |
+| /mirror/         | Returns the request body as a response.                 |       |
+| /shutdown/       | Triggers a shutdown of the server.                      |       |
+| /status/{status} | Returns a response with the specified http status code. |       |
 
 ### Common Query parameters
 
