@@ -16,6 +16,13 @@ describe('App', () => {
     });
   });
 
+  describe('GET /request', () => {
+    it('should return 200 OK', async () => {
+      const response = await request(app).get('/request');
+      expect(response.status).toBe(200);
+    });
+  });
+
   describe('POST /shutdown', () => {
     it('should return 403 when shutdown is not enabled', async () => {
       const response = await request(app).post('/shutdown');
@@ -38,7 +45,7 @@ describe('App', () => {
         code: 404,
         message: 'Not Found',
         error: {
-          message: 'Resource not found'
+          message: 'Resource not found',
         },
       });
     });
