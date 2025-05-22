@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { corsMiddleware } from './middlewares/cors';
 import { delayMiddleware } from './middlewares/delay';
 import { loggerMiddleware } from './middlewares/logger';
@@ -7,6 +8,7 @@ import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
 import { shutdownRouter } from './routes/shutdown';
 import { statusRouter } from './routes/status';
+import { requestRouter } from './routes/request';
 import { HttpStatusCodes } from './utils/http';
 import { environment } from './env';
 import { log } from './logger';
@@ -17,11 +19,13 @@ const app = express();
 app.disable('x-powered-by');
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
 app.use('/mirror', corsMiddleware, mirrorRouter);
+app.use('/request', requestRouter);
 app.use('/shutdown', shutdownRouter);
 app.use('/status', statusRouter);
 

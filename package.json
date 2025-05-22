@@ -11,10 +11,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "cookie-parser": "1.4.7",
     "express": "5.1.0",
     "pino": "9.7.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.21",
