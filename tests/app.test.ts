@@ -49,5 +49,17 @@ describe('App', () => {
         },
       });
     });
+
+    it('should return 500 for server errors', async () => {
+      const response = await request(app).get('/error');
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({
+        code: 500,
+        message: 'Internal Server Error',
+        error: {
+          message: 'An unexpected error has occurred.',
+        }
+      });
+    });
   });
 });

@@ -6,6 +6,7 @@ A simple mock server built with Node.js and Express.
 
 | HTTP request     | Description                                             | Notes |
 | ---------------- | ------------------------------------------------------- | ----- |
+| /error/          | Throws an intentional error for testing purposes.       |       |
 | /request/        | Returns detailed information about the incoming request |       |
 | /mirror/         | Returns the request body as a response.                 |       |
 | /shutdown/       | Triggers a shutdown of the server.                      |       |
