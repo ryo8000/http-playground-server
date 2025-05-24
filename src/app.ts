@@ -4,6 +4,7 @@ import { corsMiddleware } from './middlewares/cors';
 import { delayMiddleware } from './middlewares/delay';
 import { loggerMiddleware } from './middlewares/logger';
 import { createStatusResponse } from './models/statusResponse';
+import { errorRouter } from './routes/error';
 import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
 import { shutdownRouter } from './routes/shutdown';
@@ -24,6 +25,7 @@ app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
+app.use('/error', errorRouter);
 app.use('/mirror', corsMiddleware, mirrorRouter);
 app.use('/request', requestRouter);
 app.use('/shutdown', shutdownRouter);
