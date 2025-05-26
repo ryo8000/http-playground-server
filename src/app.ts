@@ -25,7 +25,7 @@ app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
-app.use('/error', errorRouter);
+app.use('/error', corsMiddleware, errorRouter);
 app.use('/mirror', corsMiddleware, mirrorRouter);
 app.use('/request', requestRouter);
 app.use('/shutdown', shutdownRouter);
