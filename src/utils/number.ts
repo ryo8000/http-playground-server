@@ -24,4 +24,4 @@ export const toSafeInteger = (value: string): number => {
   }
 
   return integer;
-}
+};

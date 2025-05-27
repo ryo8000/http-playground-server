@@ -31,7 +31,7 @@ describe('GET /status/:status', () => {
       code: 400,
       message: 'Bad Request',
       error: {
-        message: 'Invalid status'
+        message: 'Invalid status',
       },
     });
     const response2 = await request(app).get('/status/600');
@@ -40,7 +40,7 @@ describe('GET /status/:status', () => {
       code: 400,
       message: 'Bad Request',
       error: {
-        message: 'Invalid status'
+        message: 'Invalid status',
       },
     });
   });
@@ -52,7 +52,7 @@ describe('GET /status/:status', () => {
       code: 400,
       message: 'Bad Request',
       error: {
-        message: 'Invalid status'
+        message: 'Invalid status',
       },
     });
   });

@@ -58,7 +58,7 @@ describe('App', () => {
         message: 'Internal Server Error',
         error: {
           message: 'An unexpected error has occurred.',
-        }
+        },
       });
     });
   });
