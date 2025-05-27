@@ -39,18 +39,25 @@ app.use((_req, res) => {
 });
 
 // Error handler
-app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  log.error({ err }, 'Unhandled error occurred');
-  const isDevelopment = environment.nodeEnv === 'development';
-  const statusCode = isDevelopment
-    ? (err as any).status || HttpStatusCodes.INTERNAL_SERVER_ERROR
-    : HttpStatusCodes.INTERNAL_SERVER_ERROR;
+app.use(
+  (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
+  ) => {
+    log.error({ err }, 'Unhandled error occurred');
+    const isDevelopment = environment.nodeEnv === 'development';
+    const statusCode = isDevelopment
+      ? (err as Error & { status?: number }).status || HttpStatusCodes.INTERNAL_SERVER_ERROR
+      : HttpStatusCodes.INTERNAL_SERVER_ERROR;
 
-  res.status(statusCode).json(
-    createStatusResponse(statusCode, {
-      errorMessage: isDevelopment ? err.stack : 'An unexpected error has occurred.',
-    })
-  );
-});
+    res.status(statusCode).json(
+      createStatusResponse(statusCode, {
+        errorMessage: isDevelopment ? err.stack : 'An unexpected error has occurred.',
+      })
+    );
+  }
+);
 
 export { app };

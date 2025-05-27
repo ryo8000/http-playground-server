@@ -13,7 +13,7 @@ describe('requestRouter', () => {
   const testCookie = 'sessionId=abc123';
   const testHeaders = {
     'content-type': 'application/json',
-    'cookie': testCookie,
+    cookie: testCookie,
   };
   const testQuery = { param1: 'value1', param2: 'value2' };
   const testBody = { message: 'Hello' };
@@ -22,7 +22,8 @@ describe('requestRouter', () => {
 
   describe.each(httpMethods)('%s method', (method) => {
     it('should respond', async () => {
-      const res = await request(app)[method]('/request')
+      const res = await request(app)
+        [method]('/request')
         .set(testHeaders)
         .query(testQuery)
         .send(testBody);

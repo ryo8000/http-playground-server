@@ -33,7 +33,7 @@ describe('GET /shutdown', () => {
       code: 403,
       message: 'Forbidden',
       error: {
-        message: 'Shutdown is not enabled'
+        message: 'Shutdown is not enabled',
       },
     });
     expect(mockExit).not.toHaveBeenCalled();

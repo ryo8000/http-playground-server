@@ -8,9 +8,9 @@ type StatusResponse = {
   /** Optional error information */
   error?: {
     /** A detailed error message */
-    message: string
-  }
-}
+    message: string;
+  };
+};
 
 /**
  * Creates a status response object with the specified HTTP status code and optional details.
