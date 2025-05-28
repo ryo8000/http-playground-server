@@ -7,10 +7,10 @@ This guide covers development-specific details for contributing to the Simple Mo
 ```
 ├── src
 │   ├── app.ts               # Main application setup
-│   ├── constants.ts         # Application constants
 │   ├── env.ts               # Environment variable handler
-│   ├── middlewares          # middlewares directory
-│   ├── models               # models directory
+│   ├── logger.ts            # Application logging configuration
+│   ├── middlewares          # Middlewares directory
+│   ├── models               # Models directory
 │   ├── routes               # API routes directory
 │   ├── server.ts            # Server startup and shutdown handling
 │   └── utils                # Utility functions directory
@@ -45,6 +45,38 @@ yarn test
 ```
 
 This will execute all the test cases located in the `tests/` directory.
+
+## Linting
+
+To check for linting issues using ESLint:
+
+```bash
+yarn lint
+```
+
+To automatically fix linting issues:
+
+```bash
+yarn lint:fix
+```
+
+These commands help maintain code quality and consistency across the `src/` and `tests/` directories.
+
+## Formatting
+
+To check if the code is properly formatted with Prettier:
+
+```bash
+yarn format:check
+```
+
+To automatically format the code:
+
+```bash
+yarn format
+```
+
+These commands ensure consistent code style in the `src/` and `tests/` directories.
 
 ## Building the Application
 
