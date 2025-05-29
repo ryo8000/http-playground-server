@@ -4,16 +4,16 @@ A simple mock server built with Node.js and Express.
 
 ## API
 
-| HTTP request           | Description                                             | Notes |
-| ---------------------- | ------------------------------------------------------- | ----- |
-| /error/timeout/        | Simulates a timeout by never sending a response.        |       |
-| /error/network/        | Simulates a network error by closing the connection.    |       |
-| /error/malformed-json/ | Returns malformed JSON response.                        |       |
-| /error/error/          | Throws an intentional error for testing purposes.       |       |
-| /request/              | Returns detailed information about the incoming request |       |
-| /mirror/               | Returns the request body as a response.                 |       |
-| /shutdown/             | Triggers a shutdown of the server.                      |       |
-| /status/{status}       | Returns a response with the specified http status code. |       |
+| HTTP request           | Description                                              | Notes |
+| ---------------------- | -------------------------------------------------------- | ----- |
+| /error/timeout/        | Simulates a timeout by never sending a response.         |       |
+| /error/network/        | Simulates a network error by closing the connection.     |       |
+| /error/malformed-json/ | Returns malformed JSON response.                         |       |
+| /error/error/          | Throws an intentional error for testing purposes.        |       |
+| /request/              | Returns detailed information about the incoming request. |       |
+| /mirror/               | Returns the request body as a response.                  |       |
+| /shutdown/             | Triggers a shutdown of the server.                       |       |
+| /status/{status}       | Returns a response with the specified http status code.  |       |
 
 ### Common Query parameters
 
@@ -75,13 +75,13 @@ A simple mock server built with Node.js and Express.
 
 ## Environment Variables
 
-| Name            | Description                                                  | Required | Default Value |
-| --------------- | ------------------------------------------------------------ | -------- | ------------- |
-| ENABLE_SHUTDOWN | Enables the /shutdown endpoint                               | No       | false         |
-| LOG_LEVEL       | Sets the logging level (debug, info, warn, error)            | No       | info          |
-| NODE_ENV        | Sets the environment mode (development, production, test)    | No       | development   |
-| ORIGIN          | The value of the Access-Control-Allow-Origin response header | No       | \*            |
-| PORT            | Port number for this application                             | No       | 8000          |
+| Name            | Description                                                   | Required | Default Value |
+| --------------- | ------------------------------------------------------------- | -------- | ------------- |
+| ENABLE_SHUTDOWN | Enables the /shutdown endpoint.                               | No       | false         |
+| LOG_LEVEL       | Sets the logging level. (debug, info, warn, error)            | No       | info          |
+| NODE_ENV        | Sets the environment mode. (development, production, test)    | No       | development   |
+| ORIGIN          | The value of the Access-Control-Allow-Origin response header. | No       | \*            |
+| PORT            | Port number for this application.                             | No       | 8000          |
 
 ## Development
 
