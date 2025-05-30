@@ -3,7 +3,6 @@ import cookieParser from 'cookie-parser';
 import { corsMiddleware } from './middlewares/cors';
 import { delayMiddleware } from './middlewares/delay';
 import { loggerMiddleware } from './middlewares/logger';
-import { createStatusResponse } from './models/statusResponse';
 import { errorRouter } from './routes/error';
 import { indexRouter } from './routes/index';
 import { mirrorRouter } from './routes/mirror';
@@ -35,9 +34,11 @@ app.use('/status', statusRouter);
 
 // 404 handler
 app.use((_req, res) => {
-  res
-    .status(HttpStatusCodes.NOT_FOUND)
-    .json(createStatusResponse(HttpStatusCodes.NOT_FOUND, { errorMessage: 'Resource not found' }));
+  res.status(HttpStatusCodes.NOT_FOUND).json({
+    error: {
+      message: 'Resource not found',
+    },
+  });
 });
 
 // Error handler
@@ -54,11 +55,11 @@ app.use(
       ? (err as Error & { status?: number }).status || HttpStatusCodes.INTERNAL_SERVER_ERROR
       : HttpStatusCodes.INTERNAL_SERVER_ERROR;
 
-    res.status(statusCode).json(
-      createStatusResponse(statusCode, {
-        errorMessage: isDevelopment ? err.stack : 'An unexpected error has occurred.',
-      })
-    );
+    res.status(statusCode).json({
+      error: {
+        message: isDevelopment ? err.stack : 'An unexpected error has occurred.',
+      },
+    });
   }
 );
 

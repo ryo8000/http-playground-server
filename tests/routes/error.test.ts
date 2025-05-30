@@ -63,8 +63,6 @@ describe('errorRouter', () => {
       expect(response.status).toBe(400);
       if (method !== 'head') {
         expect(response.body).toEqual({
-          code: 400,
-          message: 'Bad Request',
           error: {
             message:
               "Invalid error type. SupportedTypes are 'timeout', 'network', 'malformed-json' and 'error'",
@@ -78,8 +76,6 @@ describe('errorRouter', () => {
       expect(response.status).toBe(400);
       if (method !== 'head') {
         expect(response.body).toEqual({
-          code: 400,
-          message: 'Bad Request',
           error: {
             message:
               "Invalid error type. SupportedTypes are 'timeout', 'network', 'malformed-json' and 'error'",

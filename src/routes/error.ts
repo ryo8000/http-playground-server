@@ -1,5 +1,4 @@
 import { Router, Response } from 'express';
-import { createStatusResponse } from '../models/statusResponse';
 import { HttpStatusCodes } from '../utils/http';
 
 const errorRouter = Router();
@@ -11,12 +10,12 @@ const errorRouter = Router();
  * @param {Response} res - Express response object
  */
 const sendInvalidTypeResponse = (res: Response) => {
-  res.status(HttpStatusCodes.BAD_REQUEST).json(
-    createStatusResponse(HttpStatusCodes.BAD_REQUEST, {
-      errorMessage:
+  res.status(HttpStatusCodes.BAD_REQUEST).json({
+    error: {
+      message:
         "Invalid error type. SupportedTypes are 'timeout', 'network', 'malformed-json' and 'error'",
-    })
-  );
+    },
+  });
 };
 
 errorRouter.all('/:type', (req, res) => {
