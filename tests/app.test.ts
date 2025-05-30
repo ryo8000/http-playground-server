@@ -42,8 +42,6 @@ describe('App', () => {
       const response = await request(app).get('/non-existent-route');
       expect(response.status).toBe(404);
       expect(response.body).toEqual({
-        code: 404,
-        message: 'Not Found',
         error: {
           message: 'Resource not found',
         },
@@ -54,8 +52,6 @@ describe('App', () => {
       const response = await request(app).get('/error/error');
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
-        code: 500,
-        message: 'Internal Server Error',
         error: {
           message: 'An unexpected error has occurred.',
         },

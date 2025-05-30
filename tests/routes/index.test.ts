@@ -13,12 +13,6 @@ describe('indexRouter', () => {
       const response = await request(app)[method]('/');
 
       expect(response.status).toBe(200);
-      if (method !== 'head') {
-        expect(response.body).toEqual({
-          code: 200,
-          message: 'OK',
-        });
-      }
     });
   });
 });

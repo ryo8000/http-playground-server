@@ -10,7 +10,6 @@ This guide covers development-specific details for contributing to the Simple Mo
 │   ├── env.ts               # Environment variable handler
 │   ├── logger.ts            # Application logging configuration
 │   ├── middlewares          # Middlewares directory
-│   ├── models               # Models directory
 │   ├── routes               # API routes directory
 │   ├── server.ts            # Server startup and shutdown handling
 │   └── utils                # Utility functions directory

@@ -30,8 +30,6 @@ describe('GET /shutdown', () => {
 
     expect(response.status).toBe(403);
     expect(response.body).toEqual({
-      code: 403,
-      message: 'Forbidden',
       error: {
         message: 'Shutdown is not enabled',
       },
@@ -46,7 +44,6 @@ describe('GET /shutdown', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      code: 200,
       message: 'Server shutting down',
     });
     expect(mockExit).toHaveBeenCalledWith(0);

@@ -28,6 +28,7 @@ redirectRouter.all('/:url', (req, res) => {
     });
     return;
   }
+
   res.redirect(redirectStatus, url);
 });
 
