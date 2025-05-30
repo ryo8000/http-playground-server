@@ -119,3 +119,5 @@ export const HttpStatusCodeMap: Record<number, string> = {
   510: 'Not Extended',
   511: 'Network Authentication Required',
 };
+
+export const RedirectStatuses: ReadonlySet<number> = new Set([301, 302, 303, 307, 308]);
