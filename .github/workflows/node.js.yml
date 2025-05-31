@@ -27,5 +27,38 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn
-    - run: yarn test
+    - name: Install dependencies
+      run: yarn
+    - name: Run unit tests
+      run: yarn test
+    - name: Build application
+      run: yarn build
+    - name: Install Newman
+      run: npm install -g newman
+    - name: Start server in background
+      run: |
+        node dist/server.js &
+        echo $! > server.pid
+        sleep 5
+    - name: Wait for server to be ready
+      run: |
+        timeout 30 bash -c 'until curl -f http://localhost:8000/; do sleep 1; done'
+    - name: Run API tests with Newman
+      run: |
+        newman run tests/api/api-test-collection.json \
+          -e tests/api/environment.json \
+          --reporters cli,json \
+          --reporter-json-export newman-results.json
+    - name: Stop server
+      run: |
+        if [ -f server.pid ]; then
+          kill $(cat server.pid) || true
+          rm server.pid
+        fi
+      if: always()
+    - name: Upload Newman results
+      uses: actions/upload-artifact@v4
+      with:
+        name: newman-results
+        path: newman-results.json
+      if: always()
