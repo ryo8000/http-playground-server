@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
-import { shutdownRouter } from '../../src/routes/shutdown';
-import { environment } from '../../src/env';
+import { shutdownRouter } from '../../../src/routes/shutdown';
+import { environment } from '../../../src/env';
 
 const app = express();
 app.use(express.json());
