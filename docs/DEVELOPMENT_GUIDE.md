@@ -37,13 +37,42 @@ This command will start the server with Nodemon, which automatically restarts it
 
 ## Running Tests
 
+### Unit Testing
+
 To run tests using Jest:
 
 ```bash
 yarn test
 ```
 
-This will execute all the test cases located in the `tests/` directory.
+This will execute all the test cases located in the `tests/ut/` directory.
+
+**CI/CD Integration:**
+- Unit tests are automatically run in GitHub Actions CI pipeline
+
+## API Testing
+
+Running API Tests Locally:
+
+1. Build and start the server:
+   ```bash
+   yarn build
+   node dist/server.js
+   ```
+
+2. In another terminal, run the API tests:
+   ```bash
+   # Install Newman if not already installed
+   npm install -g newman
+
+   # Run API tests
+   yarn test:api
+   ```
+
+**CI/CD Integration:**
+- API tests are automatically run in GitHub Actions CI pipeline
+- Tests run after unit tests and application build
+- Newman results are uploaded as artifacts for review
 
 ## Linting
 
@@ -59,7 +88,7 @@ To automatically fix linting issues:
 yarn lint:fix
 ```
 
-These commands help maintain code quality and consistency across the `src/` and `tests/` directories.
+These commands help maintain code quality and consistency across the `src/` and `tests/ut/` directories.
 
 ## Formatting
 
@@ -75,7 +104,7 @@ To automatically format the code:
 yarn format
 ```
 
-These commands ensure consistent code style in the `src/` and `tests/` directories.
+These commands ensure consistent code style in the `src/` and `tests/ut/` directories.
 
 ## Building the Application
 

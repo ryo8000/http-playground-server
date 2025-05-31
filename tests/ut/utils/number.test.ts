@@ -1,4 +1,4 @@
-import { toSafeInteger } from '../../src/utils/number';
+import { toSafeInteger } from '../../../src/utils/number';
 
 describe('toSafeInteger', () => {
   it('should return a number when given a valid integer string', () => {

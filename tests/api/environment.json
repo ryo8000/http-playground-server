@@ -1,0 +1,18 @@
+{
+  "id": "ci-environment",
+  "name": "CI Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "enabled": true
+    },
+    {
+      "key": "port",
+      "value": "8000",
+      "enabled": true
+    }
+  ],
+  "timestamp": 0,
+  "_postman_variable_scope": "environment"
+}
