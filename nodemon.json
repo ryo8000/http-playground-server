@@ -5,6 +5,9 @@
   "env": {
     "ENABLE_SHUTDOWN": true,
     "LOG_LEVEL": "debug",
-    "PORT": 8000
+    "HEADERS_TIMEOUT": 10000,
+    "KEEP_ALIVE_TIMEOUT": 5000,
+    "PORT": 8000,
+    "REQUEST_TIMEOUT": 30000
   }
 }

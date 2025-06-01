@@ -6,6 +6,10 @@ const server = app.listen(environment.port, () => {
   log.info(`Server is running on http://localhost:${environment.port}`);
 });
 
+server.headersTimeout = environment.headersTimeout;
+server.requestTimeout = environment.requestTimeout;
+server.keepAliveTimeout = environment.keepAliveTimeout;
+
 let isShuttingDown = false;
 
 process.on('SIGTERM', () => {

@@ -76,13 +76,16 @@ A simple mock server built with Node.js and Express.
 
 ## Environment Variables
 
-| Name            | Description                                                   | Required | Default Value |
-| --------------- | ------------------------------------------------------------- | -------- | ------------- |
-| ENABLE_SHUTDOWN | Enables the /shutdown endpoint.                               | No       | false         |
-| LOG_LEVEL       | Sets the logging level. (debug, info, warn, error)            | No       | info          |
-| NODE_ENV        | Sets the environment mode. (development, production, test)    | No       | development   |
-| ORIGIN          | The value of the Access-Control-Allow-Origin response header. | No       | \*            |
-| PORT            | Port number for this application.                             | No       | 8000          |
+| Name               | Description                                                   | Required | Default Value | Notes                        |
+| ------------------ | ------------------------------------------------------------- | -------- | ------------- | ---------------------------- |
+| ENABLE_SHUTDOWN    | Enables the /shutdown endpoint.                               | No       | false         |                              |
+| HEADERS_TIMEOUT    | HTTP headers timeout in milliseconds.                         | No       | 10000         | Must be > KEEP_ALIVE_TIMEOUT |
+| KEEP_ALIVE_TIMEOUT | HTTP keep-alive timeout in milliseconds.                      | No       | 5000          |                              |
+| LOG_LEVEL          | Sets the logging level. (debug, info, warn, error)            | No       | info          |                              |
+| NODE_ENV           | Sets the environment mode. (development, production, test)    | No       | development   |                              |
+| ORIGIN             | The value of the Access-Control-Allow-Origin response header. | No       | \*            |                              |
+| PORT               | Port number for this application.                             | No       | 8000          |                              |
+| REQUEST_TIMEOUT    | Request timeout in milliseconds.                              | No       | 30000         | Must be > HEADERS_TIMEOUT    |
 
 ## Development
 
