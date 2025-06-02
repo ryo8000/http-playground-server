@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:api": "newman run tests/api/api-test-collection.json -e tests/api/environment.json --reporters cli",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
