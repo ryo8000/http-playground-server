@@ -48,7 +48,7 @@ jobs:
         newman run tests/api/api-test-collection.json \
           -e tests/api/environment.json \
           --reporters cli,json \
-          --reporter-json-export newman-results.json
+          --reporter-json-export api-test-results.json
     - name: Stop server
       run: |
         if [ -f server.pid ]; then
@@ -56,9 +56,15 @@ jobs:
           rm server.pid
         fi
       if: always()
-    - name: Upload Newman results
+    - name: Upload unit tests results
       uses: actions/upload-artifact@v4
       with:
-        name: newman-results
-        path: newman-results.json
+        name: unit-test-results
+        path: coverage/
+      if: always()
+    - name: Upload API tests results
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-test-results
+        path: api-test-results.json
       if: always()
