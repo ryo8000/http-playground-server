@@ -4,16 +4,10 @@ import { errorRouter } from '../../../src/routes/error';
 
 const app = express();
 app.use('/error', errorRouter);
-app.use(
-  (
-    err: Error,
-    _req: express.Request,
-    res: express.Response,
-    _next: express.NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
-  ) => {
-    res.status(500).json({ message: err.message });
-  }
-);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  res.status(500).json({ message: err.message });
+});
 
 describe('errorRouter', () => {
   const httpMethods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;

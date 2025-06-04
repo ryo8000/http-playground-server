@@ -29,6 +29,8 @@ jobs:
         cache: 'yarn'
     - name: Install dependencies
       run: yarn
+    - name: Run linting
+      run: yarn lint
     - name: Run unit tests
       run: yarn test
     - name: Build application
