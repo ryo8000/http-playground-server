@@ -3,8 +3,8 @@ import request from 'supertest';
 import { errorRouter } from '../../../src/routes/error';
 
 const app = express();
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use('/error', errorRouter);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.status(500).json({ message: err.message });
 });
