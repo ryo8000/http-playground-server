@@ -12,7 +12,7 @@ describe('redirectRouter', () => {
 
   describe.each(httpMethods)('%s method', (method) => {
     it('should respond with 302 redirect when no status is provided', async () => {
-      const response = await request(app)[method](`/redirect/${encodeURIComponent(testUrl)}`);
+      const response = await request(app)[method]('/redirect').query({ url: testUrl });
 
       expect(response.status).toBe(302);
       expect(response.headers.location).toBe(testUrl);
@@ -23,8 +23,8 @@ describe('redirectRouter', () => {
 
       for (const status of statusCodes) {
         const response = await request(app)
-          [method](`/redirect/${encodeURIComponent(testUrl)}`)
-          .query({ status: status.toString() });
+          [method]('/redirect')
+          .query({ url: testUrl, status: status.toString() });
 
         expect(response.status).toBe(status);
         expect(response.headers.location).toBe(testUrl);
@@ -33,8 +33,8 @@ describe('redirectRouter', () => {
 
     it('should respond with 400 if status is invalid', async () => {
       const response = await request(app)
-        [method](`/redirect/${encodeURIComponent(testUrl)}`)
-        .query({ status: '300' });
+        [method]('/redirect')
+        .query({ url: testUrl, status: '300' });
 
       expect(response.status).toBe(400);
       if (method !== 'head') {
@@ -47,10 +47,17 @@ describe('redirectRouter', () => {
       }
     });
 
-    it('should respond with 404 when no url parameter provided', async () => {
+    it('should respond with 400 when no url parameter provided', async () => {
       const response = await request(app)[method]('/redirect');
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(400);
+      if (method !== 'head') {
+        expect(response.body).toEqual({
+          error: {
+            message: 'Missing `url` query parameter',
+          },
+        });
+      }
     });
   });
 });

@@ -4,8 +4,8 @@ import { toSafeInteger } from '../utils/number';
 
 const redirectRouter = Router();
 
-redirectRouter.all('/:url', (req, res) => {
-  const { url } = req.params;
+redirectRouter.all('/', (req, res) => {
+  const url = req.query['url']?.toString();
   const reqRedirectStatus = req.query['status']?.toString();
   const redirectStatus = reqRedirectStatus
     ? toSafeInteger(reqRedirectStatus)

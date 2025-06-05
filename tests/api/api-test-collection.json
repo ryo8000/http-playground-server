@@ -211,9 +211,15 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/redirect/https%3A%2F%2Fexample.com",
+          "raw": "{{baseUrl}}/redirect?url=https%3A%2F%2Fexample.com",
           "host": ["{{baseUrl}}"],
-          "path": ["redirect", "https%3A%2F%2Fexample.com"]
+          "path": ["redirect"],
+          "query": [
+            {
+              "key": "url",
+              "value": "https://example.com"
+            }
+          ]
         }
       },
       "protocolProfileBehavior": {
@@ -242,10 +248,14 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/redirect/https%3A%2F%2Fexample.com?status=301",
+          "raw": "{{baseUrl}}/redirect?url=https%3A%2F%2Fexample.com&status=301",
           "host": ["{{baseUrl}}"],
-          "path": ["redirect", "https%3A%2F%2Fexample.com"],
+          "path": ["redirect"],
           "query": [
+            {
+              "key": "url",
+              "value": "https://example.com"
+            },
             {
               "key": "status",
               "value": "301"
@@ -279,10 +289,14 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/redirect/https%3A%2F%2Fexample.com?status=400",
+          "raw": "{{baseUrl}}/redirect?url=https%3A%2F%2Fexample.com&status=400",
           "host": ["{{baseUrl}}"],
-          "path": ["redirect", "https%3A%2F%2Fexample.com"],
+          "path": ["redirect"],
           "query": [
+            {
+              "key": "url",
+              "value": "https://example.com"
+            },
             {
               "key": "status",
               "value": "400"
@@ -389,9 +403,7 @@
         {
           "listen": "prerequest",
           "script": {
-            "exec": [
-              "pm.globals.set('startTime', Date.now());"
-            ]
+            "exec": ["pm.globals.set('startTime', Date.now());"]
           }
         },
         {
