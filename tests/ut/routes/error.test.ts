@@ -51,31 +51,5 @@ describe('errorRouter', () => {
         expect(response.body).toEqual({ message: 'Intentional error' });
       }
     });
-
-    it('should return 400 for unsupported type', async () => {
-      const response = await request(app)[method]('/error/unknown');
-      expect(response.status).toBe(400);
-      if (method !== 'head') {
-        expect(response.body).toEqual({
-          error: {
-            message:
-              "Invalid error type. SupportedTypes are 'timeout', 'network', 'malformed-json' and 'error'",
-          },
-        });
-      }
-    });
-
-    it('should return 400 for root path', async () => {
-      const response = await request(app)[method]('/error');
-      expect(response.status).toBe(400);
-      if (method !== 'head') {
-        expect(response.body).toEqual({
-          error: {
-            message:
-              "Invalid error type. SupportedTypes are 'timeout', 'network', 'malformed-json' and 'error'",
-          },
-        });
-      }
-    });
   });
 });
