@@ -1,9 +1,9 @@
 {
-  "name": "simple-mock-server",
+  "name": "http-playground-server",
   "version": "0.0.1",
   "type": "module",
   "main": "dist/server.js",
-  "repository": "https://github.com/ryo8000/simple-mock-server.git",
+  "repository": "https://github.com/ryo8000/http-playground-server.git",
   "author": "Ryo Hasegawa",
   "license": "MIT",
   "scripts": {
