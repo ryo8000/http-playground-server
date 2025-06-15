@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { HttpStatusCodes } from '../utils/http';
+import { HttpStatusCodes } from '../utils/http.js';
 
 const indexRouter = Router();
 

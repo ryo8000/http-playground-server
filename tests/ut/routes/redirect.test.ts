@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { redirectRouter } from '../../../src/routes/redirect';
+import { redirectRouter } from '../../../src/routes/redirect.js';
 
 describe('redirectRouter', () => {
   const app = express();

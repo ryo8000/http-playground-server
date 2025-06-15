@@ -1,18 +1,18 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { corsMiddleware } from './middlewares/cors';
-import { delayMiddleware } from './middlewares/delay';
-import { loggerMiddleware } from './middlewares/logger';
-import { errorRouter } from './routes/error';
-import { indexRouter } from './routes/index';
-import { mirrorRouter } from './routes/mirror';
-import { redirectRouter } from './routes/redirect';
-import { requestRouter } from './routes/request';
-import { shutdownRouter } from './routes/shutdown';
-import { statusRouter } from './routes/status';
-import { HttpStatusCodes } from './utils/http';
-import { environment } from './env';
-import { log } from './logger';
+import { corsMiddleware } from './middlewares/cors.js';
+import { delayMiddleware } from './middlewares/delay.js';
+import { loggerMiddleware } from './middlewares/logger.js';
+import { errorRouter } from './routes/error.js';
+import { indexRouter } from './routes/index.js';
+import { mirrorRouter } from './routes/mirror.js';
+import { redirectRouter } from './routes/redirect.js';
+import { requestRouter } from './routes/request.js';
+import { shutdownRouter } from './routes/shutdown.js';
+import { statusRouter } from './routes/status.js';
+import { HttpStatusCodes } from './utils/http.js';
+import { environment } from './env.js';
+import { log } from './logger.js';
 
 const app = express();
 

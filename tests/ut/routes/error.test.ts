@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { errorRouter } from '../../../src/routes/error';
+import { errorRouter } from '../../../src/routes/error.js';
 
 const app = express();
 app.use('/error', errorRouter);

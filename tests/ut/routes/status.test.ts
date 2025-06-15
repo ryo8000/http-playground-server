@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { statusRouter } from '../../../src/routes/status';
+import { statusRouter } from '../../../src/routes/status.js';
 
 const app = express();
 app.use('/status', statusRouter);

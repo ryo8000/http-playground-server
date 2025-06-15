@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { mirrorRouter } from '../../../src/routes/mirror';
+import { mirrorRouter } from '../../../src/routes/mirror.js';
 
 const app = express();
 app.use(express.json());
