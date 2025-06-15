@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { toSafeInteger } from '../utils/number';
+import { toSafeInteger } from '../utils/number.js';
 
 /**
  * Middleware to add artificial delay to responses.

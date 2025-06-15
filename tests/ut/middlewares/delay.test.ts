@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { delayMiddleware } from '../../../src/middlewares/delay';
+import { delayMiddleware } from '../../../src/middlewares/delay.js';
 
 describe('delayMiddleware', () => {
   let mockRequest: Partial<Request>;

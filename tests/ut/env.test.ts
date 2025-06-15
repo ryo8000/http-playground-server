@@ -10,12 +10,12 @@ describe('Environment configuration', () => {
     process.env = originalEnv;
   });
 
-  const loadEnv = () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require('../../src/env').environment;
+  const loadEnv = async () => {
+    const envModule = await import('../../src/env.js');
+    return envModule.environment;
   };
 
-  it('should load default values when environment variables are not set', () => {
+  it('should load default values when environment variables are not set', async () => {
     delete process.env.HEADERS_TIMEOUT;
     delete process.env.REQUEST_TIMEOUT;
     delete process.env.KEEP_ALIVE_TIMEOUT;
@@ -25,7 +25,7 @@ describe('Environment configuration', () => {
     delete process.env.ORIGIN;
     delete process.env.PORT;
 
-    expect(loadEnv()).toEqual({
+    expect(await loadEnv()).toEqual({
       enableShutdown: false,
       headersTimeout: 10000,
       keepAliveTimeout: 5000,
@@ -37,25 +37,25 @@ describe('Environment configuration', () => {
     });
   });
 
-  it('should throw an error if headersTimeout <= keepAliveTimeout', () => {
+  it('should throw an error if headersTimeout <= keepAliveTimeout', async () => {
     process.env.HEADERS_TIMEOUT = '4000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
 
-    expect(() => loadEnv()).toThrow(
+    await expect(loadEnv()).rejects.toThrow(
       /headersTimeout \(4000ms\) must be greater than keepAliveTimeout \(5000ms\)/
     );
   });
 
-  it('should throw an error if requestTimeout <= headersTimeout', () => {
+  it('should throw an error if requestTimeout <= headersTimeout', async () => {
     process.env.HEADERS_TIMEOUT = '10000';
     process.env.REQUEST_TIMEOUT = '9000';
 
-    expect(() => loadEnv()).toThrow(
+    await expect(loadEnv()).rejects.toThrow(
       /requestTimeout \(9000ms\) must be greater than headersTimeout \(10000ms\)/
     );
   });
 
-  it('should correctly load values from environment variables', () => {
+  it('should correctly load values from environment variables', async () => {
     process.env.HEADERS_TIMEOUT = '11000';
     process.env.REQUEST_TIMEOUT = '40000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
@@ -65,7 +65,7 @@ describe('Environment configuration', () => {
     process.env.ORIGIN = 'https://example.com';
     process.env.PORT = '9000';
 
-    expect(loadEnv()).toEqual({
+    expect(await loadEnv()).toEqual({
       enableShutdown: true,
       headersTimeout: 11000,
       keepAliveTimeout: 5000,

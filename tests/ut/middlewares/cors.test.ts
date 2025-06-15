@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { environment } from '../../../src/env';
-import { corsMiddleware } from '../../../src/middlewares/cors';
+import { environment } from '../../../src/env.js';
+import { corsMiddleware } from '../../../src/middlewares/cors.js';
 
 describe('corsMiddleware', () => {
   let mockRequest: Partial<Request>;

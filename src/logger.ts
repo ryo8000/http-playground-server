@@ -1,5 +1,5 @@
-import pino from 'pino';
-import { environment } from './env';
+import { pino } from 'pino';
+import { environment } from './env.js';
 
 export const logger = pino(
   environment.nodeEnv === 'development'

@@ -1,6 +1,6 @@
-import { app } from './app';
-import { environment } from './env';
-import { log } from './logger';
+import { app } from './app.js';
+import { environment } from './env.js';
+import { log } from './logger.js';
 
 const server = app.listen(environment.port, () => {
   log.info(`Server is running on http://localhost:${environment.port}`);

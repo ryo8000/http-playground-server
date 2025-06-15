@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { environment } from '../env';
+import { environment } from '../env.js';
 
 /**
  * Middleware to handle CORS headers.
