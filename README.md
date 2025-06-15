@@ -1,6 +1,8 @@
-# Simple Mock Server
+# HTTP Playground Server
 
-A simple mock server built with Node.js and Express.
+A lightweight **HTTP playground server** for instantly simulating requests and responses—no complex pre-configuration needed.
+
+Built with Node.js and Express.
 
 ## API
 
@@ -36,15 +38,15 @@ A simple mock server built with Node.js and Express.
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/ryo8000/simple-mock-server.git
-   cd simple-mock-server
+   git clone https://github.com/ryo8000/http-playground-server.git
+   cd http-playground-server
    ```
 
 2. Build and run the application in a Docker container:
 
    ```bash
-   docker build -t simple-mock-server .
-   docker run -p 8000:8000 simple-mock-server
+   docker build -t http-playground-server .
+   docker run -p 8000:8000 http-playground-server
    ```
 
 ### Using Yarn
@@ -52,8 +54,8 @@ A simple mock server built with Node.js and Express.
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/ryo8000/simple-mock-server.git
-   cd simple-mock-server
+   git clone https://github.com/ryo8000/http-playground-server.git
+   cd http-playground-server
    ```
 
 2. Install dependencies using Yarn:

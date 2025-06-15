@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Simple Mock Server API Tests",
-    "description": "Comprehensive API tests for the Simple Mock Server",
+    "name": "HTTP Playground Server API Tests",
+    "description": "Comprehensive API tests for the HTTP Playground Server",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [

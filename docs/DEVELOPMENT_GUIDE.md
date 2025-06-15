@@ -1,6 +1,6 @@
-# Development Guide for Simple Mock Server
+# Development Guide for HTTP Playground Server
 
-This guide covers development-specific details for contributing to the Simple Mock Server.
+This guide covers development-specific details for contributing to the HTTP Playground Server.
 
 ## Project Structure
 
