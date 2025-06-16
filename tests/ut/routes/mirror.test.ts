@@ -30,6 +30,7 @@ describe('mirrorRouter', () => {
     it('should return an empty body', async () => {
       const response = await request(app).get('/mirror');
       expect(response.status).toBe(200);
+      expect(response.text).toBe('{}');
       expect(response.body).toEqual({});
     });
   });
