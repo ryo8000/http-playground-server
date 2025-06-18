@@ -6,17 +6,17 @@ Built with Node.js and Express.
 
 ## API
 
-| HTTP request           | Description                                               | Notes |
-| ---------------------- | --------------------------------------------------------- | ----- |
-| /error/timeout/        | Simulates a timeout by never sending a response.          |       |
-| /error/network/        | Simulates a network error by closing the connection.      |       |
-| /error/malformed-json/ | Returns malformed JSON response.                          |       |
-| /error/error/          | Throws an intentional error for testing purposes.         |       |
-| /mirror/               | Returns the request body as a response.                   |       |
-| /redirect/{url}        | Redirects to the specified URL with configurable status.  |       |
-| /request/              | Returns detailed information about the incoming request.  |       |
-| /shutdown/             | Triggers a shutdown of the server.                        |       |
-| /status/{status}       | Returns a response with the specified http status code.   |       |
+| HTTP request           | Description                                                                          | Notes |
+| ---------------------- | ------------------------------------------------------------------------------------ | ----- |
+| /error/timeout/        | Simulates a timeout by never sending a response.                                     |       |
+| /error/network/        | Simulates a network error by closing the connection.                                 |       |
+| /error/malformed-json/ | Returns malformed JSON response.                                                     |       |
+| /error/error/          | Throws an intentional error for testing purposes.                                    |       |
+| /mirror/               | Returns the request body as a response.                                              |       |
+| /redirect/             | Returns a redirect response based on the `status` and `url` of the query parameters. |       |
+| /request/              | Returns detailed information about the incoming request.                             |       |
+| /shutdown/             | Triggers a shutdown of the server.                                                   |       |
+| /status/{status}       | Returns a response with the specified http status code.                              |       |
 
 ### Common Query parameters
 
