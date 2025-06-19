@@ -4,25 +4,27 @@ A lightweight **HTTP playground server** for instantly simulating requests and r
 
 Built with Node.js and Express.
 
-## API
+## API Reference
 
-| HTTP request           | Description                                                                          | Notes |
-| ---------------------- | ------------------------------------------------------------------------------------ | ----- |
-| /error/timeout/        | Simulates a timeout by never sending a response.                                     |       |
-| /error/network/        | Simulates a network error by closing the connection.                                 |       |
-| /error/malformed-json/ | Returns malformed JSON response.                                                     |       |
-| /error/error/          | Throws an intentional error for testing purposes.                                    |       |
-| /mirror/               | Returns the request body as a response.                                              |       |
-| /redirect/             | Returns a redirect response based on the `status` and `url` of the query parameters. |       |
-| /request/              | Returns detailed information about the incoming request.                             |       |
-| /shutdown/             | Triggers a shutdown of the server.                                                   |       |
-| /status/{status}       | Returns a response with the specified http status code.                              |       |
+| Method | Path                     | Description                                                                          |
+| ------ | ------------------------ | ------------------------------------------------------------------------------------ |
+| `ALL`  | `/error/timeout/`        | Simulates a timeout by never sending a response.                                     |
+| `ALL`  | `/error/network/`        | Simulates a network error by closing the connection.                                 |
+| `ALL`  | `/error/malformed-json/` | Returns malformed JSON response.                                                     |
+| `ALL`  | `/error/error/`          | Throws an unhandled exception to trigger Express error handler.                      |
+| `ALL`  | `/mirror/`               | Returns the request body as a response.                                              |
+| `ALL`  | `/redirect/`             | Returns a redirect response based on the `status` and `url` of the query parameters. |
+| `ALL`  | `/request/`              | Return a structured JSON dump of the incoming request.                               |
+| `POST` | `/shutdown/`             | GTriggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                 |
+| `GET`  | `/status/{status}`       | Respond with arbitrary HTTP status.                                                  |
 
-### Common Query parameters
+### Query Parameters
 
-| Parameter | Type   | Description                                                 |
-| --------- | ------ | ----------------------------------------------------------- |
-| delay     | Number | Delays the response by the specified value in milliseconds. |
+| Name     | Type   | Default | Description                                                 |
+| -------- | ------ | ------- | ----------------------------------------------------------- |
+| `delay`  | Number | `0`     | Delays the response by the specified value in milliseconds. |
+| `status` | Number | —       | HTTP status code for `/redirect/` or `/status/{status}`.    |
+| `url`    | String | —       | Target URL for `/redirect/`.                                |
 
 ### Other Features
 
@@ -30,6 +32,19 @@ Built with Node.js and Express.
   - Responds to SIGTERM signals for clean shutdown.
   - Provides a 10-second timeout for graceful shutdown.
   - Logs shutdown progress and any errors.
+
+## Environment Variables
+
+| Name                 | Required | Default       | Description                                                      | Notes                          |
+| -------------------- | -------- | ------------- | ---------------------------------------------------------------- | ------------------------------ |
+| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`) |                                |
+| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`debug`, `info`, `warn`, `error`)       |                                |
+| `PORT`               | No       | `8000`        | Port number for this application.                                |                                |
+| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                         |                                |
+| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds.                            | Must be > `KEEP_ALIVE_TIMEOUT` |
+| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds.                                 | Must be > `HEADERS_TIMEOUT`    |
+| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                  |                                |
+| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.    |                                |
 
 ## Build and Run the Application
 
@@ -75,19 +90,6 @@ Built with Node.js and Express.
    ```bash
    node dist/server.js
    ```
-
-## Environment Variables
-
-| Name               | Description                                                   | Required | Default Value | Notes                        |
-| ------------------ | ------------------------------------------------------------- | -------- | ------------- | ---------------------------- |
-| ENABLE_SHUTDOWN    | Enables the /shutdown endpoint.                               | No       | false         |                              |
-| HEADERS_TIMEOUT    | HTTP headers timeout in milliseconds.                         | No       | 10000         | Must be > KEEP_ALIVE_TIMEOUT |
-| KEEP_ALIVE_TIMEOUT | HTTP keep-alive timeout in milliseconds.                      | No       | 5000          |                              |
-| LOG_LEVEL          | Sets the logging level. (debug, info, warn, error)            | No       | info          |                              |
-| NODE_ENV           | Sets the environment mode. (development, production, test)    | No       | development   |                              |
-| ORIGIN             | The value of the Access-Control-Allow-Origin response header. | No       | \*            |                              |
-| PORT               | Port number for this application.                             | No       | 8000          |                              |
-| REQUEST_TIMEOUT    | Request timeout in milliseconds.                              | No       | 30000         | Must be > HEADERS_TIMEOUT    |
 
 ## Development
 
