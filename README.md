@@ -15,8 +15,8 @@ Built with Node.js and Express.
 | `ALL`  | `/mirror/`               | Returns the request body as a response.                                              |
 | `ALL`  | `/redirect/`             | Returns a redirect response based on the `status` and `url` of the query parameters. |
 | `ALL`  | `/request/`              | Return a structured JSON dump of the incoming request.                               |
-| `POST` | `/shutdown/`             | GTriggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                 |
-| `GET`  | `/status/{status}`       | Respond with arbitrary HTTP status.                                                  |
+| `ALL`  | `/shutdown/`             | GTriggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                 |
+| `ALL`  | `/status/{status}`       | Respond with arbitrary HTTP status.                                                  |
 
 ### Query Parameters
 
