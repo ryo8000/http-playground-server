@@ -10,6 +10,7 @@ describe('toSafeInteger', () => {
   });
 
   it('should return undefined when given a non-integer string', () => {
+    expect(toSafeInteger(undefined)).toBeNaN();
     expect(toSafeInteger('abc')).toBeNaN();
     expect(toSafeInteger('2e1')).toBeNaN();
     expect(toSafeInteger('12.3')).toBeNaN();
