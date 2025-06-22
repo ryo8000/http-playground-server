@@ -13,7 +13,7 @@ export const delayMiddleware = async (
   _res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const delay = toSafeInteger(req.query['delay'] as string);
+  const delay = toSafeInteger(req.query['delay']?.toString());
   if (delay > 0) {
     await new Promise((resolve) => setTimeout(resolve, delay));
   }
