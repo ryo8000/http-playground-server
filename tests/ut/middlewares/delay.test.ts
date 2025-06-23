@@ -6,6 +6,12 @@ describe('delayMiddleware', () => {
   let mockResponse: Partial<Response>;
   let mockNext: NextFunction;
 
+  const measureExecutionTime = async (request: Partial<Request>): Promise<number> => {
+    const start = Date.now();
+    await delayMiddleware(request as Request, mockResponse as Response, mockNext);
+    return Date.now() - start;
+  };
+
   beforeEach(() => {
     mockRequest = {
       query: {},
@@ -14,26 +20,47 @@ describe('delayMiddleware', () => {
     mockNext = jest.fn();
   });
 
-  it('should delay the specified amount of time', async () => {
-    const delay = 100;
-    mockRequest.query = { delay: delay.toString() };
-    const start = Date.now();
+  describe('with valid delay values', () => {
+    it('should delay the specified amount of time', async () => {
+      const delayMs = 500;
+      mockRequest.query = { delay: delayMs.toString() };
+      const duration = await measureExecutionTime(mockRequest);
 
-    await delayMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
-    const duration = Date.now() - start;
-
-    expect(duration).toBeGreaterThanOrEqual(delay);
-    expect(mockNext).toHaveBeenCalled();
+      expect(duration).toBeGreaterThanOrEqual(delayMs);
+      expect(mockNext).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should call next() immediately when no delay is specified', async () => {
-    await delayMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
-    expect(mockNext).toHaveBeenCalled();
+  describe('with no delay specified', () => {
+    it('should call next() immediately', async () => {
+      const duration = await measureExecutionTime(mockRequest);
+
+      expect(duration).toBeLessThan(50);
+      expect(mockNext).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should ignore invalid delay values', async () => {
-    mockRequest.query = { delay: 'invalid' };
-    await delayMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
-    expect(mockNext).toHaveBeenCalled();
+  describe('with invalid delay values', () => {
+    const invalidDelayValues = [
+      { value: undefined, description: 'no delay specified' },
+      { value: 'invalid', description: 'non-numeric string' },
+      { value: '-100', description: 'negative number' },
+      { value: '0', description: 'zero' },
+      { value: '100.5', description: 'non-integer numeric string' },
+      { value: '1e2', description: 'scientific notation' },
+      { value: '', description: 'empty string' },
+      { value: ' ', description: 'whitespace only' },
+    ];
+
+    it.each(invalidDelayValues)(
+      'should ignore $description ($value) and call next() immediately',
+      async ({ value }) => {
+        mockRequest.query = { delay: value };
+        const duration = await measureExecutionTime(mockRequest);
+
+        expect(duration).toBeLessThan(50);
+        expect(mockNext).toHaveBeenCalledTimes(1);
+      }
+    );
   });
 });
