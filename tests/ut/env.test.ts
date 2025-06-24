@@ -21,6 +21,7 @@ describe('Environment configuration', () => {
     delete process.env.KEEP_ALIVE_TIMEOUT;
     delete process.env.ENABLE_SHUTDOWN;
     delete process.env.LOG_LEVEL;
+    delete process.env.MAX_DELAY;
     delete process.env.NODE_ENV;
     delete process.env.ORIGIN;
     delete process.env.PORT;
@@ -30,6 +31,7 @@ describe('Environment configuration', () => {
       headersTimeout: 10000,
       keepAliveTimeout: 5000,
       logLevel: 'info',
+      maxDelay: 10000,
       nodeEnv: 'development',
       origin: '*',
       port: 8000,
@@ -61,6 +63,7 @@ describe('Environment configuration', () => {
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
     process.env.ENABLE_SHUTDOWN = 'true';
     process.env.LOG_LEVEL = 'debug';
+    process.env.MAX_DELAY = '15000';
     process.env.NODE_ENV = 'production';
     process.env.ORIGIN = 'https://example.com';
     process.env.PORT = '9000';
@@ -70,6 +73,7 @@ describe('Environment configuration', () => {
       headersTimeout: 11000,
       keepAliveTimeout: 5000,
       logLevel: 'debug',
+      maxDelay: 15000,
       nodeEnv: 'production',
       origin: 'https://example.com',
       port: 9000,
