@@ -1,7 +1,7 @@
 {
   "watch": ["src"],
   "ext": "ts",
-  "exec": "ts-node ./src/server.ts",
+  "exec": "tsx ./src/server.ts",
   "env": {
     "ENABLE_SHUTDOWN": true,
     "LOG_LEVEL": "debug",
