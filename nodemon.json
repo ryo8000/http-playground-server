@@ -3,11 +3,13 @@
   "ext": "ts",
   "exec": "tsx ./src/server.ts",
   "env": {
-    "ENABLE_SHUTDOWN": true,
     "LOG_LEVEL": "debug",
-    "HEADERS_TIMEOUT": 10000,
     "KEEP_ALIVE_TIMEOUT": 5000,
-    "PORT": 8000,
-    "REQUEST_TIMEOUT": 30000
+    "HEADERS_TIMEOUT": 10000,
+    "REQUEST_TIMEOUT": 30000,
+    "ENABLE_SHUTDOWN": true,
+    "MAX_DELAY": 10000,
+    "ORIGIN": "*",
+    "PORT": 8000
   }
 }

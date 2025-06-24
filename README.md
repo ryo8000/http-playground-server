@@ -35,16 +35,17 @@ Built with Node.js and Express.
 
 ## Environment Variables
 
-| Name                 | Required | Default       | Description                                                      | Notes                          |
-| -------------------- | -------- | ------------- | ---------------------------------------------------------------- | ------------------------------ |
-| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`) |                                |
-| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`debug`, `info`, `warn`, `error`)       |                                |
-| `PORT`               | No       | `8000`        | Port number for this application.                                |                                |
-| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                         |                                |
-| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds.                            | Must be > `KEEP_ALIVE_TIMEOUT` |
-| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds.                                 | Must be > `HEADERS_TIMEOUT`    |
-| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                  |                                |
-| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.    |                                |
+| Name                 | Required | Default       | Description                                                          | Notes                          |
+| -------------------- | -------- | ------------- | -------------------------------------------------------------------- | ------------------------------ |
+| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`)     |                                |
+| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`debug`, `info`, `warn`, `error`)           |                                |
+| `PORT`               | No       | `8000`        | Port number for this application.                                    |                                |
+| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                             |                                |
+| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds.                                | Must be > `KEEP_ALIVE_TIMEOUT` |
+| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds.                                     | Must be > `HEADERS_TIMEOUT`    |
+| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                      |                                |
+| `MAX_DELAY`          | No       | `10000`       | Maximum delay allowed for the delay query parameter in milliseconds. |                                |
+| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.        |                                |
 
 ## Build and Run the Application
 

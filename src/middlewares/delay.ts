@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { toSafeInteger } from '../utils/number.js';
+import { environment } from '../env.js';
 
 /**
  * Middleware to add artificial delay to responses.
@@ -14,8 +15,9 @@ export const delayMiddleware = async (
   next: NextFunction
 ): Promise<void> => {
   const delay = toSafeInteger(req.query['delay']?.toString());
-  if (delay > 0) {
-    await new Promise((resolve) => setTimeout(resolve, delay));
+  const actualDelay = delay > 0 ? Math.min(delay, environment.maxDelay) : 0;
+  if (actualDelay > 0) {
+    await new Promise((resolve) => setTimeout(resolve, actualDelay));
   }
   next();
 };

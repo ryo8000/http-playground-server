@@ -19,6 +19,7 @@ export const environment = {
   headersTimeout,
   keepAliveTimeout,
   logLevel: process.env['LOG_LEVEL'] || 'info',
+  maxDelay: Number(process.env['MAX_DELAY']) || 10000,
   nodeEnv: process.env['NODE_ENV'] || 'development',
   origin: process.env['ORIGIN'] || '*',
   port: Number(process.env['PORT']) || 8000,
