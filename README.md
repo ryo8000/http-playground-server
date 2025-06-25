@@ -1,10 +1,15 @@
 # HTTP Playground Server
 
-A lightweight **HTTP playground server** for instantly simulating requests and responses—no complex pre-configuration needed.
+[![CI](https://github.com/ryo8000/http-playground-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/ryo8000/http-playground-server/actions/workflows/node.js.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Built with Node.js and Express.
+A lightweight **HTTP playground server** for instantly simulating requests and responses—no complex pre-configuration needed. Ideal for front-end, QA, or integration testing workflows.
 
-## API Reference
+Built with **Node.js** and **Express**.
+
+---
+
+## 📚 API Reference
 
 | Method | Path                     | Description                                                                          |
 | ------ | ------------------------ | ------------------------------------------------------------------------------------ |
@@ -26,14 +31,9 @@ Built with Node.js and Express.
 | `status` | Number | —       | HTTP status code for `/redirect/` or `/status/{status}`.    |
 | `url`    | String | —       | Target URL for `/redirect/`.                                |
 
-### Other Features
+---
 
-- The server implements graceful shutdown handling:
-  - Responds to SIGTERM signals for clean shutdown.
-  - Provides a 10-second timeout for graceful shutdown.
-  - Logs shutdown progress and any errors.
-
-## Environment Variables
+## ⚙️ Environment Variables
 
 | Name                 | Required | Default       | Description                                                          | Notes                          |
 | -------------------- | -------- | ------------- | -------------------------------------------------------------------- | ------------------------------ |
@@ -47,7 +47,9 @@ Built with Node.js and Express.
 | `MAX_DELAY`          | No       | `10000`       | Maximum delay allowed for the delay query parameter in milliseconds. |                                |
 | `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.        |                                |
 
-## Build and Run the Application
+---
+
+## 🚀 Build and Run the Application
 
 ### Using Docker
 
@@ -92,10 +94,14 @@ Built with Node.js and Express.
    node dist/server.js
    ```
 
-## Development
+---
+
+## 🧑‍💻 Development
 
 For developer-specific instructions, including details on testing and project structure, see the [Development Guide](./docs/DEVELOPMENT_GUIDE.md).
 
-## License
+---
 
-This project is licensed under the [MIT License](./LICENSE).
+## 📜 License
+
+Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
