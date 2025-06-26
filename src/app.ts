@@ -10,6 +10,7 @@ import { redirectRouter } from './routes/redirect.js';
 import { requestRouter } from './routes/request.js';
 import { shutdownRouter } from './routes/shutdown.js';
 import { statusRouter } from './routes/status.js';
+import { uuidRouter } from './routes/uuid.js';
 import { HttpStatusCodes } from './utils/http.js';
 import { environment } from './env.js';
 import { log } from './logger.js';
@@ -31,6 +32,7 @@ app.use('/redirect', corsMiddleware, redirectRouter);
 app.use('/request', requestRouter);
 app.use('/shutdown', shutdownRouter);
 app.use('/status', statusRouter);
+app.use('/uuid', uuidRouter);
 
 // 404 handler
 app.use((_req, res) => {

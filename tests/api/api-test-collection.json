@@ -383,6 +383,138 @@
       ]
     },
     {
+      "name": "UUID Generation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/uuid",
+          "host": ["{{baseUrl}}"],
+          "path": ["uuid"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains UUID', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('uuid');",
+              "    pm.expect(jsonData.uuid).to.be.a('string');",
+              "});",
+              "",
+              "pm.test('UUID is valid format', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;",
+              "    pm.expect(jsonData.uuid).to.match(uuidRegex);",
+              "});",
+              "",
+              "pm.test('UUID is version 4', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var parts = jsonData.uuid.split('-');",
+              "    pm.expect(parts[2][0]).to.equal('4');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "UUID Generation - Multiple Requests",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/uuid",
+          "host": ["{{baseUrl}}"],
+          "path": ["uuid"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Multiple requests generate different UUIDs', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var currentUuid = jsonData.uuid;",
+              "    ",
+              "    // Store the first UUID",
+              "    if (!pm.globals.get('firstUuid')) {",
+              "        pm.globals.set('firstUuid', currentUuid);",
+              "    } else {",
+              "        // Compare with the stored UUID",
+              "        var firstUuid = pm.globals.get('firstUuid');",
+              "        pm.expect(currentUuid).to.not.equal(firstUuid);",
+              "        pm.globals.unset('firstUuid'); // Clean up",
+              "    }",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "UUID with Delay",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/uuid?delay=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["uuid"],
+          "query": [
+            {
+              "key": "delay",
+              "value": "50"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": ["pm.globals.set('uuidStartTime', Date.now());"]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains valid UUID', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('uuid');",
+              "    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;",
+              "    pm.expect(jsonData.uuid).to.match(uuidRegex);",
+              "});",
+              "",
+              "pm.test('Response was delayed', function () {",
+              "    var startTime = pm.globals.get('uuidStartTime');",
+              "    var endTime = Date.now();",
+              "    var duration = endTime - startTime;",
+              "    pm.expect(duration).to.be.at.least(50);",
+              "    pm.globals.unset('uuidStartTime'); // Clean up",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Delay Middleware Test",
       "request": {
         "method": "GET",

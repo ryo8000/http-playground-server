@@ -22,6 +22,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/request/`              | Return a structured JSON dump of the incoming request.                               |
 | `ALL`  | `/shutdown/`             | GTriggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                 |
 | `ALL`  | `/status/{status}`       | Respond with arbitrary HTTP status.                                                  |
+| `ALL`  | `/uuid/`                 | Generate and return a random UUID (version 4).                                       |
 
 ### Query Parameters
 
