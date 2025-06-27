@@ -27,6 +27,12 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(
+  cors({
+    origin: environment.origin,
+    allowedHeaders: ['Content-Type'],
+  })
+);
 app.use(cookieParser());
 app.use(loggerMiddleware);
 app.use(delayMiddleware);
