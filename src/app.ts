@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { corsMiddleware } from './middlewares/cors.js';
+import cors from 'cors';
 import { delayMiddleware } from './middlewares/delay.js';
 import { loggerMiddleware } from './middlewares/logger.js';
 import { errorRouter } from './routes/error.js';
@@ -20,15 +20,27 @@ const app = express();
 // Disable X-Powered-By header
 app.disable('x-powered-by');
 
+app.use(
+  cors({
+    origin: environment.origin,
+    allowedHeaders: ['Content-Type'],
+  })
+);
 app.use(express.json());
+app.use(
+  cors({
+    origin: environment.origin,
+    allowedHeaders: ['Content-Type'],
+  })
+);
 app.use(cookieParser());
 app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
 app.use('/', indexRouter);
-app.use('/error', corsMiddleware, errorRouter);
-app.use('/mirror', corsMiddleware, mirrorRouter);
-app.use('/redirect', corsMiddleware, redirectRouter);
+app.use('/error', errorRouter);
+app.use('/mirror', mirrorRouter);
+app.use('/redirect', redirectRouter);
 app.use('/request', requestRouter);
 app.use('/shutdown', shutdownRouter);
 app.use('/status', statusRouter);
