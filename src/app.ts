@@ -20,12 +20,6 @@ const app = express();
 // Disable X-Powered-By header
 app.disable('x-powered-by');
 
-app.use(
-  cors({
-    origin: environment.origin,
-    allowedHeaders: ['Content-Type'],
-  })
-);
 app.use(express.json());
 app.use(
   cors({
