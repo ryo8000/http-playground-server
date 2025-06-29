@@ -13,6 +13,8 @@ Built with **Node.js** and **Express**.
 
 | Method | Path                     | Description                                                                          |
 | ------ | ------------------------ | ------------------------------------------------------------------------------------ |
+| `ALL`  | `/base64/encode`         | Encodes a string value to Base64 format.                                             |
+| `ALL`  | `/base64/decode`         | Decodes a Base64 string to its original format.                                      |
 | `ALL`  | `/error/timeout/`        | Simulates a timeout by never sending a response.                                     |
 | `ALL`  | `/error/network/`        | Simulates a network error by closing the connection.                                 |
 | `ALL`  | `/error/malformed-json/` | Returns malformed JSON response.                                                     |
