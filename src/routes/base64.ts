@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { HttpStatusCodes } from '../utils/http.js';
+import { log } from '../logger.js';
 
 const base64Router = Router();
 
@@ -13,14 +14,12 @@ function extractValueFromBody(body: unknown): string | null {
     return body;
   }
   if (
-    body &&
     typeof body === 'object' &&
+    body !== null &&
     'value' in body &&
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    typeof (body as any).value === 'string'
+    typeof (body as { value: unknown }).value === 'string'
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (body as any).value;
+    return (body as { value: string }).value;
   }
   return null;
 }
@@ -40,7 +39,8 @@ base64Router.all('/encode', (req, res) => {
   try {
     const encoded = Buffer.from(valueToEncode, 'utf8').toString('base64');
     res.status(HttpStatusCodes.OK).json({ encoded });
-  } catch {
+  } catch (error) {
+    log.error(error, 'Failed to encode value to Base64');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: {
         message: 'Failed to encode value to Base64',
@@ -74,7 +74,8 @@ base64Router.all('/decode', (req, res) => {
 
     const decoded = decodedBuffer.toString('utf8');
     res.status(HttpStatusCodes.OK).json({ decoded });
-  } catch {
+  } catch (error) {
+    log.error(error, 'An unexpected error occurred during decoding.');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: { message: 'An unexpected error occurred during decoding.' },
     });
