@@ -34,6 +34,183 @@
       ]
     },
     {
+      "name": "Base64 Encode",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"value\": \"Hello, World!\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/base64/encode",
+          "host": ["{{baseUrl}}"],
+          "path": ["base64", "encode"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains encoded value', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('encoded');",
+              "    pm.expect(jsonData.encoded).to.be.a('string');",
+              "});",
+              "",
+              "pm.test('Encoded value is correct Base64', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.encoded).to.equal('SGVsbG8sIFdvcmxkIQ==');",
+              "});",
+              "",
+              "pm.test('Encoded value is valid Base64 format', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;",
+              "    pm.expect(jsonData.encoded).to.match(base64Regex);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base64 Decode",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"value\": \"SGVsbG8sIFdvcmxkIQ==\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/base64/decode",
+          "host": ["{{baseUrl}}"],
+          "path": ["base64", "decode"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains decoded value', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('decoded');",
+              "    pm.expect(jsonData.decoded).to.be.a('string');",
+              "});",
+              "",
+              "pm.test('Decoded value is correct', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.decoded).to.equal('Hello, World!');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base64 Encode - Plain Text",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "Test plain text encoding"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/base64/encode",
+          "host": ["{{baseUrl}}"],
+          "path": ["base64", "encode"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response contains encoded value', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('encoded');",
+              "});",
+              "",
+              "pm.test('Can decode back to original', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var decoded = atob(jsonData.encoded);",
+              "    pm.expect(decoded).to.equal('Test plain text encoding');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base64 Decode - Invalid Format",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"value\": \"invalid-base64!\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/base64/decode",
+          "host": ["{{baseUrl}}"],
+          "path": ["base64", "decode"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message is correct', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('error');",
+              "    pm.expect(jsonData.error.message).to.equal('Invalid Base64 format');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Mirror Route",
       "request": {
         "method": "POST",
