@@ -21,8 +21,8 @@ const app = express();
 // Disable X-Powered-By header
 app.disable('x-powered-by');
 
-app.use(express.json());
 app.use(express.text());
+app.use(express.json());
 app.use(
   cors({
     origin: environment.origin,

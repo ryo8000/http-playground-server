@@ -9,10 +9,11 @@ const base64Router = Router();
  * @param body - Express request body
  * @returns The extracted string value or null if invalid
  */
-function extractValueFromBody(body: unknown): string | null {
+const extractValueFromBody = (body: unknown): string | null => {
   if (typeof body === 'string') {
     return body;
   }
+
   if (
     typeof body === 'object' &&
     body !== null &&
@@ -21,8 +22,9 @@ function extractValueFromBody(body: unknown): string | null {
   ) {
     return (body as { value: string }).value;
   }
+
   return null;
-}
+};
 
 base64Router.all('/encode', (req, res) => {
   const valueToEncode = extractValueFromBody(req.body);
@@ -39,7 +41,7 @@ base64Router.all('/encode', (req, res) => {
   try {
     const encoded = Buffer.from(valueToEncode, 'utf8').toString('base64');
     res.status(HttpStatusCodes.OK).json({ encoded });
-  } catch (error) {
+  } catch (error: unknown) {
     log.error(error, 'Failed to encode value to Base64');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: {
@@ -74,7 +76,7 @@ base64Router.all('/decode', (req, res) => {
 
     const decoded = decodedBuffer.toString('utf8');
     res.status(HttpStatusCodes.OK).json({ decoded });
-  } catch (error) {
+  } catch (error: unknown) {
     log.error(error, 'An unexpected error occurred during decoding.');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: { message: 'An unexpected error occurred during decoding.' },
