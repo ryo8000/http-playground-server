@@ -4,32 +4,15 @@ import { log } from '../logger.js';
 
 const base64Router = Router();
 
-/**
- * Extracts value from request body, handling different content types
- * @param body - Express request body
- * @returns The extracted string value or null if invalid
- */
-const extractValueFromBody = (body: unknown): string | null => {
-  if (typeof body === 'string') {
-    return body;
-  }
-
-  if (
-    typeof body === 'object' &&
-    body !== null &&
-    'value' in body &&
-    typeof (body as { value: unknown }).value === 'string'
-  ) {
-    return (body as { value: string }).value;
-  }
-
-  return null;
-};
-
 base64Router.all('/encode', (req, res) => {
-  const valueToEncode = extractValueFromBody(req.body);
+  let valueToEncode: string;
 
-  if (valueToEncode === null) {
+  // Handle different content types
+  if (typeof req.body === 'string') {
+    valueToEncode = req.body;
+  } else if (req.body && typeof req.body.value === 'string') {
+    valueToEncode = req.body.value;
+  } else {
     res.status(HttpStatusCodes.BAD_REQUEST).json({
       error: {
         message: "Missing 'value' in request body or invalid format",
@@ -42,19 +25,24 @@ base64Router.all('/encode', (req, res) => {
     const encoded = Buffer.from(valueToEncode, 'utf8').toString('base64');
     res.status(HttpStatusCodes.OK).json({ encoded });
   } catch (error: unknown) {
-    log.error(error, 'Failed to encode value to Base64');
+    log.error(error, 'An unexpected error occurred during encoding.');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: {
-        message: 'Failed to encode value to Base64',
+        message: 'An unexpected error occurred during encoding.',
       },
     });
   }
 });
 
 base64Router.all('/decode', (req, res) => {
-  const valueToDecode = extractValueFromBody(req.body);
+  let valueToDecode: string;
 
-  if (valueToDecode === null) {
+  // Handle different content types
+  if (typeof req.body === 'string') {
+    valueToDecode = req.body;
+  } else if (req.body && typeof req.body.value === 'string') {
+    valueToDecode = req.body.value;
+  } else {
     res.status(HttpStatusCodes.BAD_REQUEST).json({
       error: {
         message: "Missing 'value' in request body or invalid format",
