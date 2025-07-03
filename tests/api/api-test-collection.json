@@ -211,6 +211,140 @@
       ]
     },
     {
+      "name": "Basic Auth - Successful Authentication",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic dGVzdHVzZXI6dGVzdHBhc3M="
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/basic-auth?user=testuser&password=testpass",
+          "host": ["{{baseUrl}}"],
+          "path": ["basic-auth"],
+          "query": [
+            {
+              "key": "user",
+              "value": "testuser"
+            },
+            {
+              "key": "password",
+              "value": "testpass"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Authentication is successful', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('authenticated', true);",
+              "    pm.expect(jsonData).to.have.property('user', 'testuser');",
+              "    pm.expect(jsonData).to.have.property('password', 'testpass');",
+              "    pm.expect(jsonData).to.have.property('message', 'Authentication successful');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Basic Auth - Failed Authentication",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic d3JvbmdUZXN0Ondyb25nUGFzcw=="
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/basic-auth?user=expected&password=expected",
+          "host": ["{{baseUrl}}"],
+          "path": ["basic-auth"],
+          "query": [
+            {
+              "key": "user",
+              "value": "expected"
+            },
+            {
+              "key": "password",
+              "value": "expected"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 401', function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "",
+              "pm.test('Authentication failed response', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('authenticated', false);",
+              "    pm.expect(jsonData).to.have.property('message', 'Authentication failed');",
+              "    pm.expect(jsonData).to.have.property('user', 'wrongTest');",
+              "    pm.expect(jsonData).to.have.property('password', 'wrongPass');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Basic Auth - Empty Parameters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/basic-auth?user=&password=",
+          "host": ["{{baseUrl}}"],
+          "path": ["basic-auth"],
+          "query": [
+            {
+              "key": "user",
+              "value": ""
+            },
+            {
+              "key": "password",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Empty parameter error', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('error');",
+              "    pm.expect(jsonData.error).to.have.property('message', 'Missing user or password query parameter');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Mirror Route",
       "request": {
         "method": "POST",
