@@ -1,6 +1,6 @@
 # HTTP Playground Server
 
-[![CI](https://github.com/ryo8000/http-playground-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/ryo8000/http-playground-server/actions/workflows/node.js.yml)
+[![CI](https://github.com/ryo8000/http-playground-server/actions/workflows/ci.yml/badge.svg)](https://github.com/ryo8000/http-playground-server/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A lightweight **HTTP playground server** for instantly simulating requests and responses—no complex pre-configuration needed. Ideal for front-end, QA, or integration testing workflows.
