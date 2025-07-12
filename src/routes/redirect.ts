@@ -8,7 +8,7 @@ redirectRouter.all('/', (req, res) => {
   const url = req.query['url']?.toString();
   const reqRedirectStatus = req.query['status']?.toString();
   const redirectStatus = reqRedirectStatus
-    ? toSafeInteger(reqRedirectStatus)
+    ? (toSafeInteger(reqRedirectStatus) ?? HttpStatusCodes.FOUND)
     : HttpStatusCodes.FOUND;
 
   if (!url) {
