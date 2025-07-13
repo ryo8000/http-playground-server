@@ -62,10 +62,6 @@ Running API Tests Locally:
 
 2. In another terminal, run the API tests:
    ```bash
-   # Install Newman if not already installed
-   npm install -g newman
-
-   # Run API tests
    yarn test:api
    ```
 
