@@ -2,26 +2,26 @@ const integerPattern = /^-?[0-9]+$/;
 
 /**
  * Converts a string to a safe integer if the string represents a valid integer within the safe range.
- * Returns `NaN` if the input is not a valid integer, exceeds the safe integer range, or is undefined.
+ * Returns `undefined` if the input is not a valid integer, exceeds the safe integer range, or is undefined.
  *
  * @param {string | undefined} value - The string to convert to a safe integer, or undefined.
- * @returns {number} The converted safe integer, or `NaN` if the input is invalid or undefined.
+ * @returns {number | undefined} The converted safe integer, or `undefined` if the input is invalid or undefined.
  *
  * @example
  * toSafeInteger('9007199254740991'); // returns 9007199254740991
- * toSafeInteger('9007199254740992'); // returns NaN (out of safe range)
- * toSafeInteger('2e1'); // returns NaN (not a number)
- * toSafeInteger(undefined); // returns NaN
+ * toSafeInteger('9007199254740992'); // returns undefined (out of safe range)
+ * toSafeInteger('2e1'); // returns undefined (not a number)
+ * toSafeInteger(undefined); // returns undefined
  */
-export const toSafeInteger = (value: string | undefined): number => {
+export const toSafeInteger = (value: string | undefined): number | undefined => {
   if (value === undefined || !integerPattern.test(value)) {
-    return NaN;
+    return undefined;
   }
 
   const integer = parseInt(value, 10);
 
   if (!Number.isSafeInteger(integer) || integer.toString() !== value) {
-    return NaN;
+    return undefined;
   }
 
   return integer;

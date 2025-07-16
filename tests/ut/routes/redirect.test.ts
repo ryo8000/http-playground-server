@@ -32,18 +32,20 @@ describe('redirectRouter', () => {
     });
 
     it('should respond with 400 if status is invalid', async () => {
-      const response = await request(app)
-        [method]('/redirect')
-        .query({ url: testUrl, status: '300' });
+      const statusCodes = ['300', '2e1'];
 
-      expect(response.status).toBe(400);
-      if (method !== 'head') {
-        expect(response.body).toEqual({
-          error: {
-            message:
-              'Invalid redirect status code. Supported statuses are 301, 302, 303, 307 and 308',
-          },
-        });
+      for (const status of statusCodes) {
+        const response = await request(app)[method]('/redirect').query({ url: testUrl, status });
+
+        expect(response.status).toBe(400);
+        if (method !== 'head') {
+          expect(response.body).toEqual({
+            error: {
+              message:
+                'Invalid redirect status code. Supported statuses are 301, 302, 303, 307 and 308',
+            },
+          });
+        }
       }
     });
 
