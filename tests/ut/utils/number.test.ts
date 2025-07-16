@@ -10,20 +10,20 @@ describe('toSafeInteger', () => {
   });
 
   it('should return undefined when given a non-integer string', () => {
-    expect(toSafeInteger(undefined)).toBeNaN();
-    expect(toSafeInteger('abc')).toBeNaN();
-    expect(toSafeInteger('2e1')).toBeNaN();
-    expect(toSafeInteger('12.3')).toBeNaN();
-    expect(toSafeInteger(' 123 ')).toBeNaN();
-    expect(toSafeInteger('0123')).toBeNaN();
-    expect(toSafeInteger('')).toBeNaN();
-    expect(toSafeInteger(' ')).toBeNaN();
-    expect(toSafeInteger('12345678901234567')).toBeNaN();
-    expect(toSafeInteger('-12345678901234567')).toBeNaN();
+    expect(toSafeInteger(undefined)).toBeUndefined();
+    expect(toSafeInteger('abc')).toBeUndefined();
+    expect(toSafeInteger('2e1')).toBeUndefined();
+    expect(toSafeInteger('12.3')).toBeUndefined();
+    expect(toSafeInteger(' 123 ')).toBeUndefined();
+    expect(toSafeInteger('0123')).toBeUndefined();
+    expect(toSafeInteger('')).toBeUndefined();
+    expect(toSafeInteger(' ')).toBeUndefined();
+    expect(toSafeInteger('12345678901234567')).toBeUndefined();
+    expect(toSafeInteger('-12345678901234567')).toBeUndefined();
   });
 
   it('should return undefined when given an unsafe integer string', () => {
-    expect(toSafeInteger((Number.MAX_SAFE_INTEGER + 1).toString())).toBeNaN();
-    expect(toSafeInteger((Number.MIN_SAFE_INTEGER - 1).toString())).toBeNaN();
+    expect(toSafeInteger((Number.MAX_SAFE_INTEGER + 1).toString())).toBeUndefined();
+    expect(toSafeInteger((Number.MIN_SAFE_INTEGER - 1).toString())).toBeUndefined();
   });
 });

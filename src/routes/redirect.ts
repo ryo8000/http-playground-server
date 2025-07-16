@@ -20,7 +20,7 @@ redirectRouter.all('/', (req, res) => {
     return;
   }
 
-  if (!RedirectStatuses.has(redirectStatus)) {
+  if (redirectStatus === undefined || !RedirectStatuses.has(redirectStatus)) {
     res.status(HttpStatusCodes.BAD_REQUEST).json({
       error: {
         message: 'Invalid redirect status code. Supported statuses are 301, 302, 303, 307 and 308',
