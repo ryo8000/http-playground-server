@@ -42,7 +42,7 @@ basicAuthRouter.all('/', (req, res) => {
     return;
   }
 
-  const base64Credentials = authHeader.split(' ')[1]!;
+  const base64Credentials = authHeader.substring('Basic '.length);
   const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
   const [providedUser, ...passwordParts] = credentials.split(':');
   const providedPassword = passwordParts.join(':');
