@@ -14,8 +14,8 @@ export const delayMiddleware = async (
   _res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const delay = toSafeInteger(req.query['delay']?.toString());
-  const actualDelay = delay !== undefined && delay > 0 ? Math.min(delay, environment.maxDelay) : 0;
+  const delay = toSafeInteger(req.query['delay']?.toString()) ?? 0;
+  const actualDelay = Math.min(delay, environment.maxDelay);
   if (actualDelay > 0) {
     await new Promise((resolve) => setTimeout(resolve, actualDelay));
   }
