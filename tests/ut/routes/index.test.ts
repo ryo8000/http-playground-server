@@ -9,7 +9,7 @@ describe('indexRouter', () => {
   const httpMethods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
 
   describe.each(httpMethods)('%s method', (method) => {
-    it(`should respond with 200 and expected JSON body`, async () => {
+    it('should respond with 200 and expected JSON body', async () => {
       const response = await request(app)[method]('/');
 
       expect(response.status).toBe(200);
