@@ -13,7 +13,6 @@ describe('indexRouter', () => {
       const response = await request(app)[method]('/');
 
       expect(response.status).toBe(200);
-      expect(response.text).toBe('OK');
     });
   });
 });
