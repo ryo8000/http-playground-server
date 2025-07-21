@@ -97,7 +97,6 @@ Thumbs.db
 .gitignore
 
 # Docker
-Dockerfile*
 docker-compose*
 .dockerignore
 
@@ -108,10 +107,6 @@ docs/
 
 # Tests
 tests/
-*.test.js
-*.test.ts
-*.spec.js
-*.spec.ts
 
 # CI/CD
 .github/
@@ -123,7 +118,6 @@ tests/
 nodemon.json
 jest.config.js
 eslint.config.mjs
-# tsconfig.json
 
 # Scripts
 *.sh
