@@ -6,8 +6,9 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# Copy application source code and compile TypeScript
-COPY . .
+# Copy source code and build
+COPY tsconfig.json ./
+COPY src ./src
 RUN yarn build
 
 FROM node:22.15.0-slim AS production
@@ -18,8 +19,8 @@ WORKDIR /app
 # Copy compiled files from build stage
 COPY --from=build /app/dist ./dist
 
-# Install production dependencies
+# Install only production dependencies
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 
 CMD ["node", "dist/server.js"]
