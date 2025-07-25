@@ -14,6 +14,11 @@ RUN yarn build
 FROM node:22.15.0-slim AS production
 ENV NODE_ENV=production
 
+# Create non-root user for security
+RUN addgroup --system nodejs && \
+    adduser --system --ingroup nodejs nodejs
+USER nodejs
+
 WORKDIR /app
 
 # Copy compiled files from build stage
