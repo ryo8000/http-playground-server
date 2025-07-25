@@ -7,8 +7,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # Copy source code and build
-COPY tsconfig.json ./
-COPY src ./src
+COPY . .
 RUN yarn build
 
 FROM node:22.15.0-slim AS production
