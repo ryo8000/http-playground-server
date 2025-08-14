@@ -1,4 +1,4 @@
-import { pino } from 'pino';
+import pino from 'pino';
 import { environment } from './env.js';
 
 const logger = pino(
