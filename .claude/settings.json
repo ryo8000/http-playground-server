@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "ask": [],
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(node dist/server.js)",
+      "Bash(yarn install:*)",
+      "Bash(yarn dev)",
+      "Bash(yarn build)",
+      "Bash(yarn test)",
+      "Bash(yarn test:*)",
+      "Bash(yarn lint)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn format)",
+      "Bash(yarn format:*)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+      "Bash(rm -rf /*)",
+      "Bash(sudo:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}
