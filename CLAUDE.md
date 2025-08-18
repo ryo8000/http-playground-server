@@ -1,3 +1,4 @@
+<!-- NOTE: This file should be kept in sync with .github/copilot-instructions.md -->
 # CLAUDE Instructions for http-playground-server
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -55,7 +56,7 @@ Simulate HTTP requests/responses for front-end, QA, and integration testing. No 
   - `LOG_LEVEL`: Logging verbosity (debug, info, warn, error)
   - `MAX_DELAY`: Maximum delay allowed for delay parameter (default 10000ms)
   - `NODE_ENV`: Environment mode affecting error handling and logging
-  - `ORIGIN`: CORS origin header value (default: *)
+  - `ORIGIN`: CORS origin header value (default: `*`)
   - `PORT`: Server port (default 8000)
   - `KEEP_ALIVE_TIMEOUT`, `HEADERS_TIMEOUT`, `REQUEST_TIMEOUT`: HTTP timeout configurations
 
