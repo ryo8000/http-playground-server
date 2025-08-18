@@ -4,6 +4,7 @@ import request from 'supertest';
 describe('shutdownRouter', () => {
   let app: express.Express;
   let mockExit: jest.SpyInstance;
+  let mockGracefulShutdown: jest.SpyInstance;
 
   const createApp = async (): Promise<express.Express> => {
     const app = express();
@@ -15,6 +16,10 @@ describe('shutdownRouter', () => {
       environment: {
         enableShutdown: mockEnableShutdown,
       },
+    }));
+
+    jest.doMock('../../../src/utils/shutdown.js', () => ({
+      gracefulShutdown: mockGracefulShutdown,
     }));
 
     const { shutdownRouter } = await import('../../../src/routes/shutdown.js');
@@ -29,10 +34,12 @@ describe('shutdownRouter', () => {
     mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {
       throw new Error('process.exit called');
     });
+    mockGracefulShutdown = jest.fn();
   });
 
   afterEach(() => {
     mockExit.mockRestore();
+    jest.clearAllMocks();
   });
 
   const httpMethods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
@@ -54,7 +61,7 @@ describe('shutdownRouter', () => {
             },
           });
         }
-        expect(mockExit).not.toHaveBeenCalled();
+        expect(mockGracefulShutdown).not.toHaveBeenCalled();
       });
     });
 
@@ -64,7 +71,7 @@ describe('shutdownRouter', () => {
         app = await createApp();
       });
 
-      it('should return 200 OK and call process.exit', async () => {
+      it('should return 200 OK and call gracefulShutdown', async () => {
         const response = await request(app)[method]('/shutdown');
         expect(response.status).toBe(200);
         if (method !== 'head') {
@@ -72,7 +79,7 @@ describe('shutdownRouter', () => {
             message: 'Server shutting down',
           });
         }
-        expect(mockExit).toHaveBeenCalledWith(0);
+        expect(mockGracefulShutdown).toHaveBeenCalledWith();
       });
     });
   });
