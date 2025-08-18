@@ -5,6 +5,14 @@ let isShuttingDown = false;
 let serverInstance: Server | null = null;
 
 /**
+ * Reset the shutdown state (for testing purposes)
+ */
+export function resetShutdownState(): void {
+  isShuttingDown = false;
+  serverInstance = null;
+}
+
+/**
  * Set the server instance for shutdown operations
  */
 export function setServerInstance(server: Server): void {
@@ -16,7 +24,7 @@ export function setServerInstance(server: Server): void {
  */
 export function gracefulShutdown(server?: Server): void {
   const targetServer = server || serverInstance;
-  
+
   if (!targetServer) {
     log.error('No server instance available for shutdown');
     process.exit(1);
