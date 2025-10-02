@@ -15,7 +15,7 @@ This guide covers development-specific details for contributing to the HTTP Play
 │   └── utils                # Utility functions directory
 ├── tests
 │   ├── api                  # API tests directory
-│   └── ut                   # Jest tests directory
+│   └── ut                   # Unit tests directory
 └── Dockerfile               # Docker configuration
 ```
 
