@@ -13,7 +13,9 @@ This guide covers development-specific details for contributing to the HTTP Play
 │   ├── routes               # API routes directory
 │   ├── server.ts            # Server startup and shutdown handling
 │   └── utils                # Utility functions directory
-├── tests                    # Jest tests directory
+├── tests
+│   ├── api                  # API tests directory
+│   └── ut                   # Jest tests directory
 └── Dockerfile               # Docker configuration
 ```
 
