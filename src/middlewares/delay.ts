@@ -12,7 +12,7 @@ import { environment } from '../env.js';
 export const delayMiddleware = async (
   req: Request,
   _res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   const delay = toSafeInteger(req.query['delay']?.toString()) ?? 0;
   const actualDelay = Math.min(delay, environment.maxDelay);

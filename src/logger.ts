@@ -16,7 +16,7 @@ const logger = pino(
       }
     : {
         level: environment.logLevel,
-      }
+      },
 );
 
 export const log = {

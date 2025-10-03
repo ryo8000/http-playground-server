@@ -28,7 +28,7 @@ app.use(
   cors({
     origin: environment.origin,
     allowedHeaders: ['Authorization', 'Content-Type'],
-  })
+  }),
 );
 app.use(cookieParser());
 app.use(loggerMiddleware);

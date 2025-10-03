@@ -4,13 +4,13 @@ const keepAliveTimeout = Number(process.env['KEEP_ALIVE_TIMEOUT']) || 5000;
 
 if (headersTimeout <= keepAliveTimeout) {
   throw new Error(
-    `Invalid timeout configuration: headersTimeout (${headersTimeout}ms) must be greater than keepAliveTimeout (${keepAliveTimeout}ms)`
+    `Invalid timeout configuration: headersTimeout (${headersTimeout}ms) must be greater than keepAliveTimeout (${keepAliveTimeout}ms)`,
   );
 }
 
 if (requestTimeout <= headersTimeout) {
   throw new Error(
-    `Invalid timeout configuration: requestTimeout (${requestTimeout}ms) must be greater than headersTimeout (${headersTimeout}ms)`
+    `Invalid timeout configuration: requestTimeout (${requestTimeout}ms) must be greater than headersTimeout (${headersTimeout}ms)`,
   );
 }
 

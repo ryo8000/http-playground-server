@@ -18,7 +18,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
       headers: req.headers,
       body: req.method === 'GET' || req.body === undefined ? {} : req.body,
     },
-    'Incoming request'
+    'Incoming request',
   );
 
   // Store the original res.json method
@@ -33,7 +33,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
         headers: res.getHeaders(),
         body,
       },
-      'Outgoing response'
+      'Outgoing response',
     );
 
     // Call the original res.json method

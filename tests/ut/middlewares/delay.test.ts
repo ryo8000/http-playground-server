@@ -55,7 +55,7 @@ describe('delayMiddleware', () => {
         expect(duration).toBeLessThan(environment.maxDelay + 50);
         expect(mockNext).toHaveBeenCalledTimes(1);
       },
-      environment.maxDelay + 500
+      environment.maxDelay + 500,
     );
   });
 
@@ -87,7 +87,7 @@ describe('delayMiddleware', () => {
 
         expectNoDelay(duration);
         expect(mockNext).toHaveBeenCalledTimes(1);
-      }
+      },
     );
   });
 });

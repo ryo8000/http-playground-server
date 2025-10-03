@@ -44,7 +44,7 @@ describe('Environment configuration', () => {
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
 
     await expect(loadEnv()).rejects.toThrow(
-      /headersTimeout \(4000ms\) must be greater than keepAliveTimeout \(5000ms\)/
+      /headersTimeout \(4000ms\) must be greater than keepAliveTimeout \(5000ms\)/,
     );
   });
 
@@ -53,7 +53,7 @@ describe('Environment configuration', () => {
     process.env.REQUEST_TIMEOUT = '9000';
 
     await expect(loadEnv()).rejects.toThrow(
-      /requestTimeout \(9000ms\) must be greater than headersTimeout \(10000ms\)/
+      /requestTimeout \(9000ms\) must be greater than headersTimeout \(10000ms\)/,
     );
   });
 
