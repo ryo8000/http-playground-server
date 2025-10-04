@@ -40,7 +40,7 @@ describe('basicAuthRouter', () => {
         const credentials = 'complex-P@ssw0rd!123';
         const response = await request(app)
           [method](
-            `/basic-auth?user=${encodeURIComponent(credentials)}&password=${encodeURIComponent(credentials)}`
+            `/basic-auth?user=${encodeURIComponent(credentials)}&password=${encodeURIComponent(credentials)}`,
           )
           .auth(credentials, credentials);
 
@@ -57,7 +57,7 @@ describe('basicAuthRouter', () => {
         const credentials = 'test@example.com';
         const response = await request(app)
           [method](
-            `/basic-auth?user=${encodeURIComponent(credentials)}&password=${encodeURIComponent(credentials)}`
+            `/basic-auth?user=${encodeURIComponent(credentials)}&password=${encodeURIComponent(credentials)}`,
           )
           .auth(credentials, credentials);
 
@@ -289,7 +289,7 @@ describe('basicAuthRouter', () => {
       const password = 'user+with spaces@domain.com';
       const response = await request(app)
         .get(
-          `/basic-auth?user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`
+          `/basic-auth?user=${encodeURIComponent(user)}&password=${encodeURIComponent(password)}`,
         )
         .auth(user, password);
 

@@ -14,7 +14,7 @@ describe('toSafeInteger', () => {
       'should return the expected integer for $value',
       ({ value, expected }) => {
         expect(toSafeInteger(value)).toBe(expected);
-      }
+      },
     );
   });
 

@@ -45,7 +45,7 @@ describe('LoggerMiddleware', () => {
         headers: { 'content-type': 'application/json' },
         body: { data: 'test' },
       },
-      'Incoming request'
+      'Incoming request',
     );
 
     const responseBody = { result: 'success' };
@@ -59,7 +59,7 @@ describe('LoggerMiddleware', () => {
         headers: { 'content-type': 'application/json' },
         body: responseBody,
       },
-      'Outgoing response'
+      'Outgoing response',
     );
 
     expect(mockNext).toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('LoggerMiddleware', () => {
       expect.objectContaining({
         body: {},
       }),
-      'Incoming request'
+      'Incoming request',
     );
   });
 
@@ -87,7 +87,7 @@ describe('LoggerMiddleware', () => {
       expect.objectContaining({
         body: {},
       }),
-      'Incoming request'
+      'Incoming request',
     );
   });
 });
