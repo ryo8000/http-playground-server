@@ -42,7 +42,7 @@
     "ts-jest": "29.4.4",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.45.0"
+    "typescript-eslint": "8.46.1"
   },
   "resolutions": {
     "jose": "4.15.5"
