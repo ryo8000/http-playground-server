@@ -23,7 +23,7 @@
     "pino": "10.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "9.37.0",
+    "@eslint/js": "9.38.0",
     "@types/cookie-parser": "1.4.9",
     "@types/cors": "2.8.19",
     "@types/express": "5.0.3",
