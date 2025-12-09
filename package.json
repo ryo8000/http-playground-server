@@ -19,14 +19,14 @@
   "dependencies": {
     "cookie-parser": "1.4.7",
     "cors": "2.8.5",
-    "express": "5.2.0",
+    "express": "5.2.1",
     "pino": "10.1.0"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",
     "@types/cookie-parser": "1.4.10",
     "@types/cors": "2.8.19",
-    "@types/express": "5.0.5",
+    "@types/express": "5.0.6",
     "@types/jest": "30.0.0",
     "@types/node": "24.10.1",
     "@types/supertest": "6.0.3",
