@@ -32,10 +32,10 @@ Built with **Node.js** and **Express**.
 | Name       | Type   | Default | Description                                                 |
 | ---------- | ------ | ------- | ----------------------------------------------------------- |
 | `delay`    | Number | `0`     | Delays the response by the specified value in milliseconds. |
-| `status`   | Number | —       | HTTP status code for `/redirect/` or `/status/{status}`.    |
-| `url`      | String | —       | Target URL for `/redirect/`.                                |
-| `user`     | String | —       | Expected username for `/basic-auth/` (required).            |
-| `password` | String | —       | Expected password for `/basic-auth/` (required).            |
+| `status`   | Number | —       | HTTP status code for `/redirect` or `/status/{status}`.     |
+| `url`      | String | —       | Target URL for `/redirect`.                                 |
+| `user`     | String | —       | Expected username for `/basic-auth` (required).             |
+| `password` | String | —       | Expected password for `/basic-auth` (required).             |
 
 ---
 
