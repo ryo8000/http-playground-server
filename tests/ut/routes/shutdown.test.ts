@@ -4,6 +4,7 @@ import request from 'supertest';
 describe('shutdownRouter', () => {
   let app: express.Express;
   let mockExit: jest.SpyInstance;
+  let mockTriggerShutdown: jest.SpyInstance;
 
   const createApp = async (): Promise<express.Express> => {
     const app = express();
@@ -17,6 +18,11 @@ describe('shutdownRouter', () => {
       },
     }));
 
+    // Mock the triggerShutdown function
+    jest.doMock('../../../src/utils/shutdown.js', () => ({
+      triggerShutdown: mockTriggerShutdown,
+    }));
+
     const { shutdownRouter } = await import('../../../src/routes/shutdown.js');
     app.use('/shutdown', shutdownRouter);
 
@@ -26,13 +32,18 @@ describe('shutdownRouter', () => {
   let mockEnableShutdown: boolean;
 
   beforeEach(() => {
+    // Mock process.exit for fallback scenarios
     mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {
       throw new Error('process.exit called');
     });
+
+    // Mock triggerShutdown
+    mockTriggerShutdown = jest.fn();
   });
 
   afterEach(() => {
     mockExit.mockRestore();
+    mockTriggerShutdown.mockRestore();
   });
 
   const httpMethods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
@@ -54,6 +65,7 @@ describe('shutdownRouter', () => {
             },
           });
         }
+        expect(mockTriggerShutdown).not.toHaveBeenCalled();
         expect(mockExit).not.toHaveBeenCalled();
       });
     });
@@ -64,7 +76,7 @@ describe('shutdownRouter', () => {
         app = await createApp();
       });
 
-      it('should return 200 OK and call process.exit', async () => {
+      it('should return 200 OK and trigger shutdown', async () => {
         const response = await request(app)[method]('/shutdown');
         expect(response.status).toBe(200);
         if (method !== 'head') {
@@ -72,7 +84,7 @@ describe('shutdownRouter', () => {
             message: 'Server shutting down',
           });
         }
-        expect(mockExit).toHaveBeenCalledWith(0);
+        expect(mockTriggerShutdown).toHaveBeenCalledWith('Manual shutdown');
       });
     });
   });
