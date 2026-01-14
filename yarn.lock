@@ -1800,7 +1800,7 @@ cookie-signature@1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==
 
-cookie-signature@^1.2.1:
+cookie-signature@^1.2.1, cookie-signature@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.2.2.tgz#57c7fc3cc293acab9fec54d73e15690ebe4a1793"
   integrity sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==
@@ -4382,7 +4382,7 @@ strip-json-comments@^5.0.2:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-5.0.3.tgz#b7304249dd402ee67fd518ada993ab3593458bcf"
   integrity sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==
 
-superagent@^10.2.3:
+superagent@^10.3.0:
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-10.3.0.tgz#ff1e39e7976b63f8084291d65f5bfbbbbd156989"
   integrity sha512-B+4Ik7ROgVKrQsXTV0Jwp2u+PXYLSlqtDAhYnkkD+zn3yg8s/zjA2MeGayPoY/KICrbitwneDHrjSotxKL+0XQ==
@@ -4397,13 +4397,14 @@ superagent@^10.2.3:
     mime "2.6.0"
     qs "^6.14.1"
 
-supertest@7.1.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/supertest/-/supertest-7.1.4.tgz#3175e2539f517ca72fdc7992ffff35b94aca7d34"
-  integrity sha512-tjLPs7dVyqgItVFirHYqe2T+MfWc2VOBQ8QFKKbWTA3PU7liZR8zoSpAi/C1k1ilm9RsXIKYf197oap9wXGVYg==
+supertest@7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/supertest/-/supertest-7.2.2.tgz#dac3ee25a2aa59942a7f641e50c838a7c8819204"
+  integrity sha512-oK8WG9diS3DlhdUkcFn4tkNIiIbBx9lI2ClF8K+b2/m8Eyv47LSawxUzZQSNKUrVb2KsqeTDCcjAAVPYaSLVTA==
   dependencies:
+    cookie-signature "^1.2.2"
     methods "^1.1.2"
-    superagent "^10.2.3"
+    superagent "^10.3.0"
 
 supports-color@^5.5.0:
   version "5.5.0"
