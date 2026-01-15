@@ -41,7 +41,7 @@ base64Router.all('/encode', (req, res) => {
   try {
     const encoded = Buffer.from(valueToEncode, 'utf8').toString('base64');
     res.status(HttpStatusCodes.OK).json({ encoded });
-  } catch (error: unknown) {
+  } catch (error) {
     log.error(error, 'Failed to encode value to Base64');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: {
@@ -76,7 +76,7 @@ base64Router.all('/decode', (req, res) => {
 
     const decoded = decodedBuffer.toString('utf8');
     res.status(HttpStatusCodes.OK).json({ decoded });
-  } catch (error: unknown) {
+  } catch (error) {
     log.error(error, 'An unexpected error occurred during decoding.');
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
       error: { message: 'An unexpected error occurred during decoding.' },
