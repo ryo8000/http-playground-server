@@ -19,37 +19,19 @@ describe('statusRouter', () => {
       expect(response.status).toBe(599);
     });
 
-    it('should return 400 and corresponding message for out-of-range status code', async () => {
-      const response1 = await request(app)[method]('/status/199');
-      expect(response1.status).toBe(400);
-      if (method !== 'head') {
-        expect(response1.body).toEqual({
-          error: {
-            message: 'Invalid status',
-          },
-        });
-      }
-      const response2 = await request(app)[method]('/status/600');
-      expect(response2.status).toBe(400);
-      if (method !== 'head') {
-        expect(response2.body).toEqual({
-          error: {
-            message: 'Invalid status',
-          },
-        });
-      }
-    });
-
-    it('should return 400 and corresponding message for non-numeric status code', async () => {
-      const response = await request(app)[method]('/status/2e1');
-      expect(response.status).toBe(400);
-      if (method !== 'head') {
-        expect(response.body).toEqual({
-          error: {
-            message: 'Invalid status',
-          },
-        });
-      }
-    });
+    it.each(['199', '600', '2e1', 'abc', '1.2'])(
+      'should return 400 for invalid status code %s',
+      async (statusCode) => {
+        const response = await request(app)[method](`/status/${statusCode}`);
+        expect(response.status).toBe(400);
+        if (method !== 'head') {
+          expect(response.body).toEqual({
+            error: {
+              message: 'Invalid status',
+            },
+          });
+        }
+      },
+    );
   });
 });
