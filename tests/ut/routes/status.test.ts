@@ -33,7 +33,7 @@ describe('statusRouter', () => {
         if (method !== 'head') {
           expect(response.body).toEqual({
             error: {
-              message: 'Invalid status',
+              message: 'Invalid status code. Must be an integer between 200 and 599.',
             },
           });
         }
