@@ -6,6 +6,7 @@ describe('toSafeInteger', () => {
       { value: '123', expected: 123 },
       { value: '-456', expected: -456 },
       { value: '0', expected: 0 },
+      { value: '-0', expected: 0 },
       { value: Number.MAX_SAFE_INTEGER.toString(), expected: 9007199254740991 },
       { value: Number.MIN_SAFE_INTEGER.toString(), expected: -9007199254740991 },
     ] as const;
