@@ -1,6 +1,7 @@
 import { app } from './app.js';
 import { environment } from './env.js';
 import { log } from './logger.js';
+import { setGlobalShutdownHandler } from './utils/shutdown.js';
 
 const server = app.listen(environment.port, () => {
   log.info(`Server is running on http://localhost:${environment.port}`);
@@ -12,14 +13,15 @@ server.keepAliveTimeout = environment.keepAliveTimeout;
 
 let isShuttingDown = false;
 
-process.on('SIGTERM', () => {
+// Create a shutdown handler that uses the logger
+const shutdownHandler = (reason = 'shutdown') => {
   if (isShuttingDown) {
     log.warn('Shutdown already in progress...');
     return;
   }
   isShuttingDown = true;
 
-  log.info('SIGTERM signal received: closing HTTP server');
+  log.info(`${reason} signal received: closing HTTP server`);
 
   const forceExitTimeout = setTimeout(() => {
     log.error('Server close timed out, forcing exit');
@@ -37,4 +39,11 @@ process.on('SIGTERM', () => {
     log.info('HTTP server closed');
     process.exit(0);
   });
+};
+
+// Set the global shutdown handler so routes can use it
+setGlobalShutdownHandler(shutdownHandler);
+
+process.on('SIGTERM', () => {
+  shutdownHandler('SIGTERM');
 });
