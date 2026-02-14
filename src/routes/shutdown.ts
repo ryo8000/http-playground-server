@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { environment } from '../env.js';
 import { HttpStatusCodes } from '../utils/http.js';
+import { gracefulShutdown } from '../utils/shutdown.js';
 
 const shutdownRouter = Router();
 
@@ -15,7 +16,7 @@ shutdownRouter.all('/', (_req, res) => {
   }
 
   res.json({ message: 'Server shutting down' });
-  process.exit(0);
+  gracefulShutdown();
 });
 
 export { shutdownRouter };
