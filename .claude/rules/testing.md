@@ -13,7 +13,7 @@
 ## Requirements
 - **Always update tests** when changing any logic. Do not leave tests that test the old behavior.
 - New public functions must have corresponding unit tests.
-- After any code change, run `yarn test` and ensure all tests pass before finishing.
+- After any code change, run all relevant tests (e.g., `yarn test`, `yarn test:api`) and ensure they pass before finishing.
 
 ## Coverage
 - Tests should cover normal cases, edge cases, and error scenarios for each endpoint or function.
