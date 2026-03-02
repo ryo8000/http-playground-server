@@ -60,26 +60,12 @@ Simulate HTTP requests/responses for front-end, QA, and integration testing. No 
   - `PORT`: Server port (default 8000)
   - `KEEP_ALIVE_TIMEOUT`, `HEADERS_TIMEOUT`, `REQUEST_TIMEOUT`: HTTP timeout configurations
 
-### Testing Strategy
-- Supertest for HTTP endpoint testing
-- Unit tests in `tests/ut/` mirror the `src/` structure
-- API tests use Newman with Postman collections in `tests/api/`
-
 ### CI/CD Pipeline
 - **GitHub Actions**: Two workflows configured in `.github/workflows/`
   - `ci.yml`: Runs tests on PRs to main branch (lint, unit tests, build, API tests with Newman)
   - `docker-publish.yml`: Builds and pushes Docker images to GitHub Container Registry (GHCR) on main branch pushes
 
 ## Important Notes
-- When you are asked to modify the code, follow these steps in order:
-  1. **Understand the Goal**: First, fully understand the requested change or new feature.
-  2. **Implement Code Changes**: Modify the application code to meet the requirements.
-  3. **Update Related Tests**: If you changed any logic, **you MUST update the corresponding test code** to ensure it correctly tests the new behavior.
-  4. **Verify Your Work**: After all changes, run the following commands to ensure the code is clean and all tests pass.
-      - `yarn format` (to apply Prettier)
-      - `yarn lint:fix` (to fix for ESLint errors)
-      - `yarn test` (to run all tests)
-  5.**Finalize**: Confirm that all steps are complete and all checks have passed before finishing your task.
 - NEVER create files unless they're absolutely necessary for achieving your goal.
 - ALWAYS prefer editing an existing file to creating a new one.
 - **DRY (Don't Repeat Yourself)**: Create reusable utilities to avoid code duplication.
