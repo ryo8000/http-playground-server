@@ -9,10 +9,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `yarn build` - Compile TypeScript to JavaScript in `dist/`
 - `node dist/server.js` - Run the compiled application
 
-**Testing**:
-- `yarn test` - Run unit tests with Jest and generate coverage report
-- `yarn test:api` - Run API integration tests with Newman (requires server running)
-
 **Code Quality**:
 - `yarn lint` - Check code with ESLint
 - `yarn lint:fix` - Fix auto-fixable ESLint issues

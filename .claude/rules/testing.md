@@ -1,3 +1,9 @@
+---
+paths:
+  - "src/**/*.ts"
+  - "tests/**/*.ts"
+---
+
 # Testing Rules
 
 ## Structure
@@ -11,9 +17,7 @@
 - Run API tests with `yarn test:api` (requires the server to be running, e.g., with `yarn dev`).
 
 ## Requirements
-- **Always update tests** when changing any logic. Do not leave tests that test the old behavior.
 - New public functions must have corresponding unit tests.
-- After any code change, run all relevant tests (e.g., `yarn test`, `yarn test:api`) and ensure they pass before finishing.
 
 ## Coverage
 - Tests should cover normal cases, edge cases, and error scenarios for each endpoint or function.

@@ -1,3 +1,9 @@
+---
+paths:
+  - "src/**/*.ts"
+  - "tests/**/*.ts"
+---
+
 # Code Modification Workflow
 
 When asked to modify or add code, follow these steps in order:
