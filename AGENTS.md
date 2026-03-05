@@ -60,8 +60,3 @@ Simulate HTTP requests/responses for front-end, QA, and integration testing. No 
   - `ci.yml`: Runs tests on PRs to main branch (lint, unit tests, build, API tests with Newman)
   - `docker-publish.yml`: Builds and pushes Docker images to GitHub Container Registry (GHCR) on main branch pushes
 
-## Important Notes
-- NEVER create files unless they're absolutely necessary for achieving your goal.
-- ALWAYS prefer editing an existing file to creating a new one.
-- **DRY (Don't Repeat Yourself)**: Create reusable utilities to avoid code duplication.
-- Write **JSDoc** comments for all public functions, classes, and complex logic, explaining purpose, parameters, and return values.
