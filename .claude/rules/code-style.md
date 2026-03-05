@@ -6,8 +6,7 @@ paths:
 # Code Style Rules
 
 ## File Management
-- **NEVER create files** unless absolutely necessary to achieve the goal.
-- **ALWAYS prefer editing** an existing file over creating a new one.
+- **Prefer editing over creating:** Always favor modifying existing files. Only create new files when absolutely necessary.
 
 ## DRY (Don't Repeat Yourself)
 - Extract shared logic into reusable utilities rather than duplicating code across files.
