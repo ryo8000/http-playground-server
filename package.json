@@ -2,12 +2,14 @@
   "name": "http-playground-server",
   "version": "0.0.1",
   "type": "module",
-  "main": "dist/server.js",
+  "main": "dist/adapters/express/index.js",
   "repository": "https://github.com/ryo8000/http-playground-server.git",
   "author": "Ryo Hasegawa",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "build:lambda:function": "yarn build && cp package.json dist/ && zip -r lambda-function.zip dist/",
+    "build:lambda:layer": "mkdir -p lambda-layer/nodejs && cp -r node_modules lambda-layer/nodejs && cd lambda-layer && zip -r ../lambda-layer.zip . && cd .. && rm -rf lambda-layer",
     "dev": "nodemon",
     "test": "jest --coverage",
     "test:api": "newman run tests/api/api-test-collection.json -e tests/api/environment.json --reporters cli",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@types/aws-lambda": "8.10.149",
     "@types/cookie-parser": "1.4.10",
     "@types/cors": "2.8.19",
     "@types/express": "5.0.6",

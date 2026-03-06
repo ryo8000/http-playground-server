@@ -27,4 +27,4 @@ COPY --from=build /app/dist ./dist
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production && yarn cache clean
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/adapters/express/index.js"]

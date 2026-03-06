@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { HttpStatusCodes } from '../utils/http.js';
+import { HttpStatusCodes } from '../../utils/http.js';
 import { log } from '../logger.js';
 
 const base64Router = Router();

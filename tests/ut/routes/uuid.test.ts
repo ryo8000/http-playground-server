@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { uuidRouter } from '../../../src/routes/uuid.js';
+import { uuidRouter } from '../../../src/core/routes/uuid.js';
 
 const app = express();
 app.use('/uuid', uuidRouter);

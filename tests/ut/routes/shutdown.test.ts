@@ -11,13 +11,13 @@ describe('shutdownRouter', () => {
 
     jest.resetModules();
 
-    jest.doMock('../../../src/env.js', () => ({
+    jest.doMock('../../../src/core/env.js', () => ({
       environment: {
         enableShutdown: mockEnableShutdown,
       },
     }));
 
-    const { shutdownRouter } = await import('../../../src/routes/shutdown.js');
+    const { shutdownRouter } = await import('../../../src/core/routes/shutdown.js');
     app.use('/shutdown', shutdownRouter);
 
     return app;
