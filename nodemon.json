@@ -1,7 +1,7 @@
 {
   "watch": ["src"],
   "ext": "ts",
-  "exec": "tsx ./src/server.ts",
+  "exec": "tsx ./src/adapters/express/index.ts",
   "env": {
     "LOG_LEVEL": "debug",
     "KEEP_ALIVE_TIMEOUT": 5000,

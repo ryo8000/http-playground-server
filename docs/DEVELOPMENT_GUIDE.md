@@ -6,12 +6,17 @@ This guide covers development-specific details for contributing to the HTTP Play
 
 ```
 ├── src
-│   ├── app.ts               # Main application setup
-│   ├── env.ts               # Environment variable handler
-│   ├── logger.ts            # Application logging configuration
-│   ├── middlewares          # Middlewares directory
-│   ├── routes               # API routes directory
-│   ├── server.ts            # Server startup and shutdown handling
+│   ├── adapters             # Runtime-specific entry points
+│   │   ├── express          # Express/Docker adapter
+│   │   │   ├── app.ts       # Express application setup
+│   │   │   └── index.ts     # Server startup and shutdown handling
+│   │   └── lambda           # AWS Lambda adapter
+│   │       └── index.ts     # Lambda handler (API Gateway HTTP API v2)
+│   ├── core                 # Shared business logic
+│   │   ├── env.ts           # Environment variable handler
+│   │   ├── logger.ts        # Application logging configuration
+│   │   ├── middlewares      # Middlewares directory
+│   │   └── routes           # API routes directory
 │   └── utils                # Utility functions directory
 ├── tests
 │   ├── api                  # API tests directory
@@ -59,7 +64,7 @@ Running API Tests Locally:
 1. Build and start the server:
    ```bash
    yarn build
-   node dist/server.js
+   node dist/adapters/express/index.js
    ```
 
 2. In another terminal, run the API tests:

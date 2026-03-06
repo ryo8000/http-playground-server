@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { environment } from '../env.js';
-import { HttpStatusCodes } from '../utils/http.js';
+import { HttpStatusCodes } from '../../utils/http.js';
 
 const shutdownRouter = Router();
 

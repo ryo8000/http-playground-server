@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { HttpStatusCodes } from '../utils/http.js';
+import { HttpStatusCodes } from '../../utils/http.js';
 
 const basicAuthRouter = Router();
 
