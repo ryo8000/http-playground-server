@@ -28,7 +28,7 @@
     "@types/cors": "2.8.19",
     "@types/express": "5.0.6",
     "@types/jest": "30.0.0",
-    "@types/node": "25.3.3",
+    "@types/node": "25.3.5",
     "@types/supertest": "7.2.0",
     "eslint": "10.0.2",
     "eslint-config-prettier": "10.1.8",
