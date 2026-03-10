@@ -1,6 +1,20 @@
-const headersTimeout = Number(process.env['HEADERS_TIMEOUT']) || 10000;
-const requestTimeout = Number(process.env['REQUEST_TIMEOUT']) || 30000;
-const keepAliveTimeout = Number(process.env['KEEP_ALIVE_TIMEOUT']) || 5000;
+import { toSafeInteger } from './utils/number.js';
+
+const parseEnvInteger = (envVar: string, defaultValue: number): number => {
+  const value = process.env[envVar];
+  if (value === undefined) {
+    return defaultValue;
+  }
+  const parsed = toSafeInteger(value);
+  if (parsed === undefined) {
+    throw new Error(`Invalid ${envVar} environment variable: "${value}" is not a valid integer`);
+  }
+  return parsed;
+};
+
+const headersTimeout = parseEnvInteger('HEADERS_TIMEOUT', 10000);
+const requestTimeout = parseEnvInteger('REQUEST_TIMEOUT', 30000);
+const keepAliveTimeout = parseEnvInteger('KEEP_ALIVE_TIMEOUT', 5000);
 
 if (headersTimeout <= keepAliveTimeout) {
   throw new Error(
@@ -19,9 +33,9 @@ export const environment = {
   headersTimeout,
   keepAliveTimeout,
   logLevel: process.env['LOG_LEVEL'] || 'info',
-  maxDelay: Number(process.env['MAX_DELAY']) || 10000,
+  maxDelay: parseEnvInteger('MAX_DELAY', 10000),
   nodeEnv: process.env['NODE_ENV'] || 'development',
   origin: process.env['ORIGIN'] || '*',
-  port: Number(process.env['PORT']) || 8000,
+  port: parseEnvInteger('PORT', 8000),
   requestTimeout,
 };
