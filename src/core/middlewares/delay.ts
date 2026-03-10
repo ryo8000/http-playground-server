@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { toSafeInteger } from '../utils/number.js';
+import { toSafeInteger } from '../../utils/number.js';
 import { environment } from '../env.js';
 
 /**

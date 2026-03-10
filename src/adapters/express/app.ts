@@ -1,21 +1,21 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { delayMiddleware } from './middlewares/delay.js';
-import { loggerMiddleware } from './middlewares/logger.js';
-import { base64Router } from './routes/base64.js';
-import { basicAuthRouter } from './routes/basic-auth.js';
-import { errorRouter } from './routes/error.js';
-import { indexRouter } from './routes/index.js';
-import { mirrorRouter } from './routes/mirror.js';
-import { redirectRouter } from './routes/redirect.js';
-import { requestRouter } from './routes/request.js';
-import { shutdownRouter } from './routes/shutdown.js';
-import { statusRouter } from './routes/status.js';
-import { uuidRouter } from './routes/uuid.js';
-import { HttpStatusCodes } from './utils/http.js';
-import { environment } from './env.js';
-import { log } from './logger.js';
+import { delayMiddleware } from '../../core/middlewares/delay.js';
+import { loggerMiddleware } from '../../core/middlewares/logger.js';
+import { base64Router } from '../../core/routes/base64.js';
+import { basicAuthRouter } from '../../core/routes/basic-auth.js';
+import { errorRouter } from '../../core/routes/error.js';
+import { indexRouter } from '../../core/routes/index.js';
+import { mirrorRouter } from '../../core/routes/mirror.js';
+import { redirectRouter } from '../../core/routes/redirect.js';
+import { requestRouter } from '../../core/routes/request.js';
+import { shutdownRouter } from '../../core/routes/shutdown.js';
+import { statusRouter } from '../../core/routes/status.js';
+import { uuidRouter } from '../../core/routes/uuid.js';
+import { HttpStatusCodes } from '../../utils/http.js';
+import { environment } from '../../core/env.js';
+import { log } from '../../core/logger.js';
 
 const app = express();
 

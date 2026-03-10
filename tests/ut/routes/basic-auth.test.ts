@@ -8,7 +8,7 @@ describe('basicAuthRouter', () => {
     const app = express();
     app.use(express.json());
 
-    const { basicAuthRouter } = await import('../../../src/routes/basic-auth.js');
+    const { basicAuthRouter } = await import('../../../src/core/routes/basic-auth.js');
     app.use('/basic-auth', basicAuthRouter);
 
     return app;
