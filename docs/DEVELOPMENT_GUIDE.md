@@ -14,7 +14,7 @@ This guide covers development-specific details for contributing to the HTTP Play
 │   ├── server.ts            # Server startup and shutdown handling
 │   └── utils                # Utility functions directory
 ├── tests
-│   ├── api                  # API tests directory
+│   ├── e2e                  # E2E tests directory
 │   └── ut                   # Unit tests directory
 └── Dockerfile               # Docker configuration
 ```
@@ -52,9 +52,9 @@ This will execute all the test cases located in the `tests/ut/` directory.
 **CI/CD Integration:**
 - Unit tests are automatically run in GitHub Actions CI pipeline
 
-## API Testing
+## E2E Testing
 
-Running API Tests Locally:
+Running E2E Tests Locally:
 
 1. Build and start the server:
    ```bash
@@ -62,13 +62,13 @@ Running API Tests Locally:
    node dist/server.js
    ```
 
-2. In another terminal, run the API tests:
+2. In another terminal, run the E2E tests:
    ```bash
-   yarn test:api
+   yarn test:e2e
    ```
 
 **CI/CD Integration:**
-- API tests are automatically run in GitHub Actions CI pipeline
+- E2E tests are automatically run in GitHub Actions CI pipeline
 - Tests run after unit tests and application build
 - Newman results are uploaded as artifacts for review
 

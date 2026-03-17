@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "nodemon",
     "test": "jest --coverage",
-    "test:api": "newman run tests/api/api-test-collection.json -e tests/api/environment.json --reporters cli",
+    "test:e2e": "newman run tests/e2e/e2e-test-collection -e tests/e2e/environment.json --reporters cli",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "format": "prettier --write src tests",
