@@ -57,6 +57,5 @@ Simulate HTTP requests/responses for front-end, QA, and integration testing. No 
 
 ### CI/CD Pipeline
 - **GitHub Actions**: Two workflows configured in `.github/workflows/`
-  - `ci.yml`: Runs tests on PRs to main branch (lint, unit tests, build, API tests with Newman)
+  - `ci.yml`: Runs tests on PRs to main branch (lint, unit tests, build, E2E tests with Newman)
   - `docker-publish.yml`: Builds and pushes Docker images to GitHub Container Registry (GHCR) on main branch pushes
-
