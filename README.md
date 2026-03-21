@@ -17,7 +17,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                              |
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
-| `ALL`  | `/error/network`        | Simulates a network error by closing the connection.                                                         |
+| `ALL`  | `/error/network`        | Simulates a network error by closing the connection. Returns `400` in Lambda (socket destroy is unsupported). |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
@@ -97,7 +97,7 @@ Built with **Node.js** and **Express**.
 4. Run the application:
 
    ```bash
-   node dist/server.js
+   node dist/adapters/express/index.js
    ```
 
 ---

@@ -37,7 +37,7 @@ jobs:
       run: yarn build
     - name: Start server in background
       run: |
-        node dist/server.js &
+        node dist/adapters/express/index.js &
         echo $! > server.pid
     - name: Wait for server to be ready
       run: |

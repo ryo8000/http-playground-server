@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Development**:
 - `yarn dev` - Start development server with hot reload using nodemon
 - `yarn build` - Compile TypeScript to JavaScript in `dist/`
-- `node dist/server.js` - Run the compiled application
+- `node dist/adapters/express/index.js` - Run the compiled application
 
 **Code Quality**:
 - `yarn lint` - Check code with ESLint

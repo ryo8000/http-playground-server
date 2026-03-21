@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { HttpStatusCodes, RedirectStatuses } from '../utils/http.js';
-import { toSafeInteger } from '../utils/number.js';
+import { HttpStatusCodes, RedirectStatuses } from '../../utils/http.js';
+import { toSafeInteger } from '../../utils/number.js';
 
 const redirectRouter = Router();
 

@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { loggerMiddleware } from '../../../src/middlewares/logger.js';
-import { log } from '../../../src/logger.js';
+import { loggerMiddleware } from '../../../src/core/middlewares/logger.js';
+import { log } from '../../../src/core/logger.js';
 
-jest.mock('../../../src/logger.js', () => ({
+jest.mock('../../../src/core/logger.js', () => ({
   log: {
     debug: jest.fn(),
   },

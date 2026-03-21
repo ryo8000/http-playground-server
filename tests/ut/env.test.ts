@@ -11,7 +11,7 @@ describe('Environment configuration', () => {
   });
 
   const loadEnv = async () => {
-    const envModule = await import('../../src/env.js');
+    const envModule = await import('../../src/core/env.js');
     return envModule.environment;
   };
 

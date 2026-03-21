@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/app.js';
+import { app } from '../../../src/adapters/express/app.js';
 
 describe('Base64 Encoding/Decoding', () => {
   describe('POST /base64/encode', () => {

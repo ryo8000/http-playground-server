@@ -3,7 +3,7 @@
     "ask": [],
     "allow": [
       "Bash(git add:*)",
-      "Bash(node dist/server.js)",
+      "Bash(node dist/adapters/express/index.js)",
       "Bash(yarn install:*)",
       "Bash(yarn dev)",
       "Bash(yarn build)",

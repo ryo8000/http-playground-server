@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import { errorRouter } from '../../../src/routes/error.js';
+import { errorRouter } from '../../../src/core/routes/error.js';
 
 const app = express();
 app.use('/error', errorRouter);
@@ -14,10 +14,33 @@ describe('errorRouter', () => {
   describe.each(httpMethods)('%s method', (method) => {
     // Network disconnection and timeout are difficult to test in unit tests, so we do minimal verification
     it('should cause connection reset for "network" type', async () => {
-      const response = await request(app)
-        [method]('/error/network')
-        .catch((err) => err);
-      expect(response.message).toMatch(/socket hang up|ECONNRESET/);
+      const prevRuntime = process.env['RUNTIME'];
+      delete process.env['RUNTIME'];
+      try {
+        const response = await request(app)
+          [method]('/error/network')
+          .catch((err) => err);
+        expect(response.message).toMatch(/socket hang up|ECONNRESET/);
+      } finally {
+        if (prevRuntime !== undefined) {
+          process.env['RUNTIME'] = prevRuntime;
+        }
+      }
+    });
+
+    it('should return 500 for "network" type in lambda runtime', async () => {
+      process.env['RUNTIME'] = 'lambda';
+      try {
+        const response = await request(app)[method]('/error/network');
+        expect(response.status).toBe(500);
+        if (method !== 'head') {
+          expect(response.body).toEqual({
+            error: { message: 'Network error simulation is not supported in this environment.' },
+          });
+        }
+      } finally {
+        delete process.env['RUNTIME'];
+      }
     });
 
     it('should timeout for "timeout" type', async () => {

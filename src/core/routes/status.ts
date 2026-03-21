@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { HttpStatusCodes } from '../utils/http.js';
-import { toSafeInteger } from '../utils/number.js';
+import { HttpStatusCodes } from '../../utils/http.js';
+import { toSafeInteger } from '../../utils/number.js';
 
 const MIN_VALID_STATUS_CODE = 200;
 const MAX_VALID_STATUS_CODE = 599;

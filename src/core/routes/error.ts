@@ -7,7 +7,15 @@ errorRouter.all('/timeout', () => {
   return;
 });
 
-errorRouter.all('/network', (req) => {
+errorRouter.all('/network', (req, res) => {
+  if (process.env['RUNTIME'] === 'lambda') {
+    res
+      .status(400)
+      .json({
+        error: { message: 'Network error simulation is not supported in this environment.' },
+      });
+    return;
+  }
   // Intentionally destroy the connection
   req.socket.destroy();
   return;

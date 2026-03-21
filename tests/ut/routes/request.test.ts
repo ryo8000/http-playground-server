@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import request from 'supertest';
-import { requestRouter } from '../../../src/routes/request.js';
+import { requestRouter } from '../../../src/core/routes/request.js';
 
 describe('requestRouter', () => {
   const app = express();
