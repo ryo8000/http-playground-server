@@ -12,6 +12,7 @@ This guide covers development-specific details for contributing to the HTTP Play
 │   ├── middlewares          # Middlewares directory
 │   ├── routes               # API routes directory
 │   ├── server.ts            # Server startup and shutdown handling
+│   ├── services             # Business logic services directory
 │   └── utils                # Utility functions directory
 ├── tests
 │   ├── e2e                  # E2E tests directory

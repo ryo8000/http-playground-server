@@ -32,6 +32,10 @@ Simulate HTTP requests/responses for front-end, QA, and integration testing. No 
 - All routes in `src/routes/` export an Express Router
 - Registered in `src/app.ts` with path prefixes
 
+**Service Layer**:
+- Business logic extracted into `src/services/` to keep routes thin
+- Each service function returns a result object (`{ status, body, headers? }`) without throwing
+
 **Middleware Chain (applied in order)**:
 1. `express.text()` - Text body parsing
 2. `express.json()` - JSON body parsing
