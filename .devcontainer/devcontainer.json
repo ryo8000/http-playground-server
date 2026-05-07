@@ -15,7 +15,7 @@
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+  "postCreateCommand": "curl -fsSL -o claude_install.sh https://claude.ai/install.sh && bash ./claude_install.sh && rm ./claude_install.sh",
 
   // Configure tool-specific properties.
   "customizations": {
