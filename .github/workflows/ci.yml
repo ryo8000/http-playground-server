@@ -10,6 +10,16 @@ on:
     branches:
       - main
       - review
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - 'tsconfig.json'
+      - 'eslint.config.mjs'
+      - 'jest.config.js'
+      - '.prettierrc'
+      - '.github/workflows/ci.yml'
 
 jobs:
   test:
