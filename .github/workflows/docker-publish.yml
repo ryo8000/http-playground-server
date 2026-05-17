@@ -1,9 +1,7 @@
-name: Docker Publish
+# This workflow builds and publishes Docker images to ghcr.io
+# on push to main or when a version tag is created.
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: Docker Publish
 
 on:
   push:
@@ -17,7 +15,6 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   docker-publish:
     name: Build and publish
@@ -26,7 +23,7 @@ jobs:
       contents: read
       packages: write
       # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
+      # with sigstore/fulcio.
       id-token: write
 
     steps:
