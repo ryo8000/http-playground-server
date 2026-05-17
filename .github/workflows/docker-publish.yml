@@ -1,4 +1,4 @@
-name: Docker
+name: Docker Publish
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -20,7 +20,7 @@ env:
 
 jobs:
   docker-publish:
-
+    name: Build and publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
