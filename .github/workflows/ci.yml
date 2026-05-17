@@ -10,19 +10,37 @@ on:
     branches:
       - main
       - review
-    paths:
-      - 'src/**'
-      - 'tests/**'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'tsconfig.json'
-      - 'eslint.config.mjs'
-      - 'jest.config.js'
-      - '.prettierrc'
-      - '.github/workflows/ci.yml'
 
 jobs:
+  changes:
+    name: Detect relevant changes
+    runs-on: ubuntu-latest
+    outputs:
+      run_checks: ${{ steps.filter.outputs.run_checks }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+      - name: Check changed files
+        id: filter
+        run: |
+          git diff --name-only \
+            "${{ github.event.pull_request.base.sha }}" \
+            "${{ github.event.pull_request.head.sha }}" > changed-files.txt
+
+          echo "Changed files:"
+          cat changed-files.txt
+
+          if grep -Eq '^(src/|tests/|package\.json$|yarn\.lock$|tsconfig\.json$|eslint\.config\.mjs$|jest\.config\.js$|\.prettierrc$|Dockerfile$|\.dockerignore$|\.github/workflows/(ci|docker-publish)\.yml$)' changed-files.txt; then
+            echo "run_checks=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+          fi
+
   test:
+    name: Test
+    needs: changes
+    if: needs.changes.outputs.run_checks == 'true'
     runs-on: ubuntu-latest
 
     strategy:
@@ -77,3 +95,104 @@ jobs:
         name: e2e-test-results
         path: e2e-test-results.json
       if: always()
+
+  docker-build:
+    name: Docker image build
+    needs: changes
+    if: needs.changes.outputs.run_checks == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+
+    env:
+      # Use docker.io for Docker Hub if empty
+      REGISTRY: ghcr.io
+      # github.repository as <account>/<repo>
+      IMAGE_NAME: ${{ github.repository }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      # Install the cosign tool
+      # https://github.com/sigstore/cosign-installer
+      - name: Install cosign
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+        with:
+          cosign-release: 'v2.2.4'
+
+      # Set up BuildKit Docker container builder to be able to build
+      # multi-platform images and export cache
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+
+      # Login against a Docker registry
+      # https://github.com/docker/login-action
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=pr
+            type=sha,format=short
+
+      # Build Docker image with Buildx
+      # https://github.com/docker/build-push-action
+      - name: Build Docker image
+        id: build
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
+        with:
+          context: .
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  ci:
+    name: Required PR checks
+    needs:
+      - changes
+      - test
+      - docker-build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify required checks
+        run: |
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "Changes detection job result was ${{ needs.changes.result }}; blocking merge."
+            exit 1
+          fi
+
+          if [ "${{ needs.changes.outputs.run_checks }}" != "true" ]; then
+            echo "No application, test, or image changes detected; required checks are satisfied."
+            exit 0
+          fi
+
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            echo "Test job result was ${{ needs.test.result }}; blocking merge."
+            exit 1
+          fi
+
+          if [ "${{ needs.docker-build.result }}" != "success" ]; then
+            echo "Docker image build job result was ${{ needs.docker-build.result }}; blocking merge."
+            exit 1
+          fi
+
+          echo "Test and Docker image build jobs passed."
