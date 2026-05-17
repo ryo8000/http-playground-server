@@ -22,7 +22,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
-| `ALL`  | `/request`              | Return a structured JSON dump of the incoming request.                                                       |
+| `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
 | `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                          |
 | `ALL`  | `/status/{status}`      | Respond with a given HTTP status code (must be between 200 and 599).                                         |
 | `ALL`  | `/uuid`                 | Generate and return a random UUID (version 4).                                                               |
@@ -41,17 +41,17 @@ Built with **Node.js** and **Express**.
 
 ## ⚙️ Environment Variables
 
-| Name                 | Required | Default       | Description                                                                  | Notes                          |
-| -------------------- | -------- | ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
-| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`)             |                                |
-| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`trace`, `debug`, `info`, `warn`, `error`, `fatal`) |                                |
-| `PORT`               | No       | `8000`        | Port number for this application.                                            |                                |
-| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                                     |                                |
-| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds.                                        | Must be > `KEEP_ALIVE_TIMEOUT` |
-| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds.                                             | Must be > `HEADERS_TIMEOUT`    |
-| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                              |                                |
-| `MAX_DELAY`          | No       | `10000`       | Maximum delay allowed for the delay query parameter in milliseconds.         |                                |
-| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.                |                                |
+| Name                 | Required | Default       | Description                                                                                  |
+| -------------------- | -------- | ------------- | -------------------------------------------------------------------------------------------- |
+| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`)                             |
+| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`trace`, `debug`, `info`, `warn`, `error`, `fatal`).                |
+| `PORT`               | No       | `8000`        | Port number for this application. If set to `0`, the OS will assign a random available port. |
+| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                                                     |
+| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds. Must be > `KEEP_ALIVE_TIMEOUT`.                        |
+| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds. Must be > `HEADERS_TIMEOUT`.                                |
+| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                                              |
+| `MAX_DELAY`          | No       | `10000`       | Maximum allowed delay in milliseconds for the `delay` query parameter.                       |
+| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.                                |
 
 ---
 
