@@ -175,6 +175,11 @@ jobs:
     steps:
       - name: Verify required checks
         run: |
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "Changes detection job result was ${{ needs.changes.result }}; blocking merge."
+            exit 1
+          fi
+
           if [ "${{ needs.changes.outputs.run_checks }}" != "true" ]; then
             echo "No application, test, or image changes detected; required checks are satisfied."
             exit 0
