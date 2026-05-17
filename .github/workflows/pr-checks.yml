@@ -1,7 +1,9 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow gates pull requests. It always creates a required check,
+# but only runs the expensive test and Docker image build jobs for changes
+# that can affect the application, tests, or image.
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: CI
+name: PR Checks
 permissions:
   contents: read
 
@@ -12,7 +14,7 @@ on:
       - review
 
 jobs:
-  changes:
+  detect-changes:
     name: Detect relevant changes
     runs-on: ubuntu-latest
     outputs:
@@ -31,16 +33,16 @@ jobs:
           echo "Changed files:"
           cat changed-files.txt
 
-          if grep -Eq '^(src/|tests/|package\.json$|yarn\.lock$|tsconfig\.json$|eslint\.config\.mjs$|jest\.config\.js$|\.prettierrc$|Dockerfile$|\.dockerignore$|\.github/workflows/(ci|docker-publish)\.yml$)' changed-files.txt; then
+          if grep -Eq '^(src/|tests/|package\.json$|yarn\.lock$|tsconfig\.json$|eslint\.config\.mjs$|jest\.config\.js$|\.prettierrc$|Dockerfile$|\.dockerignore$|\.github/workflows/(pr-checks|docker-publish)\.yml$)' changed-files.txt; then
             echo "run_checks=true" >> "$GITHUB_OUTPUT"
           else
             echo "run_checks=false" >> "$GITHUB_OUTPUT"
           fi
 
   test:
-    name: Test
-    needs: changes
-    if: needs.changes.outputs.run_checks == 'true'
+    name: Test & Lint
+    needs: detect-changes
+    if: needs.detect-changes.outputs.run_checks == 'true'
     runs-on: ubuntu-latest
 
     strategy:
@@ -98,8 +100,8 @@ jobs:
 
   docker-build:
     name: Docker image build
-    needs: changes
-    if: needs.changes.outputs.run_checks == 'true'
+    needs: detect-changes
+    if: needs.detect-changes.outputs.run_checks == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -164,10 +166,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  ci:
+  required:
     name: Required PR checks
     needs:
-      - changes
+      - detect-changes
       - test
       - docker-build
     if: always()
@@ -175,12 +177,12 @@ jobs:
     steps:
       - name: Verify required checks
         run: |
-          if [ "${{ needs.changes.result }}" != "success" ]; then
-            echo "Changes detection job result was ${{ needs.changes.result }}; blocking merge."
+          if [ "${{ needs.detect-changes.result }}" != "success" ]; then
+            echo "Changes detection job result was ${{ needs.detect-changes.result }}; blocking merge."
             exit 1
           fi
 
-          if [ "${{ needs.changes.outputs.run_checks }}" != "true" ]; then
+          if [ "${{ needs.detect-changes.outputs.run_checks }}" != "true" ]; then
             echo "No application, test, or image changes detected; required checks are satisfied."
             exit 0
           fi
