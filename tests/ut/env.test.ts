@@ -80,4 +80,52 @@ describe('Environment configuration', () => {
       requestTimeout: 40000,
     });
   });
+
+  it('should throw an error when HEADERS_TIMEOUT is not a valid integer', async () => {
+    process.env.HEADERS_TIMEOUT = 'invalid';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid HEADERS_TIMEOUT environment variable: "invalid" is not a valid integer'
+    );
+  });
+
+  it('should throw an error when REQUEST_TIMEOUT is not a valid integer', async () => {
+    process.env.REQUEST_TIMEOUT = '1.5';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid REQUEST_TIMEOUT environment variable: "1.5" is not a valid integer'
+    );
+  });
+
+  it('should throw an error when KEEP_ALIVE_TIMEOUT is not a valid integer', async () => {
+    process.env.KEEP_ALIVE_TIMEOUT = '2e10';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid KEEP_ALIVE_TIMEOUT environment variable: "2e10" is not a valid integer'
+    );
+  });
+
+  it('should throw an error when MAX_DELAY is not a valid integer', async () => {
+    process.env.MAX_DELAY = 'abc';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid MAX_DELAY environment variable: "abc" is not a valid integer'
+    );
+  });
+
+  it('should throw an error when PORT is not a valid integer', async () => {
+    process.env.PORT = '8000.0';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid PORT environment variable: "8000.0" is not a valid integer'
+    );
+  });
+
+  it('should throw an error when integer is out of safe range', async () => {
+    process.env.PORT = '9007199254740992';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'Invalid PORT environment variable: "9007199254740992" is not a valid integer'
+    );
+  });
 });
