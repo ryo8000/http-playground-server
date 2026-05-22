@@ -2,11 +2,11 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
-      "Bash(git add:*)",
-      "Bash(git fetch:*)",
-      "Bash(ls:*)",
+      "Bash(git add *)",
+      "Bash(git fetch *)",
+      "Bash(ls *)",
       "Bash(node dist/server.js)",
-      "Bash(yarn install:*)",
+      "Bash(yarn install *)",
       "Bash(yarn dev)",
       "Bash(yarn build)",
       "Bash(yarn test)",
@@ -17,17 +17,17 @@
       "Bash(yarn format:*)"
     ],
     "ask": [
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(yarn add:*)",
-      "Bash(yarn remove:*)"
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(yarn add *)",
+      "Bash(yarn remove *)"
     ],
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf ~/*)",
       "Bash(rm -rf /*)",
-      "Bash(sudo:*)",
+      "Bash(sudo *)",
       "Read(./.env)",
       "Read(./.env.*)"
     ]
