@@ -3,9 +3,12 @@
   "permissions": {
     "allow": [
       "Bash(git add *)",
+      "Bash(git fetch)",
       "Bash(git fetch *)",
+      "Bash(ls)",
       "Bash(ls *)",
       "Bash(node dist/server.js)",
+      "Bash(yarn install)",
       "Bash(yarn install *)",
       "Bash(yarn dev)",
       "Bash(yarn build)",
@@ -18,6 +21,7 @@
     ],
     "ask": [
       "Bash(git commit *)",
+      "Bash(git push)",
       "Bash(git push *)",
       "Bash(yarn add *)",
       "Bash(yarn remove *)"
