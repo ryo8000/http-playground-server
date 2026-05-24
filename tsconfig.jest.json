@@ -3,6 +3,7 @@
   "compilerOptions": {
     // "NodeNext" causes a token error in Jest's ESM runner; "esnext" is required
     "module": "esnext",
+    // "bundler" pairs with "esnext" and matches Jest's bundler-like module resolution
     "moduleResolution": "bundler",
     "rootDir": ".",
     // Prevents accidental file emission when running tsc directly with this config
