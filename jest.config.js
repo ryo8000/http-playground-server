@@ -7,9 +7,7 @@ export default {
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
       useESM: true,
-      tsconfig: {
-        module: 'esnext'
-      }
+      tsconfig: './tsconfig.jest.json'
     }]
   },
   moduleNameMapper: {

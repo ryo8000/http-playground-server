@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // "NodeNext" causes a token error in Jest's ESM runner; "esnext" is required
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "rootDir": ".",
+    // Prevents accidental file emission when running tsc directly with this config
+    "noEmit": true
+  },
+  "include": ["tests/**/*"]
+}
