@@ -1,0 +1,31 @@
+name: Feature Request
+description: Suggest a new feature or endpoint
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your suggestion!
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: Describe the feature or endpoint you'd like to add.
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / Use Case
+      description: Why is this feature needed? What problem does it solve?
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful.
