@@ -16,7 +16,7 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
       url: req.url,
       query: req.query,
       headers: req.headers,
-      body: req.method === 'GET' || req.method === 'HEAD' || req.body === undefined ? {} : req.body,
+      body: req.method === 'GET' || req.method === 'HEAD' ? {} : (req.body ?? {}),
     },
     'Incoming request',
   );
