@@ -14,8 +14,10 @@ shutdownRouter.all('/', (_req, res) => {
     return;
   }
 
+  res.on('finish', () => {
+    process.kill(process.pid, 'SIGTERM');
+  });
   res.json({ message: 'Server shutting down' });
-  process.exit(0);
 });
 
 export { shutdownRouter };
