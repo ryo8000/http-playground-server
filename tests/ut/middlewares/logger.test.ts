@@ -90,4 +90,17 @@ describe('LoggerMiddleware', () => {
       'Incoming request',
     );
   });
+
+  it('should log empty body for HEAD requests', () => {
+    mockRequest.method = 'HEAD';
+
+    loggerMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
+
+    expect(log.debug).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: {},
+      }),
+      'Incoming request',
+    );
+  });
 });
