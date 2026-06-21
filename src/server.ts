@@ -37,4 +37,5 @@ process.on('SIGTERM', () => {
     log.info('HTTP server closed');
     process.exit(0);
   });
+  server.closeIdleConnections();
 });
