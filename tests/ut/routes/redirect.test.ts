@@ -61,5 +61,36 @@ describe('redirectRouter', () => {
         });
       }
     });
+
+    it('should respond with 400 when multiple url parameters are provided', async () => {
+      const response = await request(app)
+        [method]('/redirect')
+        .query('url=http://a.com&url=http://b.com');
+
+      expect(response.status).toBe(400);
+      if (method !== 'head') {
+        expect(response.body).toEqual({
+          error: {
+            message: 'Missing `url` query parameter',
+          },
+        });
+      }
+    });
+
+    it('should respond with 400 when multiple status parameters are provided', async () => {
+      const response = await request(app)
+        [method]('/redirect')
+        .query(`url=${testUrl}&status=301&status=302`);
+
+      expect(response.status).toBe(400);
+      if (method !== 'head') {
+        expect(response.body).toEqual({
+          error: {
+            message:
+              'Invalid redirect status code. Supported statuses are 301, 302, 303, 307 and 308',
+          },
+        });
+      }
+    });
   });
 });
