@@ -37,12 +37,12 @@ basicAuthRouter.all('/', (req, res) => {
   }
 
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Basic ')) {
+  if (!authHeader || authHeader.slice(0, 6).toLowerCase() !== 'basic ') {
     sendUnauthorized(res, 'Authentication required');
     return;
   }
 
-  const base64Credentials = authHeader.substring('Basic '.length);
+  const base64Credentials = authHeader.slice(6).trim();
   const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
   const [providedUser, ...passwordParts] = credentials.split(':');
   const providedPassword = passwordParts.join(':');
