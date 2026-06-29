@@ -13,18 +13,16 @@ RUN yarn build
 FROM node:25.9.0-slim AS production
 ENV NODE_ENV=production
 
-# Create non-root user for security
-RUN addgroup --system nodejs && \
-    adduser --system --ingroup nodejs nodejs
-USER nodejs
-
+USER node
 WORKDIR /app
 
-# Copy compiled files from build stage
-COPY --from=build /app/dist ./dist
-
 # Install only production dependencies
-COPY package.json yarn.lock ./
+COPY --chown=node:node package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+# Copy compiled files from build stage
+COPY --from=build --chown=node:node /app/dist ./dist
+
+EXPOSE 8000
 
 CMD ["node", "dist/server.js"]
