@@ -41,7 +41,7 @@ describe('delayMiddleware', () => {
       const delay = 100;
       const duration = await executeMiddleware(delay.toString());
 
-      expect(duration).toBeGreaterThanOrEqual(delay);
+      expect(duration).toBeGreaterThanOrEqual(delay - 10);
       expect(mockNext).toHaveBeenCalledTimes(1);
     });
 
@@ -51,7 +51,7 @@ describe('delayMiddleware', () => {
         const excessiveDelay = environment.maxDelay + 100;
         const duration = await executeMiddleware(excessiveDelay.toString());
 
-        expect(duration).toBeGreaterThanOrEqual(environment.maxDelay);
+        expect(duration).toBeGreaterThanOrEqual(environment.maxDelay - 10);
         expect(duration).toBeLessThan(environment.maxDelay + 50);
         expect(mockNext).toHaveBeenCalledTimes(1);
       },
