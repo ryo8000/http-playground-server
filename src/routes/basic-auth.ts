@@ -37,7 +37,7 @@ basicAuthRouter.all('/', (req, res) => {
   }
 
   const authHeader = req.headers.authorization;
-  if (!authHeader || authHeader.slice(0, 6).toLowerCase() !== 'basic ') {
+  if (!authHeader?.toLowerCase().startsWith('basic ')) {
     sendUnauthorized(res, 'Authentication required');
     return;
   }
