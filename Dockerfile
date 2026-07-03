@@ -1,4 +1,6 @@
-FROM node:25.9.0-slim AS build
+FROM node:26.4.0-slim AS build
+
+RUN npm install -g corepack && corepack enable
 
 WORKDIR /app
 
@@ -10,7 +12,10 @@ RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
-FROM node:25.9.0-slim AS production
+FROM node:26.4.0-slim AS production
+
+RUN npm install -g corepack && corepack enable
+
 ENV NODE_ENV=production
 
 USER node
