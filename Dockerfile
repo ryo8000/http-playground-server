@@ -1,6 +1,6 @@
 FROM node:26.4.0-slim AS build
 
-RUN npm install -g yarn@1.22.22
+RUN npm install -g corepack && corepack enable
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN yarn build
 
 FROM node:26.4.0-slim AS production
 
-RUN npm install -g yarn@1.22.22
+RUN npm install -g corepack && corepack enable
 
 ENV NODE_ENV=production
 
