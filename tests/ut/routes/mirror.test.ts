@@ -40,7 +40,7 @@ describe('mirrorRouter', () => {
       const response = await request(app).head('/mirror');
       expect(response.status).toBe(200);
       expect(response.headers['content-type']).toMatch(/application\/json/);
-      expect(response.text).toBeFalsy();
+      expect(response.text).toBe('');
     });
   });
 });
