@@ -751,7 +751,9 @@
               "    pm.response.to.have.status(200);",
               "});",
               "",
-              "pm.collectionVariables.set('firstUuid', pm.response.json().uuid);"
+              "if (pm.response.code === 200) {",
+              "    pm.collectionVariables.set('firstUuid', pm.response.json().uuid);",
+              "}"
             ]
           }
         }
@@ -783,6 +785,7 @@
               "pm.test('Multiple requests generate different UUIDs', function () {",
               "    var secondUuid = pm.response.json().uuid;",
               "    pm.expect(firstUuid, 'firstUuid collection variable not set by First Request').to.be.a('string');",
+              "    pm.expect(secondUuid, 'secondUuid is not a valid string').to.be.a('string');",
               "    pm.expect(secondUuid).to.not.equal(firstUuid);",
               "});"
             ]
