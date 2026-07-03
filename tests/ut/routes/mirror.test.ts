@@ -34,4 +34,12 @@ describe('mirrorRouter', () => {
       expect(response.body).toEqual({});
     });
   });
+
+  describe('head method', () => {
+    it('should return an empty body and correct headers', async () => {
+      const response = await request(app).head('/mirror');
+      expect(response.status).toBe(200);
+      expect(response.headers['content-type']).toMatch(/application\/json/);
+    });
+  });
 });
