@@ -11,6 +11,7 @@
     "build": "tsc",
     "dev": "nodemon",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:e2e": "newman run tests/e2e/e2e-test-collection.json -e tests/e2e/environment.json --reporters cli",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
