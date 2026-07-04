@@ -81,8 +81,10 @@ export const decodeBase64 = (body: unknown): Base64DecodeResult => {
   try {
     const decodedBuffer = Buffer.from(value, 'base64');
 
-    // Validate Base64 format (normalize padding before comparison)
-    if (decodedBuffer.toString('base64').replace(/=+$/, '') !== value.replace(/=+$/, '')) {
+    // Validate Base64 format (pad input to canonical form before comparison)
+    const rem = value.length % 4;
+    const paddedValue = rem === 0 ? value : value + '='.repeat(4 - rem);
+    if (decodedBuffer.toString('base64') !== paddedValue) {
       return {
         status: HttpStatusCodes.BAD_REQUEST,
         body: { error: { message: 'Invalid Base64 format' } },

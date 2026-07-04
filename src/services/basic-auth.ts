@@ -2,7 +2,7 @@ import { HttpStatusCodes } from '../utils/http.js';
 
 type BasicAuthResult = {
   status: number;
-  body: object;
+  body: { authenticated: boolean; message: string } | { error: { message: string } };
   headers?: Record<string, string>;
 };
 
