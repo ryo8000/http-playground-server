@@ -103,6 +103,14 @@ describe('Base64 Encoding/Decoding', () => {
       expect(response.status).toBe(200);
       expect(response.body.decoded).toBe('🚀 Hello! @#$%^&*()');
     });
+
+    it('should decode unpadded Base64', async () => {
+      // 'Hello' encodes to 'SGVsbG8=' but unpadded form 'SGVsbG8' is also valid
+      const response = await request(app).post('/base64/decode').send({ value: 'SGVsbG8' });
+
+      expect(response.status).toBe(200);
+      expect(response.body.decoded).toBe('Hello');
+    });
   });
 
   describe('Roundtrip encoding/decoding', () => {
