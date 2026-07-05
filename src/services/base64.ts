@@ -10,11 +10,11 @@ type Base64DecodeResult =
   | { status: number; body: { error: { message: string } } };
 
 /**
- * Creates an error result for a missing or invalid request body value.
+ * Creates a 400 Bad Request result for a missing or invalid request body value.
  *
  * @returns A result with BAD_REQUEST status and a descriptive error message.
  */
-const missingValueError = () => ({
+const missingValue = () => ({
   status: HttpStatusCodes.BAD_REQUEST,
   body: { error: { message: "Missing 'value' in request body or invalid format" } },
 });
@@ -52,7 +52,7 @@ export const encodeBase64 = (body: unknown): Base64EncodeResult => {
   const value = extractValueFromBody(body);
 
   if (value === null) {
-    return missingValueError();
+    return missingValue();
   }
 
   try {
@@ -77,7 +77,7 @@ export const decodeBase64 = (body: unknown): Base64DecodeResult => {
   const value = extractValueFromBody(body);
 
   if (value === null) {
-    return missingValueError();
+    return missingValue();
   }
 
   try {
