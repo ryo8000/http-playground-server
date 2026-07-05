@@ -14,6 +14,7 @@ When asked to modify or add code, follow these steps in order:
 4. **Verify Your Work** — Run the following commands and ensure they all pass:
    - `yarn format` — Apply Prettier formatting
    - `yarn lint:fix` — Fix ESLint issues
+   - `yarn verify` — Verify formatting, linting, and TypeScript compile errors
    - `yarn test` — Run all unit tests with coverage
    - `yarn test:e2e` — Run E2E tests when API behavior or collections changed (requires server running)
 5. **Finalize** — Confirm all steps are complete and all checks passed before finishing.
