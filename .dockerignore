@@ -117,7 +117,7 @@ tests/
 # Build tools config
 nodemon.json
 jest.config.js
-eslint.config.mjs
+eslint.config.js
 
 # Scripts
 *.sh
