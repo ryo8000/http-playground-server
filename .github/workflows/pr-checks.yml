@@ -35,7 +35,7 @@ jobs:
           echo "Changed files:"
           cat changed-files.txt
 
-          if grep -Eq '^(src/|tests/|package\.json$|yarn\.lock$|tsconfig\.json$|eslint\.config\.mjs$|jest\.config\.js$|\.prettierrc$|Dockerfile$|\.dockerignore$|\.github/workflows/(pr-checks|docker-publish)\.yml$)' changed-files.txt; then
+          if grep -Eq '^(src/|tests/|package\.json$|yarn\.lock$|tsconfig\.json$|eslint\.config\.js$|jest\.config\.js$|\.prettierrc$|Dockerfile$|\.dockerignore$|\.github/workflows/(pr-checks|docker-publish)\.yml$)' changed-files.txt; then
             echo "run_checks=true" >> "$GITHUB_OUTPUT"
           else
             echo "run_checks=false" >> "$GITHUB_OUTPUT"
