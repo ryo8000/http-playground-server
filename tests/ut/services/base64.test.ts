@@ -82,6 +82,8 @@ describe('decodeBase64', () => {
     it.each([
       { body: {}, reason: 'missing value in object body' },
       { body: null, reason: 'null body' },
+      { body: 42, reason: 'numeric body' },
+      { body: { value: 123 }, reason: 'value is not a string' },
     ])('should return 400 for $reason', ({ body }) => {
       const result = decodeBase64(body);
       expect(result).toEqual({

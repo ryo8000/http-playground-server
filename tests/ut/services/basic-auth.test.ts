@@ -15,6 +15,7 @@ describe('basicAuth', () => {
     { user: '   ', password: 'pass', reason: 'user is only whitespace' },
     { user: 'user', password: '   ', reason: 'password is only whitespace' },
     { user: ['user1', 'user2'], password: 'pass', reason: 'user is an array' },
+    { user: 'user', password: ['pass1', 'pass2'], reason: 'password is an array' },
   ])('should return 400 when $reason', ({ user, password }) => {
     const result = basicAuth(user, password, undefined);
     expect(result).toEqual({
@@ -25,7 +26,7 @@ describe('basicAuth', () => {
 
   it.each([
     { authHeader: undefined, reason: 'missing' },
-    { authHeader: 'Bearer token123', reason: 'using Bearer scheme' },
+    { authHeader: 'Bearer token123', reason: 'using non-Basic scheme' },
   ])('should return 401 when Authorization header is $reason', ({ authHeader }) => {
     const result = basicAuth('user', 'pass', authHeader);
     expect(result).toEqual({
@@ -38,6 +39,15 @@ describe('basicAuth', () => {
   describe('credential matching', () => {
     it('should return 200 when credentials match', () => {
       const result = basicAuth('user', 'pass', makeAuthHeader('user', 'pass'));
+      expect(result).toEqual({
+        status: 200,
+        body: { authenticated: true, message: 'Authentication successful' },
+      });
+    });
+
+    it('should accept lowercase basic scheme', () => {
+      const encoded = Buffer.from('user:pass').toString('base64');
+      const result = basicAuth('user', 'pass', `basic ${encoded}`);
       expect(result).toEqual({
         status: 200,
         body: { authenticated: true, message: 'Authentication successful' },
