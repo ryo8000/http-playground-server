@@ -5,10 +5,9 @@
 - Package manager: Yarn.
 - Keep changes minimal and consistent with existing coding patterns in `src/` and `tests/ut/`.
 
-## Completion checklist (run in this order)
-1. `yarn lint`
+## Completion checklist
+1. `yarn verify` (runs format:check, lint, typecheck in order)
 2. `yarn test`
-3. `yarn build`
 
 For endpoint behavior changes, also run:
 - `yarn test:e2e`

@@ -8,15 +8,17 @@
   "author": "Ryo Hasegawa",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "dev": "nodemon",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:e2e": "newman run tests/e2e/e2e-test-collection.json -e tests/e2e/environment.json --reporters cli",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "format": "prettier --write src tests",
-    "format:check": "prettier --check src tests"
+    "format:check": "prettier --check src tests",
+    "verify": "yarn format:check && yarn lint && yarn typecheck"
   },
   "dependencies": {
     "cookie-parser": "1.4.7",
