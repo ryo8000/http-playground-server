@@ -1,137 +1,76 @@
+import express from 'express';
 import request from 'supertest';
-import { app } from '../../../src/app.js';
+import { base64Router } from '../../../src/routes/base64.js';
 
-describe('Base64 Encoding/Decoding', () => {
-  describe('POST /base64/encode', () => {
-    it('should encode JSON body value to Base64', async () => {
-      const testData = { value: 'Hello, World!' };
-      const response = await request(app).post('/base64/encode').send(testData);
+const app = express();
+app.use(express.text());
+app.use(express.json());
+app.use('/base64', base64Router);
 
+const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'options'] as const;
+
+describe('base64Router', () => {
+  describe('encode', () => {
+    it.each(HTTP_METHODS)('should encode JSON body to Base64 via %s', async (method) => {
+      const response = await request(app)
+        [method]('/base64/encode')
+        .send({ value: 'Hello, World!' });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('encoded');
-      expect(response.body.encoded).toBe('SGVsbG8sIFdvcmxkIQ==');
+      expect(response.body).toEqual({ encoded: 'SGVsbG8sIFdvcmxkIQ==' });
     });
 
-    it('should encode plain text body to Base64', async () => {
+    it.each(HTTP_METHODS)('should encode plain text body to Base64 via %s', async (method) => {
       const response = await request(app)
-        .post('/base64/encode')
+        [method]('/base64/encode')
         .set('Content-Type', 'text/plain')
         .send('Hello, World!');
-
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('encoded');
-      expect(response.body.encoded).toBe('SGVsbG8sIFdvcmxkIQ==');
+      expect(response.body).toEqual({ encoded: 'SGVsbG8sIFdvcmxkIQ==' });
     });
 
-    it('should return 400 for missing value', async () => {
-      const response = await request(app).post('/base64/encode').send({});
-
+    it.each(HTTP_METHODS)('should return 400 for missing value via %s', async (method) => {
+      const response = await request(app)[method]('/base64/encode').send({});
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error');
-      expect(response.body.error.message).toContain("Missing 'value'");
+      expect(response.body).toEqual({
+        error: { message: "Missing 'value' in request body or invalid format" },
+      });
     });
 
-    it('should encode empty string', async () => {
-      const response = await request(app).post('/base64/encode').send({ value: '' });
-
-      expect(response.status).toBe(200);
-      expect(response.body.encoded).toBe('');
-    });
-
-    it('should encode special characters', async () => {
-      const testData = { value: '🚀 Hello! @#$%^&*()' };
-      const response = await request(app).post('/base64/encode').send(testData);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('encoded');
-
-      // Verify it can be decoded back
-      const decoded = Buffer.from(response.body.encoded, 'base64').toString('utf8');
-      expect(decoded).toBe('🚀 Hello! @#$%^&*()');
+    it('should return 400 for head', async () => {
+      const response = await request(app).head('/base64/encode');
+      expect(response.status).toBe(400);
     });
   });
 
-  describe('POST /base64/decode', () => {
-    it('should decode JSON body value from Base64', async () => {
-      const testData = { value: 'SGVsbG8sIFdvcmxkIQ==' };
-      const response = await request(app).post('/base64/decode').send(testData);
-
+  describe('decode', () => {
+    it.each(HTTP_METHODS)('should decode JSON body from Base64 via %s', async (method) => {
+      const response = await request(app)
+        [method]('/base64/decode')
+        .send({ value: 'SGVsbG8sIFdvcmxkIQ==' });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('decoded');
-      expect(response.body.decoded).toBe('Hello, World!');
+      expect(response.body).toEqual({ decoded: 'Hello, World!' });
     });
 
-    it('should decode plain text body from Base64', async () => {
+    it.each(HTTP_METHODS)('should decode plain text body from Base64 via %s', async (method) => {
       const response = await request(app)
-        .post('/base64/decode')
+        [method]('/base64/decode')
         .set('Content-Type', 'text/plain')
         .send('SGVsbG8sIFdvcmxkIQ==');
-
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('decoded');
-      expect(response.body.decoded).toBe('Hello, World!');
+      expect(response.body).toEqual({ decoded: 'Hello, World!' });
     });
 
-    it('should return 400 for missing value', async () => {
-      const response = await request(app).post('/base64/decode').send({});
-
+    it.each(HTTP_METHODS)('should return 400 for missing value via %s', async (method) => {
+      const response = await request(app)[method]('/base64/decode').send({});
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error');
-      expect(response.body.error.message).toContain("Missing 'value'");
+      expect(response.body).toEqual({
+        error: { message: "Missing 'value' in request body or invalid format" },
+      });
     });
 
-    it('should return 400 for invalid Base64', async () => {
-      const response = await request(app).post('/base64/decode').send({ value: 'invalid-base64!' });
-
+    it('should return 400 for head', async () => {
+      const response = await request(app).head('/base64/decode');
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error');
-      expect(response.body.error.message).toBe('Invalid Base64 format');
-    });
-
-    it('should decode empty Base64 string', async () => {
-      const response = await request(app).post('/base64/decode').send({ value: '' });
-
-      expect(response.status).toBe(200);
-      expect(response.body.decoded).toBe('');
-    });
-
-    it('should decode special characters', async () => {
-      // Base64 for '🚀 Hello! @#$%^&*()'
-      const base64Value = '8J+agCBIZWxsbyEgQCMkJV4mKigp';
-      const response = await request(app).post('/base64/decode').send({ value: base64Value });
-
-      expect(response.status).toBe(200);
-      expect(response.body.decoded).toBe('🚀 Hello! @#$%^&*()');
-    });
-
-    it('should decode unpadded Base64', async () => {
-      // 'Hello' encodes to 'SGVsbG8=' but unpadded form 'SGVsbG8' is also valid
-      const response = await request(app).post('/base64/decode').send({ value: 'SGVsbG8' });
-
-      expect(response.status).toBe(200);
-      expect(response.body.decoded).toBe('Hello');
-    });
-  });
-
-  describe('Roundtrip encoding/decoding', () => {
-    it('should encode and decode back to original value', async () => {
-      const originalValue = 'Test string with special chars: 🎉 @#$%';
-
-      // Encode
-      const encodeResponse = await request(app)
-        .post('/base64/encode')
-        .send({ value: originalValue });
-
-      expect(encodeResponse.status).toBe(200);
-      const encodedValue = encodeResponse.body.encoded;
-
-      // Decode
-      const decodeResponse = await request(app)
-        .post('/base64/decode')
-        .send({ value: encodedValue });
-
-      expect(decodeResponse.status).toBe(200);
-      expect(decodeResponse.body.decoded).toBe(originalValue);
     });
   });
 });

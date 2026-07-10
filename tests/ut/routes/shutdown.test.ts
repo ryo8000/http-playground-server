@@ -1,13 +1,16 @@
 import express from 'express';
 import request from 'supertest';
 
+const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
+
 describe('shutdownRouter', () => {
   let app: express.Express;
   let mockKill: jest.SpyInstance;
+  let mockEnableShutdown: boolean;
 
   const createApp = async (): Promise<express.Express> => {
-    const app = express();
-    app.use(express.json());
+    const newApp = express();
+    newApp.use(express.json());
 
     jest.resetModules();
 
@@ -18,12 +21,10 @@ describe('shutdownRouter', () => {
     }));
 
     const { shutdownRouter } = await import('../../../src/routes/shutdown.js');
-    app.use('/shutdown', shutdownRouter);
+    newApp.use('/shutdown', shutdownRouter);
 
-    return app;
+    return newApp;
   };
-
-  let mockEnableShutdown: boolean;
 
   beforeEach(() => {
     mockKill = jest.spyOn(process, 'kill').mockImplementation(() => true);
@@ -33,45 +34,35 @@ describe('shutdownRouter', () => {
     mockKill.mockRestore();
   });
 
-  const httpMethods = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
-
-  describe.each(httpMethods)('%s method', (method) => {
-    describe('when shutdown is disabled', () => {
-      beforeEach(async () => {
-        mockEnableShutdown = false;
-        app = await createApp();
-      });
-
-      it('should return 403 Forbidden', async () => {
-        const response = await request(app)[method]('/shutdown');
-        expect(response.status).toBe(403);
-        if (method !== 'head') {
-          expect(response.body).toEqual({
-            error: {
-              message: 'Shutdown is not enabled',
-            },
-          });
-        }
-        expect(mockKill).not.toHaveBeenCalled();
-      });
+  describe('when shutdown is disabled', () => {
+    beforeEach(async () => {
+      mockEnableShutdown = false;
+      app = await createApp();
     });
 
-    describe('when shutdown is enabled', () => {
-      beforeEach(async () => {
-        mockEnableShutdown = true;
-        app = await createApp();
-      });
+    it.each(HTTP_METHODS)('should return 403 via %s', async (method) => {
+      const response = await request(app)[method]('/shutdown');
+      expect(response.status).toBe(403);
+      if (method !== 'head') {
+        expect(response.body).toEqual({ error: { message: 'Shutdown is not enabled' } });
+      }
+      expect(mockKill).not.toHaveBeenCalled();
+    });
+  });
 
-      it('should return 200 OK and send SIGTERM', async () => {
-        const response = await request(app)[method]('/shutdown');
-        expect(response.status).toBe(200);
-        if (method !== 'head') {
-          expect(response.body).toEqual({
-            message: 'Server shutting down',
-          });
-        }
-        expect(mockKill).toHaveBeenCalledWith(process.pid, 'SIGTERM');
-      });
+  describe('when shutdown is enabled', () => {
+    beforeEach(async () => {
+      mockEnableShutdown = true;
+      app = await createApp();
+    });
+
+    it.each(HTTP_METHODS)('should return 200 and send SIGTERM via %s', async (method) => {
+      const response = await request(app)[method]('/shutdown');
+      expect(response.status).toBe(200);
+      if (method !== 'head') {
+        expect(response.body).toEqual({ message: 'Server shutting down' });
+      }
+      expect(mockKill).toHaveBeenCalledWith(process.pid, 'SIGTERM');
     });
   });
 });

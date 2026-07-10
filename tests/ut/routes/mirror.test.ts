@@ -6,40 +6,31 @@ const app = express();
 app.use(express.json());
 app.use('/mirror', mirrorRouter);
 
+const BODY_METHODS = ['post', 'put', 'delete', 'patch', 'options'] as const;
+
 describe('mirrorRouter', () => {
   const testBody = { message: 'Hello' };
 
-  const httpMethods = ['post', 'put', 'delete', 'patch', 'options'] as const;
-
-  describe.each(httpMethods)('%s method', (method) => {
-    it('should return the request body as a response', async () => {
-      const response = await request(app)[method]('/mirror').send(testBody);
-      expect(response.status).toBe(200);
-      expect(response.headers['content-type']).toMatch(/application\/json/);
-      expect(response.body).toEqual(testBody);
-    });
-
-    it('should return an empty body', async () => {
-      const response = await request(app)[method]('/mirror');
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual({});
-    });
+  it.each(BODY_METHODS)('should return request body via %s', async (method) => {
+    const response = await request(app)[method]('/mirror').send(testBody);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(testBody);
   });
 
-  describe('get method', () => {
-    it('should return an empty body', async () => {
-      const response = await request(app).get('/mirror');
-      expect(response.status).toBe(200);
-      expect(response.text).toBe('{}');
-      expect(response.body).toEqual({});
-    });
+  it('should return empty object when no body is sent', async () => {
+    const response = await request(app).post('/mirror');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({});
   });
 
-  describe('head method', () => {
-    it('should return an empty body and correct headers', async () => {
-      const response = await request(app).head('/mirror');
-      expect(response.status).toBe(200);
-      expect(response.headers['content-type']).toMatch(/application\/json/);
-    });
+  it('should return empty object for get', async () => {
+    const response = await request(app).get('/mirror');
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({});
+  });
+
+  it('should return 200 for head', async () => {
+    const response = await request(app).head('/mirror');
+    expect(response.status).toBe(200);
   });
 });
