@@ -20,6 +20,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/error/network`        | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
+| `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
 | `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
