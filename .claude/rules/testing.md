@@ -22,7 +22,7 @@ paths:
 
 - Group parallel cases with `it.each` instead of repeating near-identical `it` blocks.
 - Keep `describe` nesting minimal: one `describe` per function/endpoint is usually enough. Don't add a `describe` that contains a single test or merely restates the test names.
-- Assert the full response with `toEqual` (status and whole body), not field-by-field `toBe` checks.
+- Assert the response status and the full body using `toEqual` (or construct a `{ status, body }` object to assert against), rather than field-by-field `toBe` checks.
 - Only test inputs that can actually occur given the function's type signature and Express's behavior (e.g. query params arrive as `string | string[] | undefined` — don't invent numeric/boolean cases the caller can't produce).
 - Order tests: success cases first, then error cases.
 - Keep tests deterministic and restore mutated environment variables, timers, mocks, and spies.
