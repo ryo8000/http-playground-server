@@ -21,6 +21,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
 | `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |
+| `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                       |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
 | `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
