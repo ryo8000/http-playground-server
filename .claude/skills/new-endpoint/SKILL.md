@@ -14,5 +14,5 @@ Follow the existing `/base64` implementation as the reference pattern (`src/rout
 3. **Register** — in `src/app.ts`: add the import and `app.use('/<name>', <name>Router)`, keeping both lists alphabetical.
 4. **Unit tests** — mirror the source: `tests/ut/routes/<name>.test.ts` and `tests/ut/services/<name>.test.ts`.
 5. **E2E** — add requests with assertions to `tests/e2e/e2e-test-collection.json` (Postman format, base URL is `{{baseUrl}}`).
-6. **Docs** — add a row per path to the README `API Reference` table (e.g. `/base64` has one row each for `/encode` and `/decode`). If the endpoint takes query parameters, add them to the README `Query Parameters` table. If a new env var is needed: default it in `src/env.ts`, expose via `environment`, and document it in the README `Environment Variables` table.
+6. **Docs** — add a row per path to the README `API Reference` table, using the full path (e.g. `/base64` gets a row each for `/base64/encode` and `/base64/decode`). If the endpoint takes query parameters, add them to the README `Query Parameters` table. If a new env var is needed: default it in `src/env.ts`, expose via `environment`, and document it in the README `Environment Variables` table.
 7. **Verify** — run the `/verify` skill, including the e2e step (endpoint behavior changed by definition).
