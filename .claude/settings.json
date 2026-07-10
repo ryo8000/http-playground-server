@@ -2,6 +2,8 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "deny": [
+      "Bash(rm -fr *)",
+      "Bash(rm -rf *)",
       "Bash(sudo *)",
       "Read(./.env)",
       "Read(./.env.*)"
@@ -46,6 +48,8 @@
       "Bash(git status)",
       "Bash(git status *)",
       "Bash(git tag -l *)",
+      "Bash(ls)",
+      "Bash(ls *)",
       "Bash(node dist/server.js)",
       "Bash(npx jest *)",
       "Bash(yarn audit)",
