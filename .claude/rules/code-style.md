@@ -7,7 +7,7 @@ paths:
 
 ## Layering
 
-- Route handlers must stay thin: extract request input, call a service function, respond with `res.status(result.status).json(result.body)`.
+- Route handlers must stay thin: extract request input, call a service function, respond with `res.status(result.status).json(result.body)`. For non-JSON responses like redirects, send the status-appropriate reply instead (e.g. `res.redirect(result.status, result.url)`; see `src/routes/redirect.ts`).
 - Endpoint logic lives in `src/services/` as pure functions that take plain values (never `req`/`res`) and return a `{ status, body }` result object. Define a discriminated result type per service (see `src/services/base64.ts`).
 - Shared helpers go in `src/utils/`. Check there before writing new helper logic.
 

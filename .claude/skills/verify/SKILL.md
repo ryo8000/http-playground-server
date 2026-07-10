@@ -29,7 +29,7 @@ The Newman suite needs the server listening on port 8000:
 
 1. `yarn build`
 2. Start the server in the background (use the Bash tool's `run_in_background`): `node dist/server.js`
-3. Wait until it responds: `curl -s -o /dev/null http://localhost:8000/` (retry a few times if needed).
+3. Wait until it responds: `curl --retry 5 --retry-connrefused --retry-delay 1 -s -o /dev/null http://localhost:8000/`
 4. `yarn test:e2e`
 5. Stop the background server (kill the background task) — do not leave it running.
 
