@@ -24,6 +24,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
 | `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
+| `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                            |
 | `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                          |
 | `ALL`  | `/status/{status}`      | Respond with a given HTTP status code (must be between 200 and 599).                                         |
 | `ALL`  | `/uuid`                 | Generate and return a random UUID (version 4).                                                               |
