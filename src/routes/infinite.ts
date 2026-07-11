@@ -10,6 +10,12 @@ infiniteRouter.all('/', (req, res) => {
   res.status(HttpStatusCodes.OK).type('application/octet-stream');
   res.flushHeaders();
 
+  // HEAD has no body to stream; end after the headers so the timer never runs.
+  if (req.method === 'HEAD') {
+    res.end();
+    return;
+  }
+
   // Drop writes while the socket buffer is full so a slow client can't grow memory unboundedly
   const chunk = Buffer.alloc(CHUNK_SIZE_BYTES, 'a');
   const timer = setInterval(() => {
