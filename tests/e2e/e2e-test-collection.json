@@ -867,6 +867,45 @@
           }
         }
       ]
+    },
+    {
+      "name": "Big Headers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/big-headers?size=100&count=2",
+          "host": ["{{baseUrl}}"],
+          "path": ["big-headers"],
+          "query": [
+            {
+              "key": "size",
+              "value": "100"
+            },
+            {
+              "key": "count",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Oversized headers are set', function () {",
+              "    pm.expect(pm.response.headers.get('X-Big-Header-1')).to.have.lengthOf(100);",
+              "    pm.expect(pm.response.headers.get('X-Big-Header-2')).to.have.lengthOf(100);",
+              "});"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
