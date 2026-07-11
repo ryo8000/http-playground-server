@@ -19,6 +19,7 @@ describe('Environment configuration', () => {
     delete process.env.HEADERS_TIMEOUT;
     delete process.env.REQUEST_TIMEOUT;
     delete process.env.KEEP_ALIVE_TIMEOUT;
+    delete process.env.ENABLE_CRASH;
     delete process.env.ENABLE_SHUTDOWN;
     delete process.env.LOG_LEVEL;
     delete process.env.MAX_DELAY;
@@ -27,6 +28,7 @@ describe('Environment configuration', () => {
     delete process.env.PORT;
 
     expect(await loadEnv()).toEqual({
+      enableCrash: false,
       enableShutdown: false,
       headersTimeout: 10000,
       keepAliveTimeout: 5000,
@@ -61,6 +63,7 @@ describe('Environment configuration', () => {
     process.env.HEADERS_TIMEOUT = '11000';
     process.env.REQUEST_TIMEOUT = '40000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
+    process.env.ENABLE_CRASH = 'true';
     process.env.ENABLE_SHUTDOWN = 'true';
     process.env.LOG_LEVEL = 'debug';
     process.env.MAX_DELAY = '15000';
@@ -69,6 +72,7 @@ describe('Environment configuration', () => {
     process.env.PORT = '9000';
 
     expect(await loadEnv()).toEqual({
+      enableCrash: true,
       enableShutdown: true,
       headersTimeout: 11000,
       keepAliveTimeout: 5000,

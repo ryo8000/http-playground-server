@@ -15,6 +15,7 @@ if (requestTimeout <= headersTimeout) {
 }
 
 export const environment = {
+  enableCrash: process.env['ENABLE_CRASH'] === 'true',
   enableShutdown: process.env['ENABLE_SHUTDOWN'] === 'true',
   headersTimeout,
   keepAliveTimeout,
