@@ -16,8 +16,8 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/base64/encode`        | Encodes a string value to Base64 format.                                                                     |
 | `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                              |
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
+| `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
-| `ALL`  | `/error/network`        | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
 | `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |

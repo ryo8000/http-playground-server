@@ -11,17 +11,6 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
 
 describe('errorRouter', () => {
-  // Network disconnection and timeout are difficult to test in unit tests, so we do minimal verification
-  it.each(HTTP_METHODS)(
-    'should cause connection reset for network error via %s',
-    async (method) => {
-      const response = await request(app)
-        [method]('/error/network')
-        .catch((err) => err);
-      expect(response.message).toMatch(/socket hang up|ECONNRESET/);
-    },
-  );
-
   it.each(HTTP_METHODS)('should timeout for timeout error via %s', async (method) => {
     const response = await request(app)
       [method]('/error/timeout')

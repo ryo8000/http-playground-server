@@ -7,12 +7,6 @@ errorRouter.all('/timeout', () => {
   return;
 });
 
-errorRouter.all('/network', (req) => {
-  // Intentionally destroy the connection
-  req.socket.destroy();
-  return;
-});
-
 errorRouter.all('/malformed-json', (_req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send('{"invalid-json": true, missingQuotes: value'); // Missing closing brace and quotes
