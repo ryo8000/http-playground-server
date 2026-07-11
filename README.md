@@ -18,6 +18,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
 | `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                      |
 | `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                            |
+| `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                 |
 | `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
