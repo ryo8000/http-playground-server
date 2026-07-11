@@ -16,6 +16,12 @@ dripRouter.all('/', (req, res) => {
   res.setHeader('Content-Length', result.size);
   res.flushHeaders();
 
+  // HEAD has no body to drip; end after the headers so the timer never runs.
+  if (req.method === 'HEAD') {
+    res.end();
+    return;
+  }
+
   let sent = 0;
   const timer = setInterval(() => {
     res.write('a');
