@@ -869,6 +869,35 @@
       ]
     },
     {
+      "name": "Crash - Not Enabled",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/crash",
+          "host": ["{{baseUrl}}"],
+          "path": ["crash"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 403', function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "",
+              "pm.test('Response has error message', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Crash is not enabled');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Big Headers",
       "request": {
         "method": "GET",

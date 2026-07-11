@@ -17,6 +17,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                              |
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
 | `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                      |
+| `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                            |
 | `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
@@ -54,6 +55,7 @@ Built with **Node.js** and **Express**.
 | `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds. Must be > `KEEP_ALIVE_TIMEOUT`.         |
 | `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds. Must be > `HEADERS_TIMEOUT`.                 |
 | `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                               |
+| `ENABLE_CRASH`       | No       | `false`       | Enables the /crash endpoint.                                                  |
 | `MAX_DELAY`          | No       | `10000`       | Maximum allowed delay in milliseconds for the `delay` query parameter.        |
 | `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.                 |
 
