@@ -16,6 +16,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/base64/encode`        | Encodes a string value to Base64 format.                                                                     |
 | `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                              |
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
+| `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                      |
 | `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
