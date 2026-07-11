@@ -7,6 +7,9 @@ import { infiniteRouter } from '../../../src/routes/infinite.js';
 const app = express();
 app.use('/infinite', infiniteRouter);
 
+// HEAD is excluded: it has no body to stream and is covered by a dedicated test
+const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'] as const;
+
 describe('infiniteRouter', () => {
   let server: http.Server;
   let port: number;
@@ -23,27 +26,23 @@ describe('infiniteRouter', () => {
     server.close(done);
   });
 
-  // The body never ends, so the client reads a few chunks and aborts
-  it.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])(
-    'should keep streaming data for %s requests until the client aborts',
-    (method) => {
-      return new Promise<void>((resolve, reject) => {
-        const req = http.request({ port, path: '/infinite', method }, (res) => {
-          expect(res.statusCode).toBe(200);
-          let received = 0;
-          res.on('data', (chunk: Buffer) => {
-            received += chunk.length;
-            if (received >= 2048) {
-              req.destroy();
-              resolve();
-            }
-          });
+  it.each(HTTP_METHODS)('should keep streaming data until the client aborts via %s', (method) => {
+    return new Promise<void>((resolve, reject) => {
+      const req = http.request({ port, path: '/infinite', method }, (res) => {
+        expect(res.statusCode).toBe(200);
+        let received = 0;
+        res.on('data', (chunk: Buffer) => {
+          received += chunk.length;
+          if (received >= 2048) {
+            req.destroy();
+            resolve();
+          }
         });
-        req.on('error', reject);
-        req.end();
       });
-    },
-  );
+      req.on('error', reject);
+      req.end();
+    });
+  });
 
   // A HEAD response has no body, so the client sees a complete response at the headers
   it('should respond with only headers for HEAD requests', async () => {
