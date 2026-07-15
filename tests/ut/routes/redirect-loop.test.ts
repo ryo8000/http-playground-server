@@ -13,4 +13,10 @@ describe('redirectLoopRouter', () => {
     expect(response.status).toBe(302);
     expect(response.headers['location']).toBe('/redirect-loop');
   });
+
+  it('should preserve query parameters so middleware stays applied on every hop', async () => {
+    const response = await request(app).get('/redirect-loop?delay=1000').redirects(0);
+    expect(response.status).toBe(302);
+    expect(response.headers['location']).toBe('/redirect-loop?delay=1000');
+  });
 });
