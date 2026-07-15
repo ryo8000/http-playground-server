@@ -40,7 +40,7 @@ describe('failThenSucceedRouter', () => {
     expect(response.status).toBe(400);
     if (method !== 'head') {
       expect(response.body).toEqual({
-        error: { message: 'Invalid after. Must be an integer of 0 or more.' },
+        error: { message: 'Invalid after. Must be an integer between 0 and 10000.' },
       });
     }
   });

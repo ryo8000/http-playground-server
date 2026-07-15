@@ -2,9 +2,12 @@ import { HttpStatusCodes } from '../utils/http.js';
 import { toSafeInteger } from '../utils/number.js';
 
 const DEFAULT_AFTER = 3;
+const MAX_AFTER = 10_000;
 const DEFAULT_ID = 'default';
 // Safety cap so arbitrary ids cannot grow the counter map without bound.
 const MAX_TRACKED_IDS = 10_000;
+
+const INVALID_AFTER_MESSAGE = `Invalid after. Must be an integer between 0 and ${MAX_AFTER}.`;
 
 const attemptCounts = new Map<string, number>();
 
@@ -34,13 +37,13 @@ const badRequest = (message: string): FailThenSucceedResult => ({
  */
 export const failThenSucceed = (afterParam: unknown, idParam: unknown): FailThenSucceedResult => {
   if (afterParam !== undefined && typeof afterParam !== 'string') {
-    return badRequest('Invalid after. Must be an integer of 0 or more.');
+    return badRequest(INVALID_AFTER_MESSAGE);
   }
 
   const after = afterParam === undefined ? DEFAULT_AFTER : toSafeInteger(afterParam);
 
-  if (after === undefined || after < 0) {
-    return badRequest('Invalid after. Must be an integer of 0 or more.');
+  if (after === undefined || after < 0 || after > MAX_AFTER) {
+    return badRequest(INVALID_AFTER_MESSAGE);
   }
 
   if (idParam !== undefined && typeof idParam !== 'string') {
@@ -49,13 +52,18 @@ export const failThenSucceed = (afterParam: unknown, idParam: unknown): FailThen
 
   const id = idParam ?? DEFAULT_ID;
 
-  if (!attemptCounts.has(id) && attemptCounts.size >= MAX_TRACKED_IDS) {
-    attemptCounts.clear();
-  }
-
   const attempt = (attemptCounts.get(id) ?? 0) + 1;
 
   if (attempt <= after) {
+    // Evict just before storing a brand-new id at capacity, so requests that don't
+    // insert (success, after=0) never evict. FIFO by first insertion: Map preserves
+    // insertion order and set() on an existing key doesn't reorder it.
+    if (!attemptCounts.has(id) && attemptCounts.size >= MAX_TRACKED_IDS) {
+      const oldestKey = attemptCounts.keys().next().value;
+      if (oldestKey !== undefined) {
+        attemptCounts.delete(oldestKey);
+      }
+    }
     attemptCounts.set(id, attempt);
     return {
       status: HttpStatusCodes.INTERNAL_SERVER_ERROR,
