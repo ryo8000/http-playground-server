@@ -1150,6 +1150,37 @@
       ]
     },
     {
+      "name": "Redirect Loop",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/redirect-loop",
+          "host": ["{{baseUrl}}"],
+          "path": ["redirect-loop"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 302', function () {",
+              "    pm.response.to.have.status(302);",
+              "});",
+              "",
+              "pm.test('Location points to itself', function () {",
+              "    pm.expect(pm.response.headers.get('Location')).to.equal('/redirect-loop');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      }
+    },
+    {
       "name": "Big Headers",
       "request": {
         "method": "GET",

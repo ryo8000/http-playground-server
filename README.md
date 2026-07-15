@@ -30,6 +30,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/rate-limit`           | Allows `limit` requests per `window` seconds per `id`, then returns 429 with a `Retry-After` header.         |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
+| `ALL`  | `/redirect-loop`        | Redirects to itself forever with a 302 response.                                                             |
 | `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
 | `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                            |
 | `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                          |
