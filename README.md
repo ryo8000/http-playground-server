@@ -18,6 +18,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
 | `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                      |
 | `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                            |
+| `ALL`  | `/date`                 | Responds with an arbitrary `Date` header taken from the `value` query parameter.                             |
 | `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                 |
 | `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
@@ -58,6 +59,7 @@ Built with **Node.js** and **Express**.
 | `window`   | Number  | `10`      | Window length in seconds for `/rate-limit` (1–3600).                                               |
 | `count`    | Number  | `1`       | Number of oversized headers for `/big-headers` (1–100).                                            |
 | `interval` | Number  | `1000`    | Milliseconds between dripped bytes for `/drip` (1–10000).                                          |
+| `value`    | String  | —         | Value of the `Date` response header for `/date` (required).                                        |
 
 ---
 
