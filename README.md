@@ -23,6 +23,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
 | `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
+| `ALL`  | `/fail-then-succeed`    | Fails `after` times per `id`, then succeeds. The counter resets on success so the cycle repeats.             |
 | `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |
 | `ALL`  | `/infinite`             | Streams an endless chunked response body until the client closes the connection.                             |
 | `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                       |

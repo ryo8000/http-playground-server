@@ -869,6 +869,123 @@
       ]
     },
     {
+      "name": "Fail Then Succeed - Attempt 1 Fails",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/fail-then-succeed?after=2&id=e2e",
+          "host": ["{{baseUrl}}"],
+          "path": ["fail-then-succeed"],
+          "query": [
+            {
+              "key": "after",
+              "value": "2"
+            },
+            {
+              "key": "id",
+              "value": "e2e"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 500', function () {",
+              "    pm.response.to.have.status(500);",
+              "});",
+              "",
+              "pm.test('Response has error message', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Attempt 1 failed (succeeds on attempt 3)');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fail Then Succeed - Attempt 2 Fails",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/fail-then-succeed?after=2&id=e2e",
+          "host": ["{{baseUrl}}"],
+          "path": ["fail-then-succeed"],
+          "query": [
+            {
+              "key": "after",
+              "value": "2"
+            },
+            {
+              "key": "id",
+              "value": "e2e"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 500', function () {",
+              "    pm.response.to.have.status(500);",
+              "});",
+              "",
+              "pm.test('Response has error message', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Attempt 2 failed (succeeds on attempt 3)');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fail Then Succeed - Attempt 3 Succeeds",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/fail-then-succeed?after=2&id=e2e",
+          "host": ["{{baseUrl}}"],
+          "path": ["fail-then-succeed"],
+          "query": [
+            {
+              "key": "after",
+              "value": "2"
+            },
+            {
+              "key": "id",
+              "value": "e2e"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has success message', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.equal('Attempt 3 succeeded after 2 failure(s)');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Crash - Not Enabled",
       "request": {
         "method": "GET",
