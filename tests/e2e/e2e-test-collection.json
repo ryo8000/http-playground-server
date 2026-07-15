@@ -986,6 +986,41 @@
       ]
     },
     {
+      "name": "Truncate - Invalid Size",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/truncate?size=0",
+          "host": ["{{baseUrl}}"],
+          "path": ["truncate"],
+          "query": [
+            {
+              "key": "size",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Response has error message', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Invalid size. Must be an integer between 1 and 1048576.');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Crash - Not Enabled",
       "request": {
         "method": "GET",

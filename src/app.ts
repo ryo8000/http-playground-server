@@ -22,6 +22,7 @@ import { requestRouter } from './routes/request.js';
 import { resetRouter } from './routes/reset.js';
 import { shutdownRouter } from './routes/shutdown.js';
 import { statusRouter } from './routes/status.js';
+import { truncateRouter } from './routes/truncate.js';
 import { uuidRouter } from './routes/uuid.js';
 import { HttpStatusCodes } from './utils/http.js';
 import { environment } from './env.js';
@@ -63,6 +64,7 @@ app.use('/request', requestRouter);
 app.use('/reset', resetRouter);
 app.use('/shutdown', shutdownRouter);
 app.use('/status', statusRouter);
+app.use('/truncate', truncateRouter);
 app.use('/uuid', uuidRouter);
 
 // 404 handler
