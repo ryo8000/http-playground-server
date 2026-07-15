@@ -12,13 +12,7 @@ type DateResult =
  * @returns True if every character is allowed in a header value.
  */
 const isValidHeaderValue = (value: string): boolean => {
-  for (const char of value) {
-    const code = char.codePointAt(0) as number;
-    if ((code < 0x20 && code !== 0x09) || code === 0x7f || code > 0xff) {
-      return false;
-    }
-  }
-  return true;
+  return !/[^\t\x20-\x7e\x80-\xff]/.test(value);
 };
 
 /**
