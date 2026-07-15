@@ -4,9 +4,12 @@ import { HttpStatusCodes } from '../utils/http.js';
 const redirectLoopRouter = Router();
 
 redirectLoopRouter.all('/', (req, res) => {
-  // Redirect to the same URL (including query params) so middleware like `delay`
-  // stays applied on every hop of the loop.
-  res.redirect(HttpStatusCodes.FOUND, req.originalUrl);
+  // Redirect to this same route, preserving only the query string so middleware
+  // like `delay` stays applied on every hop. The path is a literal (not
+  // req.originalUrl) to avoid reflecting user input into the redirect target.
+  const queryIndex = req.originalUrl.indexOf('?');
+  const queryString = queryIndex === -1 ? '' : req.originalUrl.slice(queryIndex);
+  res.redirect(HttpStatusCodes.FOUND, `/redirect-loop${queryString}`);
 });
 
 export { redirectLoopRouter };
