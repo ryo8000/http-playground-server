@@ -28,6 +28,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/infinite`             | Streams an endless chunked response body until the client closes the connection.                             |
 | `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                       |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
+| `ALL`  | `/rate-limit`           | Allows `limit` requests per `window` seconds per `id`, then returns 429 with a `Retry-After` header.         |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
 | `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
 | `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                            |
