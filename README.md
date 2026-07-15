@@ -40,13 +40,23 @@ Built with **Node.js** and **Express**.
 
 ### Query Parameters
 
-| Name       | Type   | Default | Description                                                 |
-| ---------- | ------ | ------- | ----------------------------------------------------------- |
-| `delay`    | Number | `0`     | Delays the response by the specified value in milliseconds. |
-| `status`   | Number | —       | HTTP status code for `/redirect` or `/status/{status}`.     |
-| `url`      | String | —       | Target URL for `/redirect`.                                 |
-| `user`     | String | —       | Expected username for `/basic-auth` (required).             |
-| `password` | String | —       | Expected password for `/basic-auth` (required).             |
+| Name       | Type    | Default   | Description                                                                                        |
+| ---------- | ------- | --------- | -------------------------------------------------------------------------------------------------- |
+| `delay`    | Number  | `0`       | Delays the response by the specified value in milliseconds.                                        |
+| `status`   | Number  | —         | HTTP status code for `/redirect` or `/status/{status}`.                                            |
+| `url`      | String  | —         | Target URL for `/redirect`.                                                                        |
+| `user`     | String  | —         | Expected username for `/basic-auth` (required).                                                    |
+| `password` | String  | —         | Expected password for `/basic-auth` (required).                                                    |
+| `rate`     | Number  | `0.5`     | Failure probability between 0 and 1 for `/flaky`.                                                  |
+| `after`    | Number  | `3`       | Number of failures before success for `/fail-then-succeed` (0–10000).                              |
+| `id`       | String  | `default` | Key identifying the counter for `/fail-then-succeed` or `/rate-limit`.                             |
+| `size`     | Number  | —         | Bytes for `/truncate` (default `1024`), `/big-headers` (default `8192`) or `/drip` (default `10`). |
+| `send`     | Number  | `size/2`  | Bytes actually sent before cutting the connection for `/truncate`.                                 |
+| `chunked`  | Boolean | `false`   | Uses chunked transfer (no Content-Length) for `/truncate` when `true`.                             |
+| `limit`    | Number  | `5`       | Allowed requests per window for `/rate-limit` (1–10000).                                           |
+| `window`   | Number  | `10`      | Window length in seconds for `/rate-limit` (1–3600).                                               |
+| `count`    | Number  | `1`       | Number of oversized headers for `/big-headers` (1–100).                                            |
+| `interval` | Number  | `1000`    | Milliseconds between dripped bytes for `/drip` (1–10000).                                          |
 
 ---
 
