@@ -12,7 +12,7 @@ describe('timeoutRouter', () => {
   it.each(HTTP_METHODS)('should time out by never sending a response via %s', async (method) => {
     const response = await request(app)
       [method]('/timeout')
-      .timeout({ deadline: 1000 })
+      .timeout({ deadline: 200 })
       .catch((err) => err);
     expect(response.timeout).toBeTruthy();
   });
