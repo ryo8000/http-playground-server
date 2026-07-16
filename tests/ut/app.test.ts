@@ -49,7 +49,7 @@ describe('App', () => {
     });
 
     it('should return 500 for server errors', async () => {
-      const response = await request(app).get('/error/error');
+      const response = await request(app).get('/exception');
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
         error: {

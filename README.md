@@ -21,14 +21,13 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/date`                 | Responds with an arbitrary `Date` header taken from the `value` query parameter.                             |
 | `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                 |
 | `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
-| `ALL`  | `/error/timeout`        | Simulates a timeout by never sending a response.                                                             |
-| `ALL`  | `/error/malformed-json` | Returns malformed JSON response.                                                                             |
-| `ALL`  | `/error/error`          | Throws an unhandled exception to trigger Express error handler.                                              |
+| `ALL`  | `/exception`            | Throws an unhandled exception to trigger Express error handler.                                              |
 | `ALL`  | `/fail-then-succeed`    | Fails `after` times per `id`, then succeeds. The counter resets on success so the cycle repeats.             |
 | `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |
 | `ALL`  | `/flaky`                | Randomly fails with a 500 response based on the `rate` query parameter.                                      |
 | `ALL`  | `/infinite`             | Streams an endless chunked response body until the client closes the connection.                             |
 | `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                       |
+| `ALL`  | `/malformed-json`       | Returns malformed JSON response.                                                                             |
 | `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
 | `ALL`  | `/rate-limit`           | Allows `limit` requests per `window` seconds per `id`, then returns 429 with a `Retry-After` header.         |
 | `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
@@ -37,6 +36,7 @@ Built with **Node.js** and **Express**.
 | `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                            |
 | `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                          |
 | `ALL`  | `/status/{status}`      | Respond with a given HTTP status code (must be between 200 and 599).                                         |
+| `ALL`  | `/timeout`              | Simulates a timeout by never sending a response.                                                             |
 | `ALL`  | `/truncate`             | Declares a `size`-byte body but sends only `send` bytes before cutting the connection mid-response.          |
 | `ALL`  | `/uuid`                 | Generate and return a random UUID (version 4).                                                               |
 
