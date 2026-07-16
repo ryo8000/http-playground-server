@@ -636,9 +636,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/error/malformed-json",
+          "raw": "{{baseUrl}}/malformed-json",
           "host": ["{{baseUrl}}"],
-          "path": ["error", "malformed-json"]
+          "path": ["malformed-json"]
         }
       },
       "event": [
@@ -666,9 +666,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/error/error",
+          "raw": "{{baseUrl}}/exception",
           "host": ["{{baseUrl}}"],
-          "path": ["error", "error"]
+          "path": ["exception"]
         }
       },
       "event": [
