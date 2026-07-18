@@ -31,7 +31,6 @@ export const basicAuth = (
   passwordParam: unknown,
   authorizationHeader: string | undefined,
 ): BasicAuthResult => {
-  // Validate that both user and password are provided and non-empty
   if (
     !userParam ||
     !passwordParam ||
