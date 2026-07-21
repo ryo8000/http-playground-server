@@ -4,7 +4,7 @@ import { status } from '../services/status.js';
 const statusRouter = Router();
 
 statusRouter.all('/:status', (req, res) => {
-  const result = status(req.params.status);
+  const result = status(req.params.status, Math.random());
 
   if (!result.ok) {
     res.status(result.status).json(result.body);
