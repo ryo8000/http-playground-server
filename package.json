@@ -33,7 +33,7 @@
     "@types/express": "5.0.6",
     "@types/jest": "30.0.0",
     "@types/node": "26.1.1",
-    "@types/supertest": "7.2.0",
+    "@types/supertest": "7.2.1",
     "eslint": "10.7.0",
     "eslint-config-prettier": "10.1.8",
     "jest": "30.4.2",
