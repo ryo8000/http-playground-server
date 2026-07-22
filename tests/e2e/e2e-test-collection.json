@@ -1461,6 +1461,121 @@
       ]
     },
     {
+      "name": "Bearer Auth - Successful Authentication",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer secret-token"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bearer-auth?token=secret-token",
+          "host": ["{{baseUrl}}"],
+          "path": ["bearer-auth"],
+          "query": [
+            {
+              "key": "token",
+              "value": "secret-token"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Authentication is successful', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.authenticated).to.be.true;",
+              "    pm.expect(jsonData.message).to.equal('Authentication successful');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bearer Auth - Failed Authentication",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer wrong-token"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/bearer-auth?token=secret-token",
+          "host": ["{{baseUrl}}"],
+          "path": ["bearer-auth"],
+          "query": [
+            {
+              "key": "token",
+              "value": "secret-token"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 401', function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "",
+              "pm.test('WWW-Authenticate header is present', function () {",
+              "    pm.expect(pm.response.headers.get('WWW-Authenticate')).to.equal('Bearer realm=\"Access to /bearer-auth\"');",
+              "});",
+              "",
+              "pm.test('Authentication failed', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.authenticated).to.be.false;",
+              "    pm.expect(jsonData.message).to.equal('Authentication failed');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bearer Auth - Missing Token Parameter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/bearer-auth",
+          "host": ["{{baseUrl}}"],
+          "path": ["bearer-auth"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message is present', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Missing token query parameter');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Gzip - Compressed Response",
       "request": {
         "method": "GET",
