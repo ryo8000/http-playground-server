@@ -11,35 +11,36 @@ Built with **Node.js** and **Express**.
 
 ## 📚 API Reference
 
-| Method | Path                    | Description                                                                                                  |
-| ------ | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `ALL`  | `/base64/encode`        | Encodes a string value to Base64 format.                                                                     |
-| `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                              |
-| `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters. |
-| `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                      |
-| `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                            |
-| `ALL`  | `/date`                 | Responds with an arbitrary `Date` header taken from the `value` query parameter.                             |
-| `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                 |
-| `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                         |
-| `ALL`  | `/exception`            | Throws an unhandled exception to trigger Express error handler.                                              |
-| `ALL`  | `/fail-then-succeed`    | Fails `after` times per `id`, then succeeds. The counter resets on success so the cycle repeats.             |
-| `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.           |
-| `ALL`  | `/flaky`                | Randomly fails with a 500 response based on the `rate` query parameter.                                      |
-| `ALL`  | `/gzip`                 | Returns a correctly gzip-compressed JSON body (`Content-Encoding: gzip`).                                    |
-| `ALL`  | `/infinite`             | Streams an endless chunked response body until the client closes the connection.                             |
-| `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                       |
-| `ALL`  | `/malformed-json`       | Returns malformed JSON response.                                                                             |
-| `ALL`  | `/mirror`               | Returns the request body as a response.                                                                      |
-| `ALL`  | `/rate-limit`           | Allows `limit` requests per `window` seconds per `id`, then returns 429 with a `Retry-After` header.         |
-| `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                         |
-| `ALL`  | `/redirect-loop`        | Redirects to itself forever with a 302 response.                                                             |
-| `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                      |
-| `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                            |
-| `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                          |
-| `ALL`  | `/status/{status}`      | Respond with a given HTTP status code (must be between 200 and 599).                                         |
-| `ALL`  | `/timeout`              | Simulates a timeout by never sending a response.                                                             |
-| `ALL`  | `/truncate`             | Declares a `size`-byte body but sends only `send` bytes before cutting the connection mid-response.          |
-| `ALL`  | `/uuid`                 | Generate and return a random UUID (version 4).                                                               |
+| Method | Path                    | Description                                                                                                            |
+| ------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `ALL`  | `/base64/encode`        | Encodes a string value to Base64 format.                                                                               |
+| `ALL`  | `/base64/decode`        | Decodes a Base64 string to its original format.                                                                        |
+| `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters.           |
+| `ALL`  | `/bearer-auth`          | Tests HTTP Bearer Authentication: compares the token from the `Authorization: Bearer` header against query parameters. |
+| `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                                |
+| `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                                      |
+| `ALL`  | `/date`                 | Responds with an arbitrary `Date` header taken from the `value` query parameter.                                       |
+| `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                           |
+| `ALL`  | `/disconnect`           | Simulates a network error by closing the connection.                                                                   |
+| `ALL`  | `/exception`            | Throws an unhandled exception to trigger Express error handler.                                                        |
+| `ALL`  | `/fail-then-succeed`    | Fails `after` times per `id`, then succeeds. The counter resets on success so the cycle repeats.                       |
+| `ALL`  | `/fake-gzip`            | Declares `Content-Encoding: gzip` but returns an uncompressed body, so client decompression fails.                     |
+| `ALL`  | `/flaky`                | Randomly fails with a 500 response based on the `rate` query parameter.                                                |
+| `ALL`  | `/gzip`                 | Returns a correctly gzip-compressed JSON body (`Content-Encoding: gzip`).                                              |
+| `ALL`  | `/infinite`             | Streams an endless chunked response body until the client closes the connection.                                       |
+| `ALL`  | `/keep-alive-cut`       | Responds normally with `Connection: keep-alive`, then resets the connection (TCP RST).                                 |
+| `ALL`  | `/malformed-json`       | Returns malformed JSON response.                                                                                       |
+| `ALL`  | `/mirror`               | Returns the request body as a response.                                                                                |
+| `ALL`  | `/rate-limit`           | Allows `limit` requests per `window` seconds per `id`, then returns 429 with a `Retry-After` header.                   |
+| `ALL`  | `/redirect`             | Returns a redirect response based on the `status` and `url` of the query parameters.                                   |
+| `ALL`  | `/redirect-loop`        | Redirects to itself forever with a 302 response.                                                                       |
+| `ALL`  | `/request`              | Returns a structured JSON dump of the incoming request.                                                                |
+| `ALL`  | `/reset`                | Cuts the connection with a TCP RST instead of sending a response.                                                      |
+| `ALL`  | `/shutdown`             | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                                    |
+| `ALL`  | `/status/{status}`      | Respond with a given HTTP status code (must be between 200 and 599).                                                   |
+| `ALL`  | `/timeout`              | Simulates a timeout by never sending a response.                                                                       |
+| `ALL`  | `/truncate`             | Declares a `size`-byte body but sends only `send` bytes before cutting the connection mid-response.                    |
+| `ALL`  | `/uuid`                 | Generate and return a random UUID (version 4).                                                                         |
 
 ### Query Parameters
 
