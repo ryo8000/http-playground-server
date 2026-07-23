@@ -1,0 +1,15 @@
+name: "CodeQL config"
+
+# This is an HTTP playground server designed to be hit repeatedly by clients
+# under test. Several endpoints intentionally exhibit behavior that CodeQL's
+# default queries flag as risky, but which is the whole point of the endpoint.
+# Exclude those queries here rather than annotating each route.
+query-filters:
+  # Auth endpoints (e.g. /basic-auth, /bearer-auth) are pseudo-auth handlers,
+  # not a real authentication system, so rate limiting is intentionally omitted.
+  - exclude:
+      id: js/missing-rate-limiting
+  # /redirect redirects to a caller-supplied URL by design, so it cannot
+  # validate the redirect target.
+  - exclude:
+      id: js/server-side-unvalidated-url-redirection

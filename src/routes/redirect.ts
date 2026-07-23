@@ -11,7 +11,6 @@ redirectRouter.all('/', (req, res) => {
     return;
   }
 
-  // codeql[js/server-side-unvalidated-url-redirection]
   res.redirect(result.status, result.url);
 });
 
