@@ -4,7 +4,6 @@ import { bearerAuth } from '../services/bearer-auth.js';
 const bearerAuthRouter = Router();
 
 bearerAuthRouter.all('/', (req, res) => {
-  // codeql[js/missing-rate-limiting]
   const result = bearerAuth(req.query['token'], req.headers.authorization);
 
   if (result.headers) {
