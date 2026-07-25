@@ -33,7 +33,7 @@
       "Skill(verify)",
       "Bash(git add:*)",
       "Bash(git blame:*)",
-      "Bash(git branch)",
+      "Bash(git branch:*)",
       "Bash(git check-ignore:*)",
       "Bash(git diff:*)",
       "Bash(git fetch:*)",
@@ -44,9 +44,10 @@
       "Bash(git stash list)",
       "Bash(git status:*)",
       "Bash(git tag -l:*)",
-      "Bash(ls:*)",
       "Bash(node dist/server.js)",
+      "Bash(npm audit:*)",
       "Bash(npm info:*)",
+      "Bash(npm ls:*)",
       "Bash(npx eslint:*)",
       "Bash(npx jest:*)",
       "Bash(npx prettier:*)",
@@ -80,6 +81,5 @@
         ]
       }
     ]
-  },
-  "enableAllProjectMcpServers": false
+  }
 }
