@@ -1,0 +1,23 @@
+{
+  "name": "HTTP Playground (try the endpoints)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+
+  "postCreateCommand": "yarn install --frozen-lockfile",
+  "postAttachCommand": "yarn dev",
+
+  // Enabled so these endpoints can actually be tried; each Codespace is disposable.
+  // They stop the server process, and nodemon does not restart after a crash, so the
+  // server has to be brought back with `yarn dev`.
+  "remoteEnv": {
+    "ENABLE_CRASH": "true",
+    "ENABLE_SHUTDOWN": "true"
+  },
+
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "HTTP Playground Server",
+      "onAutoForward": "notify"
+    }
+  }
+}

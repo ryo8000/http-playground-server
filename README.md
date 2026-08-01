@@ -9,6 +9,39 @@ Built with **Node.js** and **Express**.
 
 ---
 
+## ⚡ Try It Instantly
+
+### In your browser, with GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ryo8000/http-playground-server?devcontainer_path=.devcontainer%2Fdemo%2Fdevcontainer.json)
+
+The badge opens a Codespace with the **HTTP Playground** configuration, which starts the server on port `8000` automatically. Send requests straight from the terminal:
+
+```bash
+curl -i localhost:8000/status/418
+curl -i localhost:8000/request
+curl -sv localhost:8000/reset
+```
+
+> [!TIP]
+> Use `localhost:8000` from the terminal rather than the forwarded `*.app.github.dev` URL. The forwarded URL goes through an HTTP proxy, which normalizes the connection-level behavior that endpoints like `/reset`, `/keep-alive-cut`, `/truncate`, and `/infinite` exist to demonstrate.
+
+`/crash` and `/shutdown` are enabled in the Codespace, and they really do stop the server process. Nothing else is affected — the Codespace is yours alone — but the server will not come back on its own. Restart it with:
+
+```bash
+yarn dev
+```
+
+### On your machine, with the published image
+
+```bash
+docker run --rm -p 8000:8000 ghcr.io/ryo8000/http-playground-server:latest
+```
+
+Add `-e ENABLE_SHUTDOWN=true -e ENABLE_CRASH=true` to enable those endpoints.
+
+---
+
 ## 📚 API Reference
 
 | Method | Path                    | Description                                                                                                            |
@@ -85,6 +118,8 @@ Built with **Node.js** and **Express**.
 ## 🚀 Build and Run the Application
 
 ### Using Docker
+
+Builds the image from source. To run the published image instead, see [Try It Instantly](#-try-it-instantly).
 
 1. Clone this repository:
 
