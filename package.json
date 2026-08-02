@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
+    "serve": "tsx src/server.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "jest",
