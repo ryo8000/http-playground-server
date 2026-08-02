@@ -18,9 +18,10 @@ Built with **Node.js** and **Express**.
 The badge opens a Codespace with the **HTTP Playground** configuration, which starts the server on port `8000` automatically. Send requests straight from the terminal:
 
 ```bash
-curl -i localhost:8000/status/418
-curl -i localhost:8000/request
-curl -sv localhost:8000/reset
+curl -i localhost:8000/status/503                  # any status code from 200 to 599
+curl -i localhost:8000/request                     # what the server received
+curl -N "localhost:8000/drip?size=5&interval=500"  # body dripped one byte at a time
+curl -sv localhost:8000/reset                      # connection killed with a TCP RST
 ```
 
 > [!TIP]
@@ -142,6 +143,12 @@ Builds the image from source. To run the published image instead, see [Try It In
    docker run -p 8000:8000 http-playground-server
    ```
 
+   Pass environment variables with `-e`:
+
+   ```bash
+   docker run -p 8000:8000 -e ENABLE_SHUTDOWN=true -e ENABLE_CRASH=true http-playground-server
+   ```
+
 ### Using Yarn
 
 1. Clone this repository:
@@ -167,6 +174,12 @@ Builds the image from source. To run the published image instead, see [Try It In
 
    ```bash
    node dist/server.js
+   ```
+
+   Pass environment variables as usual:
+
+   ```bash
+   ENABLE_SHUTDOWN=true ENABLE_CRASH=true node dist/server.js
    ```
 
 ---
