@@ -18,9 +18,10 @@ Built with **Node.js** and **Express**.
 The badge opens a Codespace with the **HTTP Playground** configuration, which starts the server on port `8000` automatically. Send requests straight from the terminal:
 
 ```bash
-curl -i localhost:8000/status/418
-curl -i localhost:8000/request
-curl -sv localhost:8000/reset
+curl -i localhost:8000/status/503                  # any status code you ask for
+curl -i localhost:8000/request                     # what the server received
+curl -N "localhost:8000/drip?size=5&interval=500"  # body dripped one byte at a time
+curl -sv localhost:8000/reset                      # connection killed with a TCP RST
 ```
 
 > [!TIP]
