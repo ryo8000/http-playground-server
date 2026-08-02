@@ -142,6 +142,12 @@ Builds the image from source. To run the published image instead, see [Try It In
    docker run -p 8000:8000 http-playground-server
    ```
 
+   Pass environment variables with `-e`:
+
+   ```bash
+   docker run -p 8000:8000 -e ENABLE_SHUTDOWN=true -e ENABLE_CRASH=true http-playground-server
+   ```
+
 ### Using Yarn
 
 1. Clone this repository:
@@ -167,6 +173,12 @@ Builds the image from source. To run the published image instead, see [Try It In
 
    ```bash
    node dist/server.js
+   ```
+
+   Pass environment variables as usual:
+
+   ```bash
+   ENABLE_SHUTDOWN=true ENABLE_CRASH=true node dist/server.js
    ```
 
 ---
