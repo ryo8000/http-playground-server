@@ -2,13 +2,17 @@
   "name": "HTTP Playground (try the endpoints)",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
 
+  // waitFor defaults to updateContentCommand, which lets the attach hook run mid-install.
+  "waitFor": "postCreateCommand",
   "postCreateCommand": "yarn install --frozen-lockfile",
-  "postAttachCommand": "yarn dev",
 
-  // Enabled so these endpoints can actually be tried; each Codespace is disposable.
-  // They stop the server process, and nodemon does not restart after a crash, so the
-  // server has to be brought back with `yarn dev`.
+  // The attach hook runs on every reconnect, hence the guard. `serve` rather than `dev`
+  // because a nodemon watcher survives /crash and would pile up on every restart.
+  "postAttachCommand": "curl -sf -o /dev/null http://localhost:8000/ || yarn serve",
+
+  // Enabled because each Codespace is disposable and isolated per user.
   "remoteEnv": {
+    "LOG_LEVEL": "debug",
     "ENABLE_CRASH": "true",
     "ENABLE_SHUTDOWN": "true"
   },

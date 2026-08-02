@@ -29,7 +29,7 @@ curl -sv localhost:8000/reset
 `/crash` and `/shutdown` are enabled in the Codespace, and they really do stop the server process. Nothing else is affected — the Codespace is yours alone — but the server will not come back on its own. Restart it with:
 
 ```bash
-yarn dev
+yarn serve
 ```
 
 ### On your machine, with the published image
@@ -38,7 +38,14 @@ yarn dev
 docker run --rm -p 8000:8000 ghcr.io/ryo8000/http-playground-server:latest
 ```
 
-Add `-e ENABLE_SHUTDOWN=true -e ENABLE_CRASH=true` to enable those endpoints.
+To enable `/crash` and `/shutdown`, pass the flags before the image name:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e ENABLE_SHUTDOWN=true \
+  -e ENABLE_CRASH=true \
+  ghcr.io/ryo8000/http-playground-server:latest
+```
 
 ---
 
