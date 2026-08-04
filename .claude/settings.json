@@ -5,15 +5,14 @@
       "Bash(rm -fr:*)",
       "Bash(rm -rf:*)",
       "Bash(sudo:*)",
-      "Read(./.env)",
-      "Read(./.env.*)"
+      "Read(**/.env)",
+      "Read(**/.env.*)"
     ],
     "ask": [
       "Bash(git branch -D:*)",
       "Bash(git branch -d:*)",
       "Bash(git checkout:*)",
       "Bash(git clean:*)",
-      "Bash(git commit:*)",
       "Bash(git merge:*)",
       "Bash(git push:*)",
       "Bash(git rebase:*)",
@@ -23,7 +22,6 @@
       "Bash(git stash pop:*)",
       "Bash(git stash push:*)",
       "Bash(git switch:*)",
-      "Bash(node -e:*)",
       "Bash(yarn add:*)",
       "Bash(yarn remove:*)",
       "Bash(yarn upgrade:*)"
@@ -45,7 +43,6 @@
       "Bash(git status:*)",
       "Bash(git tag -l:*)",
       "Bash(node dist/server.js)",
-      "Bash(npm audit:*)",
       "Bash(npm info:*)",
       "Bash(npm ls:*)",
       "Bash(npx eslint:*)",
@@ -62,11 +59,13 @@
       "Bash(yarn lint:*)",
       "Bash(yarn lint:fix:*)",
       "Bash(yarn outdated)",
+      "Bash(yarn serve)",
       "Bash(yarn test:*)",
       "Bash(yarn test:coverage:*)",
       "Bash(yarn test:e2e:*)",
       "Bash(yarn typecheck)",
-      "Bash(yarn verify:*)"
+      "Bash(yarn verify:*)",
+      "Bash(yarn why:*)"
     ]
   },
   "hooks": {
