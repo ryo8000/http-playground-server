@@ -1579,6 +1579,209 @@
           }
         }
       ]
+    },
+    {
+      "name": "Cookies - Returns Request Cookies",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "e2e=1"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cookies",
+          "host": ["{{baseUrl}}"],
+          "path": ["cookies"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Body contains the request cookie', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.cookies.e2e).to.equal('1');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cookies - Set Cookies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cookies/set?flavor=chocolate&session=abc123",
+          "host": ["{{baseUrl}}"],
+          "path": ["cookies", "set"],
+          "query": [
+            {
+              "key": "flavor",
+              "value": "chocolate"
+            },
+            {
+              "key": "session",
+              "value": "abc123"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Set-Cookie headers are present', function () {",
+              "    var setCookie = pm.response.headers.filter(function (header) {",
+              "        return header.key.toLowerCase() === 'set-cookie';",
+              "    }).map(function (header) { return header.value; });",
+              "    pm.expect(setCookie).to.have.lengthOf(2);",
+              "    pm.expect(setCookie[0]).to.include('flavor=chocolate');",
+              "    pm.expect(setCookie[1]).to.include('session=abc123');",
+              "});",
+              "",
+              "pm.test('Body echoes the cookie pairs', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.cookies).to.eql({ flavor: 'chocolate', session: 'abc123' });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cookies - Set Repeated Parameter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cookies/set?flavor=chocolate&flavor=vanilla",
+          "host": ["{{baseUrl}}"],
+          "path": ["cookies", "set"],
+          "query": [
+            {
+              "key": "flavor",
+              "value": "chocolate"
+            },
+            {
+              "key": "flavor",
+              "value": "vanilla"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('No Set-Cookie header is sent', function () {",
+              "    pm.expect(pm.response.headers.get('Set-Cookie')).to.be.undefined;",
+              "});",
+              "",
+              "pm.test('Body contains the error message', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal(\"Invalid value for cookie 'flavor'. Must be a single string.\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cookies - Delete Cookies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cookies/delete?flavor=",
+          "host": ["{{baseUrl}}"],
+          "path": ["cookies", "delete"],
+          "query": [
+            {
+              "key": "flavor",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Expired Set-Cookie header is present', function () {",
+              "    pm.expect(pm.response.headers.get('Set-Cookie')).to.include('flavor=;');",
+              "});",
+              "",
+              "pm.test('Body lists the deleted cookies', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.deleted).to.eql(['flavor']);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cookies - Delete Invalid Cookie Name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cookies/delete?bad%20name=",
+          "host": ["{{baseUrl}}"],
+          "path": ["cookies", "delete"],
+          "query": [
+            {
+              "key": "bad name",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('No Set-Cookie header is sent', function () {",
+              "    pm.expect(pm.response.headers.get('Set-Cookie')).to.be.undefined;",
+              "});",
+              "",
+              "pm.test('Body contains the error message', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal(\"Invalid cookie name 'bad name'.\");",
+              "});"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

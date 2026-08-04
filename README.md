@@ -59,6 +59,9 @@ docker run --rm -p 8000:8000 \
 | `ALL`  | `/basic-auth`           | Tests HTTP Basic Authentication by comparing credentials from Authorization header against query parameters.           |
 | `ALL`  | `/bearer-auth`          | Tests HTTP Bearer Authentication: compares the token from the `Authorization: Bearer` header against query parameters. |
 | `ALL`  | `/big-headers`          | Responds with `count` oversized `X-Big-Header-*` response headers of `size` bytes each.                                |
+| `ALL`  | `/cookies`              | Returns the cookies sent with the request.                                                                             |
+| `ALL`  | `/cookies/set`          | Sets one cookie per query parameter and echoes them back: `/cookies/set?flavor=chocolate`.                             |
+| `ALL`  | `/cookies/delete`       | Expires the cookies named by the query parameters: `/cookies/delete?flavor=`.                                          |
 | `ALL`  | `/crash`                | Kills the server process without graceful shutdown. Requires `ENABLE_CRASH=true`.                                      |
 | `ALL`  | `/date`                 | Responds with an arbitrary `Date` header taken from the `value` query parameter.                                       |
 | `ALL`  | `/drip`                 | Drips the response body one byte per `interval` until `size` bytes are sent.                                           |
