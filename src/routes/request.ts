@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { parseCookieHeader } from '../utils/cookies.js';
 
 const requestRouter = Router();
 
@@ -12,7 +13,7 @@ requestRouter.all('/', (req, res) => {
     query: req.query,
     headers: req.headers,
     body: req.method === 'GET' || req.body === undefined ? {} : req.body,
-    cookies: req.cookies,
+    cookies: parseCookieHeader(req.headers.cookie),
   });
 });
 

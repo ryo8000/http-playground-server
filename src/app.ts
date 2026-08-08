@@ -1,5 +1,4 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { delayMiddleware } from './middlewares/delay.js';
 import { loggerMiddleware } from './middlewares/logger.js';
@@ -49,7 +48,6 @@ app.use(
     allowedHeaders: ['Authorization', 'Content-Type'],
   }),
 );
-app.use(cookieParser());
 app.use(loggerMiddleware);
 app.use(delayMiddleware);
 
