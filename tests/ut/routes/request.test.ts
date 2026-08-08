@@ -1,12 +1,10 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import request from 'supertest';
 import { requestRouter } from '../../../src/routes/request.js';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use('/request', requestRouter);
 
 const BODY_METHODS = ['post', 'put', 'delete', 'patch', 'options'] as const;
@@ -62,6 +60,15 @@ describe('requestRouter', () => {
       protocol: expect.any(String),
       host: expect.any(String),
     });
+  });
+
+  it('should respond with the cookies exactly as sent', async () => {
+    const res = await request(app)
+      .get('/request')
+      .set('Cookie', '__proto__=abc; a=j%3A%7B%22x%22%3A1%7D');
+
+    expect(res.status).toBe(200);
+    expect(res.body.cookies).toEqual({ ['__proto__']: 'abc', a: 'j:{"x":1}' });
   });
 
   it('should return 200 for head', async () => {

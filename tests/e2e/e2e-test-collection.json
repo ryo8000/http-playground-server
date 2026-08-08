@@ -387,6 +387,10 @@
           {
             "key": "X-Test-Header",
             "value": "test-value"
+          },
+          {
+            "key": "Cookie",
+            "value": "e2e=1; json=j%3A%7B%22x%22%3A1%7D"
           }
         ],
         "url": {
@@ -422,6 +426,11 @@
               "    pm.expect(jsonData).to.have.property('body');",
               "    pm.expect(jsonData).to.have.property('cookies');",
               "    pm.expect(jsonData.query).to.have.property('test', 'param');",
+              "});",
+              "",
+              "pm.test('Cookies are reported as sent', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.cookies).to.eql({ e2e: '1', json: 'j:{\"x\":1}' });",
               "});"
             ]
           }

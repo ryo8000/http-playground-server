@@ -1,10 +1,8 @@
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import request from 'supertest';
 import { cookiesRouter } from '../../../src/routes/cookies.js';
 
 const app = express();
-app.use(cookieParser());
 app.use('/cookies', cookiesRouter);
 
 const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;

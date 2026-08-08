@@ -1,3 +1,4 @@
+import { parseCookieHeader } from '../utils/cookies.js';
 import { HttpStatusCodes } from '../utils/http.js';
 
 // RFC 6265 cookie-name characters (HTTP token)
@@ -26,53 +27,15 @@ const badRequest = (message: string): InvalidCookieResult => ({
 });
 
 /**
- * Decodes a cookie value, unwrapping the optional double quotes around it.
- *
- * @param value - The raw value from the Cookie header.
- * @returns The decoded value, or the raw one when the percent-encoding is
- *   malformed (`decodeURIComponent` throws on e.g. '%zz').
- */
-const decodeCookieValue = (value: string): string => {
-  const unquoted = value.startsWith('"') && value.endsWith('"') ? value.slice(1, -1) : value;
-
-  try {
-    return decodeURIComponent(unquoted);
-  } catch {
-    return unquoted;
-  }
-};
-
-/**
- * Parses a Cookie request header into the name/value pairs it carries.
- *
- * Deliberately parsed here rather than read from cookie-parser's `req.cookies`:
- * that drops a cookie named '__proto__' and turns 'j:'-prefixed values into
- * objects, so the endpoint would not report what the client actually sent.
+ * Reads the cookies carried by a Cookie request header.
  *
  * @param header - The raw Cookie header, absent when the request sent none.
- * @returns A result with one entry per cookie, the first occurrence winning.
+ * @returns A result with one entry per cookie.
  */
-export const readCookies = (header: string | undefined): ReadCookiesResult => {
-  const cookies: Record<string, string> = Object.create(null);
-
-  for (const pair of header?.split(';') ?? []) {
-    const separator = pair.indexOf('=');
-
-    if (separator < 0) {
-      continue;
-    }
-
-    const name = pair.slice(0, separator).trim();
-
-    if (name === '' || Object.prototype.hasOwnProperty.call(cookies, name)) {
-      continue;
-    }
-
-    cookies[name] = decodeCookieValue(pair.slice(separator + 1).trim());
-  }
-
-  return { status: HttpStatusCodes.OK, body: { cookies } };
-};
+export const readCookies = (header: string | undefined): ReadCookiesResult => ({
+  status: HttpStatusCodes.OK,
+  body: { cookies: parseCookieHeader(header) },
+});
 
 /**
  * Validates query parameters as cookie name/value pairs to set.
