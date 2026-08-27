@@ -12,14 +12,14 @@ server.keepAliveTimeout = environment.keepAliveTimeout;
 
 let isShuttingDown = false;
 
-process.on('SIGTERM', () => {
+const gracefulShutdown = (signal: NodeJS.Signals) => {
   if (isShuttingDown) {
     log.warn('Shutdown already in progress...');
     return;
   }
   isShuttingDown = true;
 
-  log.info('SIGTERM signal received: closing HTTP server');
+  log.info(`${signal} signal received: closing HTTP server`);
 
   const forceExitTimeout = setTimeout(() => {
     log.error('Server close timed out, forcing exit');
@@ -38,4 +38,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
   server.closeIdleConnections();
-});
+};
+
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
