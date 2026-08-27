@@ -7,9 +7,10 @@ paths:
 
 ## Layering
 
-- Route handlers must stay thin: extract request input, call a service function, respond with `res.status(result.status).json(result.body)`. When there is no body, use `res.sendStatus(result.status)` (see `src/routes/status.ts`). For non-JSON responses like redirects, send the status-appropriate reply instead (e.g. `res.redirect(result.status, result.url)`; see `src/routes/redirect.ts`).
-- Endpoint logic lives in `src/services/` as pure functions that take plain values (never `req`/`res`) and return a `{ status, body }` result object. Add a discriminant like `ok` only when the route must branch on it (see `src/services/status.ts`); otherwise use a plain union without a tag (see `src/services/base64.ts`).
-- Shared helpers go in `src/utils/`. Check there before writing new helper logic.
+Endpoint logic lives in `src/services/` as pure functions taking plain values (never `req`/`res`); shared helpers go in `src/utils/` — check there before writing new helper logic. What lives in the service vs the route depends on one question: **does the success response have an irreducible `res`/socket side effect** (streaming, `socket.destroy()`, never responding)?
+
+- **No** — the service returns the whole response as `{ status, body }`, plus a `headers` record if it sets custom headers (`src/services/big-headers.ts`); add an `ok` discriminant only when the route branches on it (`src/services/status.ts`), else a plain union (`src/services/base64.ts`). The route just forwards it, applying headers via `Object.entries(result.headers)` rather than by name (`src/routes/basic-auth.ts`).
+- **Yes** (drip, truncate, disconnect, reset, keep-alive-cut) — the service only validates and returns resolved params, with `status`/`body` on the error case; the route owns all `res`/socket orchestration, including `res.on('close')` cleanup (`src/routes/drip.ts`). With no params to validate, skip the service entirely (`src/routes/reset.ts`).
 
 ## Module conventions (ESM)
 
@@ -26,11 +27,11 @@ paths:
 
 ## Comments
 
-- Add comments (including JSDoc) only when they explain a non-obvious constraint or decision; do not add boilerplate JSDoc that restates the signature.
-- Leave existing boilerplate JSDoc alone — don't strip it in unrelated patches.
+- Every named function gets a JSDoc (purpose, `@param`, `@returns`) — including non-exported helpers like the `badRequest` factories in `src/services/`.
+- Add inline comments only for a non-obvious constraint or decision, not boilerplate that restates the code.
 
 ## Scope discipline
 
 - Prefer editing existing files over creating new ones.
 - Follow YAGNI/DRY: implement only what is requested or clearly necessary (no speculative error handling or hypothetical extensibility), and commonize only once duplication is real and identical.
-- Inline values used only once instead of extracting constants; don't add type aliases or result fields (e.g. an `ok` flag) that nothing discriminates on.
+- Inline single-use values; don't extract constants, type aliases, or an `ok` flag that nothing branches on.
