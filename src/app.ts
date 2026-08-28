@@ -6,6 +6,7 @@ import { base64Router } from './routes/base64.js';
 import { basicAuthRouter } from './routes/basic-auth.js';
 import { bearerAuthRouter } from './routes/bearer-auth.js';
 import { bigHeadersRouter } from './routes/big-headers.js';
+import { cacheRouter } from './routes/cache.js';
 import { cookiesRouter } from './routes/cookies.js';
 import { crashRouter } from './routes/crash.js';
 import { dateRouter } from './routes/date.js';
@@ -45,7 +46,9 @@ app.use(express.json());
 app.use(
   cors({
     origin: environment.origin,
-    allowedHeaders: ['Authorization', 'Content-Type'],
+    // Neither the conditional request headers nor ETag are CORS-safelisted
+    allowedHeaders: ['Authorization', 'Content-Type', 'If-None-Match', 'If-Modified-Since'],
+    exposedHeaders: ['ETag'],
   }),
 );
 app.use(loggerMiddleware);
@@ -56,6 +59,7 @@ app.use('/base64', base64Router);
 app.use('/basic-auth', basicAuthRouter);
 app.use('/bearer-auth', bearerAuthRouter);
 app.use('/big-headers', bigHeadersRouter);
+app.use('/cache', cacheRouter);
 app.use('/cookies', cookiesRouter);
 app.use('/crash', crashRouter);
 app.use('/date', dateRouter);

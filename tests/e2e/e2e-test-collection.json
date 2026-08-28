@@ -1556,6 +1556,177 @@
       ]
     },
     {
+      "name": "Cache - Returns Cache Headers",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cache",
+          "host": ["{{baseUrl}}"],
+          "path": ["cache"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('ETag, Last-Modified, and Cache-Control headers are present', function () {",
+              "    pm.expect(pm.response.headers.get('ETag')).to.equal('\"http-playground\"');",
+              "    pm.expect(pm.response.headers.get('Last-Modified')).to.be.a('string');",
+              "    pm.expect(pm.response.headers.get('Cache-Control')).to.equal('no-cache');",
+              "});",
+              "",
+              "pm.test('Body echoes the unquoted etag and Last-Modified', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.etag).to.equal('http-playground');",
+              "    pm.expect(jsonData.lastModified).to.be.a('string');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache - Conditional Request Returns 304",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "If-None-Match",
+            "value": "\"http-playground\""
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cache",
+          "host": ["{{baseUrl}}"],
+          "path": ["cache"]
+        }
+      },
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "cache-control": true
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 304', function () {",
+              "    pm.response.to.have.status(304);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache - Stale Validator Returns 200",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "If-None-Match",
+            "value": "\"stale\""
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/cache",
+          "host": ["{{baseUrl}}"],
+          "path": ["cache"]
+        }
+      },
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "cache-control": true
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Body echoes the current unquoted etag', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.etag).to.equal('http-playground');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache - Max-Age Header",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cache/60",
+          "host": ["{{baseUrl}}"],
+          "path": ["cache", "60"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Cache-Control header is set', function () {",
+              "    pm.expect(pm.response.headers.get('Cache-Control')).to.equal('public, max-age=60');",
+              "});",
+              "",
+              "pm.test('Body echoes the Cache-Control value', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.cacheControl).to.equal('public, max-age=60');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache - Invalid Seconds",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/cache/abc",
+          "host": ["{{baseUrl}}"],
+          "path": ["cache", "abc"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message is present', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Invalid seconds. Must be an integer between 0 and 31536000.');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Gzip - Compressed Response",
       "request": {
         "method": "GET",
