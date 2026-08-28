@@ -13,9 +13,8 @@ Run the checks below in order. Fix failures and rerun the failed step before mov
 yarn verify
 ```
 
-- `format:check` failure → run `yarn format`, rerun.
-- `lint` failure → run `yarn lint:fix`, fix the rest by hand, rerun.
-- `typecheck` failure → fix the type errors, rerun.
+- `format:check` failure → run `yarn format`.
+- `lint` failure → run `yarn lint:fix`, then fix the rest by hand.
 
 ## 2. Unit tests
 
