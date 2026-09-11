@@ -35,7 +35,7 @@
     "@types/supertest": "7.2.1",
     "eslint": "10.9.1",
     "eslint-config-prettier": "10.1.8",
-    "jest": "30.5.0",
+    "jest": "30.5.1",
     "newman": "6.2.2",
     "nodemon": "3.1.14",
     "pino-pretty": "13.1.3",
