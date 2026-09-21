@@ -47,13 +47,13 @@
     "typescript-eslint": "8.70.0"
   },
   "resolutions": {
-    "flatted": "3.4.2",
-    "handlebars": "4.7.9",
-    "jose": "4.15.9",
-    "lodash": "4.18.1",
-    "node-forge": "1.4.0",
-    "qs": "6.16.0",
-    "underscore": "1.13.8",
-    "uuid": "11.1.1"
+    "newman/**/flatted": "3.4.2",
+    "newman/**/handlebars": "4.7.9",
+    "newman/**/jose": "4.15.9",
+    "newman/**/lodash": "4.18.1",
+    "newman/**/node-forge": "1.4.0",
+    "newman/**/qs": "6.16.0",
+    "newman/**/underscore": "1.13.8",
+    "newman/**/uuid": "11.1.1"
   }
 }
