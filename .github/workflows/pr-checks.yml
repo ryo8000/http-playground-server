@@ -117,6 +117,9 @@ jobs:
           path: e2e-test-results.json
         if: always()
 
+      - name: Audit production dependencies
+        run: yarn audit --groups dependencies
+
   docker-build:
     name: Docker image build
     needs: detect-changes
