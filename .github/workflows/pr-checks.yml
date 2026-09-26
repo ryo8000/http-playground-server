@@ -10,6 +10,10 @@ on:
       - main
       - review
 
+# See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+env:
+  NODE_VERSION: 26.x
+
 jobs:
   detect-changes:
     name: Detect relevant changes
@@ -50,10 +54,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    strategy:
-      matrix:
-        node-version: [26.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout repository
@@ -61,10 +61,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
 
       - name: Install dependencies
@@ -117,6 +117,25 @@ jobs:
           path: e2e-test-results.json
         if: always()
 
+  audit:
+    name: Audit dependencies
+    needs: detect-changes
+    if: needs.detect-changes.outputs.run_checks == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Audit production dependencies
         run: yarn audit --groups dependencies
 
@@ -155,6 +174,7 @@ jobs:
     needs:
       - detect-changes
       - test
+      - audit
       - docker-build
     if: always()
     runs-on: ubuntu-latest
@@ -178,9 +198,14 @@ jobs:
             exit 1
           fi
 
+          if [ "${{ needs.audit.result }}" != "success" ]; then
+            echo "Audit job result was ${{ needs.audit.result }}; blocking merge."
+            exit 1
+          fi
+
           if [ "${{ needs.docker-build.result }}" != "success" ]; then
             echo "Docker image build job result was ${{ needs.docker-build.result }}; blocking merge."
             exit 1
           fi
 
-          echo "Test and Docker image build jobs passed."
+          echo "Test, audit, and Docker image build jobs passed."
