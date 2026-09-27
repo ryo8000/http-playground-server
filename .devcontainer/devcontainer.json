@@ -7,6 +7,7 @@
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
     "ghcr.io/devcontainers/features/docker-in-docker:4": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
   },
@@ -17,7 +18,6 @@
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": {
     "install-deps": "yarn",
-    "install-claude-code": "curl -fsSL https://claude.ai/install.sh | bash",
     "install-codex": "curl -fsSL https://chatgpt.com/codex/install.sh | sh",
   },
 
