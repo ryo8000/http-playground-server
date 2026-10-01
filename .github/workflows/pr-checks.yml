@@ -204,7 +204,7 @@ jobs:
           fi
 
           if [ "${{ needs.detect-changes.outputs.run_checks }}" != "true" ]; then
-            echo "No application, test, or image changes detected; required checks are satisfied."
+            echo "No application, test, or image changes detected; skipped test, audit, and Docker build jobs."
             exit 0
           fi
 
