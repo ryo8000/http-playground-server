@@ -5,6 +5,11 @@
 - Package manager: Yarn 1.
 - Keep changes minimal and consistent with existing coding patterns in `src/` and `tests/ut/`.
 
+## Style
+- Inline comments: explain *why*, not *what*. Skip them when the code is self-explanatory.
+- Keep the existing JSDoc format (summary + `@param`/`@returns`) on functions; no extra prose.
+- README: one terse API Reference row per endpoint; don't restate what the code shows.
+
 ## Completion checklist
 1. `yarn verify` (runs format:check, lint, typecheck in order)
 2. `yarn test`
