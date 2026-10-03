@@ -9,10 +9,11 @@ This guide covers development-specific details for contributing to the HTTP Play
 │   ├── app.ts               # Main application setup
 │   ├── env.ts               # Environment variable handler
 │   ├── logger.ts            # Application logging configuration
-│   ├── middlewares          # Middlewares directory
-│   ├── routes               # API routes directory
+│   ├── middlewares          # Middlewares
+│   ├── routes               # Express routers (one file per endpoint)
 │   ├── server.ts            # Server startup and shutdown handling
-│   └── utils                # Utility functions directory
+│   ├── services             # Endpoint business logic used by routes
+│   └── utils                # Utility functions
 ├── tests
 │   ├── e2e                  # E2E tests directory
 │   └── ut                   # Unit tests directory
