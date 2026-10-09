@@ -50,12 +50,29 @@ describe('Environment configuration', () => {
     },
   );
 
-  it.each(['abc', '-1'])('should throw an error if an integer variable is %j', async (value) => {
-    process.env.PORT = value;
+  it.each([
+    ['PORT', 'abc'],
+    ['PORT', '-1'],
+    ['PORT', '65536'],
+    ['KEEP_ALIVE_TIMEOUT', String(2 ** 31 - 1 - 1000 + 1)],
+  ])('should throw an error if %s is %j', async (name, value) => {
+    process.env[name] = value;
 
-    await expect(loadEnv()).rejects.toThrow(
-      `Invalid PORT: ${value} must be a non-negative integer`,
-    );
+    await expect(loadEnv()).rejects.toThrow(`Invalid ${name}: ${JSON.stringify(value)}`);
+  });
+
+  it('should accept integer variables at their upper limits', async () => {
+    process.env.KEEP_ALIVE_TIMEOUT = String(2 ** 31 - 1 - 1000);
+    process.env.HEADERS_TIMEOUT = String(2 ** 32);
+    process.env.REQUEST_TIMEOUT = String(Number.MAX_SAFE_INTEGER);
+    process.env.PORT = '65535';
+
+    expect(await loadEnv()).toMatchObject({
+      headersTimeout: 2 ** 32,
+      keepAliveTimeout: 2 ** 31 - 1 - 1000,
+      port: 65535,
+      requestTimeout: Number.MAX_SAFE_INTEGER,
+    });
   });
 
   it('should throw an error if headersTimeout <= keepAliveTimeout', async () => {
