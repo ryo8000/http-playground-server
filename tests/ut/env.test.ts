@@ -41,6 +41,23 @@ describe('Environment configuration', () => {
     });
   });
 
+  it.each(['0', ''])(
+    'should fall back to the default value if an integer variable is %j',
+    async (value) => {
+      process.env.PORT = value;
+
+      expect((await loadEnv()).port).toBe(8000);
+    },
+  );
+
+  it.each(['abc', '-1'])('should throw an error if an integer variable is %j', async (value) => {
+    process.env.PORT = value;
+
+    await expect(loadEnv()).rejects.toThrow(
+      `Invalid PORT: ${value} must be a non-negative integer`,
+    );
+  });
+
   it('should throw an error if headersTimeout <= keepAliveTimeout', async () => {
     process.env.HEADERS_TIMEOUT = '4000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
