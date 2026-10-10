@@ -50,46 +50,69 @@ describe('Environment configuration', () => {
     },
   );
 
-  it.each([
-    ['PORT', 'abc'],
-    ['PORT', '-1'],
-    ['PORT', '65536'],
-    ['KEEP_ALIVE_TIMEOUT', String(2 ** 31 - 1 - 1000 + 1)],
-  ])('should throw an error if %s is %j', async (name, value) => {
-    process.env[name] = value;
+  it.each(['abc', '-1', '65536'])('should throw an error if PORT is %j', async (value) => {
+    process.env.PORT = value;
 
-    await expect(loadEnv()).rejects.toThrow(`Invalid ${name}: ${JSON.stringify(value)}`);
+    await expect(loadEnv()).rejects.toThrow(`PORT=${JSON.stringify(value)}`);
   });
 
-  it('should accept integer variables at their upper limits', async () => {
+  it('should accept integer variables at their largest allowed values', async () => {
     process.env.KEEP_ALIVE_TIMEOUT = String(2 ** 31 - 1 - 1000);
-    process.env.HEADERS_TIMEOUT = String(2 ** 32);
+    process.env.HEADERS_TIMEOUT = String(Number.MAX_SAFE_INTEGER - 1);
     process.env.REQUEST_TIMEOUT = String(Number.MAX_SAFE_INTEGER);
+    process.env.MAX_DELAY = String(2 ** 31 - 1);
     process.env.PORT = '65535';
 
     expect(await loadEnv()).toMatchObject({
-      headersTimeout: 2 ** 32,
+      headersTimeout: Number.MAX_SAFE_INTEGER - 1,
       keepAliveTimeout: 2 ** 31 - 1 - 1000,
+      maxDelay: 2 ** 31 - 1,
       port: 65535,
       requestTimeout: Number.MAX_SAFE_INTEGER,
     });
   });
 
-  it('should throw an error if headersTimeout <= keepAliveTimeout', async () => {
-    process.env.HEADERS_TIMEOUT = '4000';
+  it('should throw an error if HEADERS_TIMEOUT <= KEEP_ALIVE_TIMEOUT', async () => {
+    process.env.HEADERS_TIMEOUT = '5000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
 
     await expect(loadEnv()).rejects.toThrow(
-      /headersTimeout \(4000ms\) must be greater than keepAliveTimeout \(5000ms\)/,
+      'HEADERS_TIMEOUT=5000 must be greater than KEEP_ALIVE_TIMEOUT=5000',
     );
   });
 
-  it('should throw an error if requestTimeout <= headersTimeout', async () => {
+  it('should throw an error if REQUEST_TIMEOUT <= HEADERS_TIMEOUT', async () => {
     process.env.HEADERS_TIMEOUT = '10000';
-    process.env.REQUEST_TIMEOUT = '9000';
+    process.env.REQUEST_TIMEOUT = '10000';
 
     await expect(loadEnv()).rejects.toThrow(
-      /requestTimeout \(9000ms\) must be greater than headersTimeout \(10000ms\)/,
+      'REQUEST_TIMEOUT=10000 must be greater than HEADERS_TIMEOUT=10000',
+    );
+  });
+
+  it('should skip timeout ordering checks against an invalid value', async () => {
+    process.env.KEEP_ALIVE_TIMEOUT = String(2 ** 31 - 1 - 1000 + 1);
+    process.env.HEADERS_TIMEOUT = '10000';
+
+    await expect(loadEnv()).rejects.toThrow(
+      new Error(
+        'Invalid environment configuration:\n' +
+          `  - KEEP_ALIVE_TIMEOUT="${2 ** 31 - 1 - 1000 + 1}" must be an integer between 1 and ${2 ** 31 - 1 - 1000}, or 0 for the default`,
+      ),
+    );
+  });
+
+  it('should report all errors at once', async () => {
+    process.env.PORT = 'abc';
+    process.env.HEADERS_TIMEOUT = '5000';
+    process.env.KEEP_ALIVE_TIMEOUT = '5000';
+
+    await expect(loadEnv()).rejects.toThrow(
+      new Error(
+        'Invalid environment configuration:\n' +
+          '  - PORT="abc" must be an integer between 1 and 65535, or 0 for the default\n' +
+          '  - HEADERS_TIMEOUT=5000 must be greater than KEEP_ALIVE_TIMEOUT=5000',
+      ),
     );
   });
 
