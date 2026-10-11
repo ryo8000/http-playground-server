@@ -67,10 +67,11 @@ describe('Environment configuration', () => {
     });
   });
 
-  it('should fall back to the default value if an integer variable is empty', async () => {
+  it('should fall back to the default value if a variable is empty', async () => {
+    process.env.LOG_LEVEL = '';
     process.env.PORT = '';
 
-    expect((await loadEnv()).port).toBe(8000);
+    expect(await loadEnv()).toMatchObject({ logLevel: 'info', port: 8000 });
   });
 
   it('should accept 0 for integer variables', async () => {
@@ -110,6 +111,14 @@ describe('Environment configuration', () => {
     process.env.REQUEST_TIMEOUT = '0';
 
     expect(await loadEnv()).toMatchObject({ headersTimeout: 10000, requestTimeout: 0 });
+  });
+
+  it('should throw an error if LOG_LEVEL does not exactly match an allowed value', async () => {
+    process.env.LOG_LEVEL = 'INFO';
+
+    await expect(loadEnv()).rejects.toThrow(
+      'LOG_LEVEL="INFO" must be one of trace, debug, info, warn, error, fatal, silent',
+    );
   });
 
   it.each(['abc', '-1', '65536'])('should throw an error if PORT is %j', async (value) => {

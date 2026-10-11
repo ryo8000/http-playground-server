@@ -4,6 +4,7 @@ const MAX_PORT = 65535;
 const MAX_TIMER_MS = 2 ** 31 - 1;
 // Node.js adds server.keepAliveTimeoutBuffer (1000ms by default) to keepAliveTimeout for the socket timeout, which must stay within MAX_TIMER_MS.
 const MAX_KEEP_ALIVE_TIMEOUT_MS = MAX_TIMER_MS - 1000;
+const LOG_LEVELS = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'] as const;
 
 const errors: string[] = [];
 
@@ -34,6 +35,34 @@ const parseIntegerEnv = (
   return value;
 };
 
+/**
+ * Parses an environment variable as one of the allowed values, falling back to a default when unset.
+ *
+ * @param {string} name - The environment variable name.
+ * @param {readonly T[]} allowedValues - The values the variable may take.
+ * @param {T} defaultValue - The value used when the variable is unset or empty.
+ * @returns {T} The matched value or `defaultValue`.
+ */
+const parseEnumEnv = <T extends string>(
+  name: string,
+  allowedValues: readonly T[],
+  defaultValue: NoInfer<T>,
+): T => {
+  const raw = process.env[name];
+  if (raw === undefined || raw === '') {
+    return defaultValue;
+  }
+
+  const value = allowedValues.find((candidate) => candidate === raw);
+  if (value === undefined) {
+    errors.push(`${name}=${JSON.stringify(raw)} must be one of ${allowedValues.join(', ')}`);
+    return defaultValue;
+  }
+
+  return value;
+};
+
+const logLevel = parseEnumEnv('LOG_LEVEL', LOG_LEVELS, 'info');
 const port = parseIntegerEnv('PORT', 8000, MAX_PORT);
 const keepAliveTimeout = parseIntegerEnv('KEEP_ALIVE_TIMEOUT', 5000, MAX_KEEP_ALIVE_TIMEOUT_MS);
 const headersTimeout = parseIntegerEnv('HEADERS_TIMEOUT', 10000);
@@ -57,7 +86,7 @@ export const environment = {
   enableShutdown: process.env['ENABLE_SHUTDOWN'] === 'true',
   headersTimeout,
   keepAliveTimeout,
-  logLevel: process.env['LOG_LEVEL'] || 'info',
+  logLevel,
   maxDelay,
   nodeEnv: process.env['NODE_ENV'] || 'development',
   origin: process.env['ORIGIN'] || '*',
