@@ -1,14 +1,16 @@
+import type { AddressInfo } from 'node:net';
 import { app } from './app.js';
 import { environment } from './env.js';
 import { log } from './logger.js';
 
 const server = app.listen(environment.port, () => {
-  log.info(`Server is running on http://localhost:${environment.port}`);
+  const { port } = server.address() as AddressInfo;
+  log.info(`Server is running on http://localhost:${port}`);
 });
 
+server.keepAliveTimeout = environment.keepAliveTimeout;
 server.headersTimeout = environment.headersTimeout;
 server.requestTimeout = environment.requestTimeout;
-server.keepAliveTimeout = environment.keepAliveTimeout;
 
 let isShuttingDown = false;
 

@@ -16,16 +16,16 @@ describe('Environment configuration', () => {
   };
 
   it('should load default values when environment variables are not set', async () => {
+    delete process.env.NODE_ENV;
+    delete process.env.LOG_LEVEL;
+    delete process.env.PORT;
+    delete process.env.KEEP_ALIVE_TIMEOUT;
     delete process.env.HEADERS_TIMEOUT;
     delete process.env.REQUEST_TIMEOUT;
-    delete process.env.KEEP_ALIVE_TIMEOUT;
+    delete process.env.ORIGIN;
+    delete process.env.MAX_DELAY;
     delete process.env.ENABLE_CRASH;
     delete process.env.ENABLE_SHUTDOWN;
-    delete process.env.LOG_LEVEL;
-    delete process.env.MAX_DELAY;
-    delete process.env.NODE_ENV;
-    delete process.env.ORIGIN;
-    delete process.env.PORT;
 
     expect(await loadEnv()).toEqual({
       enableCrash: false,
@@ -41,27 +41,60 @@ describe('Environment configuration', () => {
     });
   });
 
-  it.each(['0', ''])(
-    'should fall back to the default value if an integer variable is %j',
-    async (value) => {
-      process.env.PORT = value;
+  it('should correctly load values from environment variables', async () => {
+    process.env.NODE_ENV = 'production';
+    process.env.LOG_LEVEL = 'debug';
+    process.env.PORT = '9000';
+    process.env.KEEP_ALIVE_TIMEOUT = '5000';
+    process.env.HEADERS_TIMEOUT = '11000';
+    process.env.REQUEST_TIMEOUT = '40000';
+    process.env.ORIGIN = 'https://example.com';
+    process.env.MAX_DELAY = '15000';
+    process.env.ENABLE_CRASH = 'true';
+    process.env.ENABLE_SHUTDOWN = 'true';
 
-      expect((await loadEnv()).port).toBe(8000);
-    },
-  );
+    expect(await loadEnv()).toEqual({
+      enableCrash: true,
+      enableShutdown: true,
+      headersTimeout: 11000,
+      keepAliveTimeout: 5000,
+      logLevel: 'debug',
+      maxDelay: 15000,
+      nodeEnv: 'production',
+      origin: 'https://example.com',
+      port: 9000,
+      requestTimeout: 40000,
+    });
+  });
 
-  it.each(['abc', '-1', '65536'])('should throw an error if PORT is %j', async (value) => {
-    process.env.PORT = value;
+  it('should fall back to the default value if an integer variable is empty', async () => {
+    process.env.PORT = '';
 
-    await expect(loadEnv()).rejects.toThrow(`PORT=${JSON.stringify(value)}`);
+    expect((await loadEnv()).port).toBe(8000);
+  });
+
+  it('should accept 0 for integer variables and skip timeout ordering checks', async () => {
+    process.env.PORT = '0';
+    process.env.KEEP_ALIVE_TIMEOUT = '0';
+    process.env.HEADERS_TIMEOUT = '0';
+    process.env.REQUEST_TIMEOUT = '0';
+    process.env.MAX_DELAY = '0';
+
+    expect(await loadEnv()).toMatchObject({
+      headersTimeout: 0,
+      keepAliveTimeout: 0,
+      maxDelay: 0,
+      port: 0,
+      requestTimeout: 0,
+    });
   });
 
   it('should accept integer variables at their largest allowed values', async () => {
+    process.env.PORT = '65535';
     process.env.KEEP_ALIVE_TIMEOUT = String(2 ** 31 - 1 - 1000);
     process.env.HEADERS_TIMEOUT = String(Number.MAX_SAFE_INTEGER - 1);
     process.env.REQUEST_TIMEOUT = String(Number.MAX_SAFE_INTEGER);
     process.env.MAX_DELAY = String(2 ** 31 - 1);
-    process.env.PORT = '65535';
 
     expect(await loadEnv()).toMatchObject({
       headersTimeout: Number.MAX_SAFE_INTEGER - 1,
@@ -72,16 +105,22 @@ describe('Environment configuration', () => {
     });
   });
 
-  it('should throw an error if HEADERS_TIMEOUT <= KEEP_ALIVE_TIMEOUT', async () => {
-    process.env.HEADERS_TIMEOUT = '5000';
+  it.each(['abc', '-1', '65536'])('should throw an error if PORT is %j', async (value) => {
+    process.env.PORT = value;
+
+    await expect(loadEnv()).rejects.toThrow(`PORT=${JSON.stringify(value)}`);
+  });
+
+  it('should throw an error if a nonzero HEADERS_TIMEOUT <= KEEP_ALIVE_TIMEOUT', async () => {
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
+    process.env.HEADERS_TIMEOUT = '5000';
 
     await expect(loadEnv()).rejects.toThrow(
       'HEADERS_TIMEOUT=5000 must be greater than KEEP_ALIVE_TIMEOUT=5000',
     );
   });
 
-  it('should throw an error if REQUEST_TIMEOUT <= HEADERS_TIMEOUT', async () => {
+  it('should throw an error if a nonzero REQUEST_TIMEOUT <= HEADERS_TIMEOUT', async () => {
     process.env.HEADERS_TIMEOUT = '10000';
     process.env.REQUEST_TIMEOUT = '10000';
 
@@ -97,48 +136,22 @@ describe('Environment configuration', () => {
     await expect(loadEnv()).rejects.toThrow(
       new Error(
         'Invalid environment configuration:\n' +
-          `  - KEEP_ALIVE_TIMEOUT="${2 ** 31 - 1 - 1000 + 1}" must be an integer between 1 and ${2 ** 31 - 1 - 1000}, or 0 for the default`,
+          `  - KEEP_ALIVE_TIMEOUT="${2 ** 31 - 1 - 1000 + 1}" must be an integer between 0 and ${2 ** 31 - 1 - 1000}`,
       ),
     );
   });
 
   it('should report all errors at once', async () => {
     process.env.PORT = 'abc';
-    process.env.HEADERS_TIMEOUT = '5000';
     process.env.KEEP_ALIVE_TIMEOUT = '5000';
+    process.env.HEADERS_TIMEOUT = '5000';
 
     await expect(loadEnv()).rejects.toThrow(
       new Error(
         'Invalid environment configuration:\n' +
-          '  - PORT="abc" must be an integer between 1 and 65535, or 0 for the default\n' +
+          '  - PORT="abc" must be an integer between 0 and 65535\n' +
           '  - HEADERS_TIMEOUT=5000 must be greater than KEEP_ALIVE_TIMEOUT=5000',
       ),
     );
-  });
-
-  it('should correctly load values from environment variables', async () => {
-    process.env.HEADERS_TIMEOUT = '11000';
-    process.env.REQUEST_TIMEOUT = '40000';
-    process.env.KEEP_ALIVE_TIMEOUT = '5000';
-    process.env.ENABLE_CRASH = 'true';
-    process.env.ENABLE_SHUTDOWN = 'true';
-    process.env.LOG_LEVEL = 'debug';
-    process.env.MAX_DELAY = '15000';
-    process.env.NODE_ENV = 'production';
-    process.env.ORIGIN = 'https://example.com';
-    process.env.PORT = '9000';
-
-    expect(await loadEnv()).toEqual({
-      enableCrash: true,
-      enableShutdown: true,
-      headersTimeout: 11000,
-      keepAliveTimeout: 5000,
-      logLevel: 'debug',
-      maxDelay: 15000,
-      nodeEnv: 'production',
-      origin: 'https://example.com',
-      port: 9000,
-      requestTimeout: 40000,
-    });
   });
 });
