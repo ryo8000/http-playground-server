@@ -40,15 +40,9 @@ const headersTimeout = parseIntegerEnv('HEADERS_TIMEOUT', 10000);
 const requestTimeout = parseIntegerEnv('REQUEST_TIMEOUT', 30000);
 const maxDelay = parseIntegerEnv('MAX_DELAY', 10000, MAX_TIMER_MS);
 
-if (headersTimeout !== 0 && headersTimeout <= keepAliveTimeout) {
+if (requestTimeout !== 0 && headersTimeout > requestTimeout) {
   errors.push(
-    `HEADERS_TIMEOUT=${headersTimeout} must be greater than KEEP_ALIVE_TIMEOUT=${keepAliveTimeout}`,
-  );
-}
-
-if (requestTimeout !== 0 && requestTimeout <= headersTimeout) {
-  errors.push(
-    `REQUEST_TIMEOUT=${requestTimeout} must be greater than HEADERS_TIMEOUT=${headersTimeout}`,
+    `HEADERS_TIMEOUT=${headersTimeout} must be less than or equal to REQUEST_TIMEOUT=${requestTimeout} unless either is 0`,
   );
 }
 

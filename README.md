@@ -116,18 +116,18 @@ docker run --rm -p 8000:8000 \
 
 ## ⚙️ Environment Variables
 
-| Name                 | Required | Default       | Description                                                                   |
-| -------------------- | -------- | ------------- | ----------------------------------------------------------------------------- |
-| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`)              |
-| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`trace`, `debug`, `info`, `warn`, `error`, `fatal`). |
-| `PORT`               | No       | `8000`        | Port number for this application.                                             |
-| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                                      |
-| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds. Must be > `KEEP_ALIVE_TIMEOUT`.         |
-| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds. Must be > `HEADERS_TIMEOUT`.                 |
-| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                               |
-| `ENABLE_CRASH`       | No       | `false`       | Enables the /crash endpoint.                                                  |
-| `MAX_DELAY`          | No       | `10000`       | Maximum allowed delay in milliseconds for the `delay` query parameter.        |
-| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.                 |
+| Name                 | Required | Default       | Description                                                                              |
+| -------------------- | -------- | ------------- | ---------------------------------------------------------------------------------------- |
+| `NODE_ENV`           | No       | `development` | Sets the environment mode. (`development`, `production`, `test`)                         |
+| `LOG_LEVEL`          | No       | `info`        | Sets the logging level. (`trace`, `debug`, `info`, `warn`, `error`, `fatal`).            |
+| `PORT`               | No       | `8000`        | Port number for this application.                                                        |
+| `KEEP_ALIVE_TIMEOUT` | No       | `5000`        | HTTP keep-alive timeout in milliseconds.                                                 |
+| `HEADERS_TIMEOUT`    | No       | `10000`       | HTTP headers timeout in milliseconds. Must be <= `REQUEST_TIMEOUT` unless either is `0`. |
+| `REQUEST_TIMEOUT`    | No       | `30000`       | Request timeout in milliseconds.                                                         |
+| `ORIGIN`             | No       | `*`           | The value of the Access-Control-Allow-Origin response header.                            |
+| `MAX_DELAY`          | No       | `10000`       | Maximum allowed delay in milliseconds for the `delay` query parameter.                   |
+| `ENABLE_CRASH`       | No       | `false`       | Enables the /crash endpoint.                                                             |
+| `ENABLE_SHUTDOWN`    | No       | `false`       | Enables the /shutdown endpoint.                                                          |
 
 ---
 
