@@ -1,7 +1,7 @@
 import pino from 'pino';
 import { environment } from './env.js';
 
-const logger = pino(
+export const log = pino(
   environment.nodeEnv === 'development'
     ? {
         level: environment.logLevel,
@@ -18,12 +18,3 @@ const logger = pino(
         level: environment.logLevel,
       },
 );
-
-export const log = {
-  fatal: logger.fatal.bind(logger),
-  error: logger.error.bind(logger),
-  warn: logger.warn.bind(logger),
-  info: logger.info.bind(logger),
-  debug: logger.debug.bind(logger),
-  trace: logger.trace.bind(logger),
-};
