@@ -3,7 +3,11 @@ import { app } from './app.js';
 import { environment } from './env.js';
 import { log } from './logger.js';
 
-const server = app.listen(environment.port, () => {
+const server = app.listen(environment.port, (err) => {
+  if (err) {
+    log.error({ err }, 'Server failed to start');
+    process.exit(1);
+  }
   const { port } = server.address() as AddressInfo;
   log.info(`Server is running on http://localhost:${port}`);
 });
