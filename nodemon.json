@@ -4,7 +4,7 @@
   "exec": "tsx ./src/server.ts",
   "env": {
     "LOG_LEVEL": "debug",
-    "ENABLE_CRASH": true,
-    "ENABLE_SHUTDOWN": true
+    "ENABLE_CRASH": "true",
+    "ENABLE_SHUTDOWN": "true"
   }
 }
