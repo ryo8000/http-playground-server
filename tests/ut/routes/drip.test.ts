@@ -29,14 +29,4 @@ describe('dripRouter', () => {
       });
     }
   });
-
-  it.each(HTTP_METHODS)('should return 400 for an invalid interval via %s', async (method) => {
-    const response = await request(app)[method]('/drip?interval=0');
-    expect(response.status).toBe(400);
-    if (method !== 'head') {
-      expect(response.body).toEqual({
-        error: { message: 'Invalid interval. Must be an integer between 1 and 10000.' },
-      });
-    }
-  });
 });

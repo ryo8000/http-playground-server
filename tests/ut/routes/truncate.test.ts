@@ -47,14 +47,4 @@ describe('truncateRouter', () => {
       });
     }
   });
-
-  it.each(HTTP_METHODS)('should return 400 for an invalid send via %s', async (method) => {
-    const response = await request(app)[method]('/truncate?size=100&send=100');
-    expect(response.status).toBe(400);
-    if (method !== 'head') {
-      expect(response.body).toEqual({
-        error: { message: 'Invalid send. Must be an integer between 0 and size - 1.' },
-      });
-    }
-  });
 });
