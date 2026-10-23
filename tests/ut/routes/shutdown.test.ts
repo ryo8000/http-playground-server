@@ -30,10 +30,6 @@ describe('shutdownRouter', () => {
     mockKill = jest.spyOn(process, 'kill').mockImplementation(() => true);
   });
 
-  afterEach(() => {
-    mockKill.mockRestore();
-  });
-
   describe('when shutdown is disabled', () => {
     beforeEach(async () => {
       mockEnableShutdown = false;

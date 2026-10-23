@@ -8,10 +8,6 @@ app.use('/flaky', flakyRouter);
 const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
 
 describe('flakyRouter', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it.each(HTTP_METHODS)(
     'should return 200 when the roll is at or above the rate via %s',
     async (method) => {
