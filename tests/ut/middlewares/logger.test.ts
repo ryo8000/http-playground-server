@@ -14,7 +14,6 @@ describe('LoggerMiddleware', () => {
   let mockNext: NextFunction;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     mockRequest = {
       method: 'POST',
       url: '/test',

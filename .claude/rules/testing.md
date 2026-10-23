@@ -21,7 +21,7 @@ paths:
 - Group parallel cases with `it.each`, not repeated near-identical `it` blocks. Keep `describe` nesting minimal (one per function/endpoint); no `describe` wrapping a single test or restating test names.
 - Assert status and headers with `toBe`, the full body with `toEqual` (or a `{ status, body }` object) — never field-by-field on the body. Match dynamic values (UUIDs, timestamps) with `expect.any(...)`/`expect.stringMatching(...)` inside the `toEqual`, or `toMatch` on a single field.
 - Only test inputs the type signature and Express allow (query params are `string | string[] | undefined` — no invented numeric/boolean cases). Order success cases before error cases.
-- Keep tests deterministic; restore mutated env vars, timers, mocks, and spies.
+- Keep tests deterministic: restore mutated `process.env` and shared state like `environment` (`jest.config.js` already restores spies and clears mocks).
 
 ## Running
 

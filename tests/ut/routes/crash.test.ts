@@ -30,10 +30,6 @@ describe('crashRouter', () => {
     mockExit = jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
   });
 
-  afterEach(() => {
-    mockExit.mockRestore();
-  });
-
   describe('when crashing is disabled', () => {
     beforeEach(async () => {
       mockEnableCrash = false;

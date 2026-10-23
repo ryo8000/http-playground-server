@@ -9,10 +9,6 @@ app.use('/sse', sseRouter);
 const HTTP_METHODS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options'] as const;
 
 describe('sseRouter', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   it.each(HTTP_METHODS)('should stream the requested number of events via %s', async (method) => {
     const setIntervalSpy = jest.spyOn(global, 'setInterval');
     const response = await request(app)[method]('/sse?count=2&interval=1');
