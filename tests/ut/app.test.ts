@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app } from '../../src/app.js';
+import { log } from '../../src/logger.js';
 
 describe('App', () => {
   describe('GET /', () => {
@@ -49,6 +50,7 @@ describe('App', () => {
     });
 
     it('should return 500 for server errors', async () => {
+      const errorSpy = jest.spyOn(log, 'error');
       const response = await request(app).get('/exception');
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
@@ -56,6 +58,11 @@ describe('App', () => {
           message: 'An unexpected error has occurred.',
         },
       });
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      expect(errorSpy).toHaveBeenCalledWith(
+        { err: expect.objectContaining({ message: 'Intentional error' }) },
+        'Unhandled error occurred',
+      );
     });
   });
 });
