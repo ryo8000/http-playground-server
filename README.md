@@ -84,6 +84,7 @@ docker run --rm -p 8000:8000 \
 | `ALL`  | `/reset`             | Cuts the connection with a TCP RST instead of sending a response.                                                                        |
 | `ALL`  | `/shutdown`          | Triggers a shutdown of the server. Requires `ENABLE_SHUTDOWN=true`.                                                                      |
 | `ALL`  | `/status/{status}`   | Respond with a given HTTP status code (must be between 200 and 599).                                                                     |
+| `ALL`  | `/sse`               | Streams Server-Sent Events, then closes the connection. Resumes after `Last-Event-ID`, or returns 204 once all events were sent.         |
 | `ALL`  | `/timeout`           | Simulates a timeout by never sending a response.                                                                                         |
 | `ALL`  | `/truncate`          | Declares a `size`-byte body but sends only `send` bytes before cutting the connection mid-response.                                      |
 | `ALL`  | `/uuid`              | Generate and return a random UUID (version 4).                                                                                           |
@@ -107,8 +108,8 @@ docker run --rm -p 8000:8000 \
 | `chunked`  | Boolean | `false`           | Uses chunked transfer (no Content-Length) for `/truncate` when `true`.                             |
 | `limit`    | Number  | `5`               | Allowed requests per window for `/rate-limit` (1–10000).                                           |
 | `window`   | Number  | `10`              | Window length in seconds for `/rate-limit` (1–3600).                                               |
-| `count`    | Number  | `1`               | Number of oversized headers for `/big-headers` (1–100).                                            |
-| `interval` | Number  | `1000`            | Milliseconds between dripped bytes for `/drip` (1–10000).                                          |
+| `count`    | Number  | —                 | Oversized headers for `/big-headers` (default `1`) or events for `/sse` (default `5`) (1–100).     |
+| `interval` | Number  | `1000`            | Milliseconds between dripped bytes for `/drip` or events for `/sse` (1–10000).                     |
 | `value`    | String  | —                 | Value of the `Date` response header for `/date` (required).                                        |
 | `etag`     | String  | `http-playground` | ETag for `/cache` (printable ASCII, 1–128 chars, no spaces, quotes, commas, or backslashes).       |
 

@@ -1761,6 +1761,161 @@
       ]
     },
     {
+      "name": "SSE - Streams Events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/sse?count=2&interval=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["sse"],
+          "query": [
+            {
+              "key": "count",
+              "value": "2"
+            },
+            {
+              "key": "interval",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Content-Type is text/event-stream', function () {",
+              "    pm.expect(pm.response.headers.get('Content-Type')).to.equal('text/event-stream; charset=utf-8');",
+              "});",
+              "",
+              "pm.test('Full event stream is received', function () {",
+              "    pm.expect(pm.response.text()).to.match(/^id: 1\\ndata: \\{\"index\":1,\"timestamp\":\"[^\"]+\"\\}\\n\\nid: 2\\ndata: \\{\"index\":2,\"timestamp\":\"[^\"]+\"\\}\\n\\n$/);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SSE - Resumes After Last-Event-ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Last-Event-ID",
+            "value": "1"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/sse?count=2&interval=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["sse"],
+          "query": [
+            {
+              "key": "count",
+              "value": "2"
+            },
+            {
+              "key": "interval",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Only events after Last-Event-ID are received', function () {",
+              "    pm.expect(pm.response.text()).to.match(/^id: 2\\ndata: \\{\"index\":2,\"timestamp\":\"[^\"]+\"\\}\\n\\n$/);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SSE - Last-Event-ID At Count Returns 204",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Last-Event-ID",
+            "value": "2"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/sse?count=2",
+          "host": ["{{baseUrl}}"],
+          "path": ["sse"],
+          "query": [
+            {
+              "key": "count",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 204', function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "SSE - Invalid Count",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/sse?count=101",
+          "host": ["{{baseUrl}}"],
+          "path": ["sse"],
+          "query": [
+            {
+              "key": "count",
+              "value": "101"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message is present', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error.message).to.equal('Invalid count. Must be an integer between 1 and 100.');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "Cookies - Returns Request Cookies",
       "request": {
         "method": "GET",
