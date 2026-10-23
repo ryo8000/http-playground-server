@@ -28,6 +28,7 @@ import { redirectLoopRouter } from './routes/redirect-loop.js';
 import { requestRouter } from './routes/request.js';
 import { resetRouter } from './routes/reset.js';
 import { shutdownRouter } from './routes/shutdown.js';
+import { sseRouter } from './routes/sse.js';
 import { statusRouter } from './routes/status.js';
 import { timeoutRouter } from './routes/timeout.js';
 import { truncateRouter } from './routes/truncate.js';
@@ -46,8 +47,14 @@ app.use(express.json());
 app.use(
   cors({
     origin: environment.origin,
-    // Neither the conditional request headers nor ETag are CORS-safelisted
-    allowedHeaders: ['Authorization', 'Content-Type', 'If-None-Match', 'If-Modified-Since'],
+    // Neither the conditional request headers, Last-Event-ID, nor ETag are CORS-safelisted
+    allowedHeaders: [
+      'Authorization',
+      'Content-Type',
+      'If-None-Match',
+      'If-Modified-Since',
+      'Last-Event-ID',
+    ],
     exposedHeaders: ['ETag'],
   }),
 );
@@ -80,6 +87,7 @@ app.use('/redirect-loop', redirectLoopRouter);
 app.use('/request', requestRouter);
 app.use('/reset', resetRouter);
 app.use('/shutdown', shutdownRouter);
+app.use('/sse', sseRouter);
 app.use('/status', statusRouter);
 app.use('/timeout', timeoutRouter);
 app.use('/truncate', truncateRouter);
