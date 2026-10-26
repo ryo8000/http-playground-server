@@ -48,7 +48,7 @@
   },
   "resolutions": {
     "newman/**/flatted": "3.4.2",
-    "newman/**/handlebars": "4.7.9",
+    "newman/**/handlebars": "4.7.10",
     "newman/**/jose": "4.15.9",
     "newman/**/lodash": "4.18.1",
     "newman/**/node-forge": "1.4.0",
