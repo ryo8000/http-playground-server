@@ -132,8 +132,9 @@ jobs:
           path: e2e-test-results.json
         if: always()
 
-  audit:
-    name: Audit dependencies
+  # New advisories for existing dependencies are left to Dependabot.
+  dependency-review:
+    name: Dependency review
     needs: detect-changes
     if: needs.detect-changes.outputs.run_checks == 'true'
     runs-on: ubuntu-latest
@@ -141,18 +142,8 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Audit production dependencies
-        run: yarn audit --groups dependencies
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
 
   docker-build:
     name: Docker image build
@@ -189,7 +180,7 @@ jobs:
     needs:
       - detect-changes
       - test
-      - audit
+      - dependency-review
       - docker-build
     if: always()
     runs-on: ubuntu-latest
@@ -204,7 +195,7 @@ jobs:
           fi
 
           if [ "${{ needs.detect-changes.outputs.run_checks }}" != "true" ]; then
-            echo "No application, test, or image changes detected; skipped test, audit, and Docker build jobs."
+            echo "No application, test, or image changes detected; skipped test, dependency review, and Docker build jobs."
             exit 0
           fi
 
@@ -213,8 +204,8 @@ jobs:
             exit 1
           fi
 
-          if [ "${{ needs.audit.result }}" != "success" ]; then
-            echo "Audit job result was ${{ needs.audit.result }}; blocking merge."
+          if [ "${{ needs.dependency-review.result }}" != "success" ]; then
+            echo "Dependency review job result was ${{ needs.dependency-review.result }}; blocking merge."
             exit 1
           fi
 
@@ -223,4 +214,4 @@ jobs:
             exit 1
           fi
 
-          echo "Test, audit, and Docker image build jobs passed."
+          echo "Test, dependency review, and Docker image build jobs passed."
