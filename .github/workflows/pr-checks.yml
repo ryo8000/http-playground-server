@@ -105,7 +105,7 @@ jobs:
 
       - name: Run E2E tests with Newman
         run: |
-          newman run tests/e2e/e2e-test-collection.json \
+          yarn newman run tests/e2e/e2e-test-collection.json \
             -e tests/e2e/environment.json \
             --reporters cli,json \
             --reporter-json-export e2e-test-results.json
