@@ -8,7 +8,7 @@
 ## Style
 - Inline comments: explain *why*, not *what*. Skip them when the code is self-explanatory.
 - Keep the existing JSDoc format (summary + `@param`/`@returns`) on functions; no extra prose.
-- README: one terse API Reference row per endpoint; don't restate what the code shows.
+- README: document each new endpoint as one terse API Reference row; don't restate what the code shows.
 
 ## Completion checklist
 1. `yarn verify` (runs format:check, lint, typecheck in order)
@@ -20,7 +20,6 @@ For endpoint or middleware behavior changes, also run:
 ## Expectations for changes
 - Prefer adding or updating tests when changing behavior.
 - Avoid unrelated refactors in the same patch.
-- Document new endpoints in the README API Reference table.
 
 ## PR output expectations
 - Report commands run and their outcomes.
