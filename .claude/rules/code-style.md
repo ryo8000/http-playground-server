@@ -9,7 +9,7 @@ paths:
 
 Endpoint logic lives in `src/services/` as pure functions taking plain values (never `req`/`res`); shared helpers go in `src/utils/` — check there before writing new helper logic. With no params to validate, skip the service entirely (`src/routes/uuid.ts`, `src/routes/reset.ts`). Otherwise, what lives in the service vs the route depends on one question: **does the success response have an irreducible `res`/socket side effect** (streaming, `socket.destroy()`, never responding)?
 
-- **No** — the service returns the whole response as `{ status, body }`, plus a `headers` record if it sets custom headers (`src/services/big-headers.ts`); add an `ok` discriminant only when the route branches on it (`src/services/status.ts`), else a plain union (`src/services/base64.ts`). The route just forwards it, applying headers via `Object.entries(result.headers)` rather than by name (`src/routes/basic-auth.ts`).
+- **No** — the service returns the whole response as `{ status, body }`, plus a `headers` record if it sets custom headers (`src/services/big-headers.ts`); add an `ok` discriminant only when the route branches on it (`src/services/status.ts`), else a plain union (`src/services/base64.ts`). The route just forwards it, applying `result.headers` as a whole rather than setting headers by name.
 - **Yes** (drip, truncate) — the service only validates and returns resolved params, with `status`/`body` on the error case; the route owns all `res`/socket orchestration, including `res.on('close')` cleanup (`src/routes/drip.ts`).
 
 ## Module conventions (ESM)
