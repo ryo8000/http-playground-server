@@ -22,8 +22,4 @@ paths:
 - Assert status and headers with `toBe`, the full body with `toEqual` (or a `{ status, body }` object) — never field-by-field on the body. Match dynamic values (UUIDs, timestamps) with `expect.any(...)`/`expect.stringMatching(...)` inside the `toEqual`, or `toMatch` on a single field.
 - Only test inputs the type signature and Express allow (query params are `string | string[] | undefined` — no invented numeric/boolean cases). Order success cases before error cases.
 - Keep tests deterministic: restore mutated `process.env` and shared state like `environment` (`jest.config.js` already restores spies and clears mocks).
-
-## Running
-
-- `yarn test` — all unit tests; `npx jest <path>` for one file. `yarn test:e2e` needs the server running (`yarn build && node dist/server.js`, port 8000; the `/verify` skill automates this).
 - Jest runs ts-jest in ESM mode; test files import from `src/` with `.js` extensions.
