@@ -5,6 +5,11 @@
 - Package manager: Yarn 1.
 - Keep changes minimal and consistent with existing coding patterns in `src/` and `tests/ut/`.
 
+## Scoped rules
+Read before reviewing or editing matching files:
+- `src/**/*.ts`: `.claude/rules/code-style.md`, `.claude/rules/testing.md`
+- `tests/**`: `.claude/rules/testing.md`
+
 ## Style
 - Inline comments: explain *why*, not *what*. Skip them when the code is self-explanatory.
 - Keep the existing JSDoc format (summary + `@param`/`@returns`) on functions; no extra prose.
